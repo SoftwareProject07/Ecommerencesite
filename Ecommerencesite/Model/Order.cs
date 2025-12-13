@@ -7,8 +7,8 @@ namespace Ecommerencesite.Model
                     [Key]
                     public int id { get; set; }
                     public int UserId { get; set; }
-                    public string OrderNumber { get; set; }
-                    public Decimal Ordertotal { get; set; }
-                    public DateTime OrderStatus { get; set; }
+                    public string? OrderNumber { get; set; } = null;
+                    public Decimal? Ordertotal { get; set; } = null;
+                    public DateTime? OrderStatus { get; set; } = null;
           }
 }

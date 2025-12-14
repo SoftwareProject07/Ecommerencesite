@@ -1,113 +1,149 @@
-import React from 'react';
-import   "../component/styles/headers.css";
- 
+import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
+import style from  "../component/styles/registerations.module.css";
+import axios from 'axios';
 
-export default function Header() {
+export default function Registeration() {
+  const [firstname, setFirstName] = useState("");
+  const [middlename, setMiddleName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [found, setFound] = useState("");
+  const [type, setType] = useState("");
+  const [createon, setCreateOn] = useState("");
+
+  const handleFirstNameChange = (value) => {
+    setFirstName(value);
+  };
+
+  const handleMiddleNameChange = (value) => {
+    setMiddleName(value);
+  };
+
+  const handleLastNameChange = (value) => {
+    setLastName(value);
+  };
+
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+  };
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+  };
+
+  const handleFoundChange = (value) => {
+    setFound(value);
+  };
+
+  const handleTypeChange = (value) => {
+    setType(value);
+  };
+
+  const handleCreateOnChange = (value) => {
+    setCreateOn(value);
+  };
+
+  const handlesave = () => {
+    const data = {
+      FirstName: firstname,
+      MiddleName: middlename,
+      LastName: lastname,
+      Password: password,
+      Email: email,
+      Fund: found,
+      type: type,
+      CreateOn: createon
+    };
+   axios
+      .post(
+        "http://localhost:5256/api/USERMEDICINE/CREATERegisterUser",
+        data,
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((response) => {
+        alert("Login Successful!");
+        navigate("login");
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert("Error: " + error.response.data.responseMessage);
+        } else if (error.request) {
+          alert("No response from server!");
+        } else {
+          alert("Request Error: " + error.message);
+        }
+      });
+  };
   return (
-    <>
-      {/* NAVBAR */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
-        {/* <a className="navbar-brand" href="#">AKMedizostore</a> */}
-<a className="navbar-brand d-flex align-items-center" href="#">
-  <img 
-    src="/AKMedizostore.png" 
-    alt="AKMedizostore"
-    style={{ width: "30px", height: "30px", marginRight: "8px" }}
-  />
-  AKMedizostore
-</a>
+    <Fragment>
+      <section className={style.bg} >
+        <div className="mask d-flex align-items-center h-100 gradient-custom-3">
+          <div className="container h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div className="card" style={{ borderRadius: "15px" }}>
+                  <div className="card-body p-5">
+                    <h2 className="text-uppercase text-center mb-5">Create an account</h2>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+                    <form>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <label className="form-label" htmlFor="form3Example1cg">FirstName</label>
+                        <input type="text" id="txtFirstName" className="form-control form-control-lg" onChange={(e) => handleFirstNameChange(e.target.value)} />
+                      </div>
 
-            <li className="nav-item">
-              <a className="nav-link" href="http://localhost:5173/header">Home</a>
-            </li>
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <input type="text" id="txtMiddleName" className="form-control form-control-lg" onChange={(e) => handleMiddleNameChange(e.target.value)} />
+                        <label className="form-label" htmlFor="form3Example3cg">MiddleName</label>
+                      </div>
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <input type="text" id="txtLastName" className="form-control form-control-lg" onChange={(e) => handleLastNameChange(e.target.value)} />
+                        <label className="form-label" htmlFor="form3Example3cg">LastName</label>
+                      </div>
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <input type="password" id="txtPassword" className="form-control form-control-lg" onChange={(e) => handlePasswordChange(e.target.value)} />
+                        <label className="form-label" htmlFor="form3Example4cg">Password</label>
+                      </div>
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <input type="email" id="txtEmail" className="form-control form-control-lg" onChange={(e) => handleEmailChange(e.target.value)} />
+                        <label className="form-label" htmlFor="form3Example3cg">Email</label>
+                      </div>
 
-            <li className="nav-item">
-              <a className="nav-link" href="#medicineOrder">Medicine Order</a>
-            </li>
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <input type="found" id="txtFound" className="form-control form-control-lg" hidden onChange={(e) => handleFoundChange(e.target.value)} />
+                        {/* <label className="form-label" htmlFor="form3Example4cg">Found</label> */}
+                      </div>
 
-            <li className="nav-item">
-              <a className="nav-link" href="#">About</a>
-            </li>
+                      <div data-mdb-input-init className="form-outline mb-4">
+                        <input type="type" id="txtType" className="form-control form-control-lg" hidden onChange={(e) => handleTypeChange(e.target.value)} />
+                        {/* <label className="form-label" htmlFor="form3Example4cdg">Type</label> */}
+                      </div>
+                      <input type="datetime-local" id="textCreateOn" className="form-control form-control-lg" onChange={(e) => handleCreateOnChange(e.target.value)} hidden />
+                      {/* <div className="form-check d-flex justify-content-center mb-5">
+                      <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                      <label className="form-check-label" htmlFor="form2Example3g">
+                        I agree all statements in <Link to="#" className="text-body"><u>Terms of service</u></Link>
+                      </label>
+                    </div> */}
 
-          </ul>
+                      <div className="d-flex justify-content-center">
+                        <button type="button" data-mdb-button-init
+                          data-mdb-ripple-init className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={() => handlesave()}>Register</button>
+                      </div>
 
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search Medicines"
-            />
-            <button className="btn btn-outline-success">Search</button>
-          </form>
-        </div>
-      </nav>
+                      <p className="text-center text-muted mt-5 mb-0">Have already an account?  <Link to="/login"><u>Login here</u> </Link></p>
 
-      {/* FULL PAGE MEDICINE ORDER VIEW */}
-      <div className="container-fluid mt-4" id="medicineOrder">
-        <div className="row">
+                    </form>
 
-          {/* LEFT CATEGORIES */}
-          <div className="col-md-3">
-            <h4>Categories</h4>
-            <ul className="list-group">
-              <li className="list-group-item">Pain Relief</li>
-              <li className="list-group-item">Antibiotics</li>
-              <li className="list-group-item">Vitamins</li>
-              <li className="list-group-item">Cough Syrup</li>
-              <li className="list-group-item">Skin Care</li>
-              <li className="list-group-item">Baby Care</li>
-            </ul>
-          </div>
-
-          {/* RIGHT – MEDICINES */}
-          <div className="col-md-9">
-            <h3 className="mb-3">All Medicines</h3>
-
-            <div className="row">
-
-              {[
-                { name: "Paracetamol", price: 25 },
-                { name: "Amoxicillin", price: 60 },
-                { name: "Vitamin C Tablets", price: 90 },
-                { name: "Cough Syrup", price: 80 },
-                { name: "Crocin", price: 35 },
-                { name: "Skin Ointment", price: 50 }
-              ].map((med, index) => (
-                <div className="col-md-4 mb-4" key={index}>
-                  <div className="card">
-                    <img
-                      src="https://via.placeholder.com/200"
-                      className="card-img-top"
-                      alt={med.name}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{med.name}</h5>
-                      <p>Price: ₹{med.price}</p>
-                      <button className="btn btn-primary w-100">
-                        Add to Cart
-                      </button>
-                    </div>
                   </div>
                 </div>
-              ))}
-
+              </div>
             </div>
           </div>
-
         </div>
-      </div>
-    </>
+      </section>
+    </Fragment>
   );
 }

@@ -42,38 +42,66 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// =======================
+// SERVICES
+// =======================
+
+// CORS
 builder.Services.AddCors(options =>
 {
-          options.AddPolicy("AllowAll",
-              builder =>
-              {
-                        builder.AllowAnyOrigin()
-                         .AllowAnyMethod()
-                         .AllowAnyHeader();
-              });
+          options.AddPolicy("AllowAll", policy =>
+          {
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+          });
 });
 
+// Controllers
 builder.Services.AddControllers();
-builder.Services.AddDbContext<Ecommerecewebstedatabase>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Ecommerecewebstedatabasecontext")));
+
+// Database
+builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("Ecommerecewebstedatabasecontext")
+    )
+);
+
+// Dependency Injection
 builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Kestrel (Railway / Docker friendly)
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//          options.ListenAnyIP(8080);
+//});
+
+// =======================
+// BUILD APP (ONLY ONCE)
+// =======================
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// =======================
+// MIDDLEWARE
+// =======================
 if (app.Environment.IsDevelopment())
 {
           app.UseSwagger();
           app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
+
+app.UseCors("AllowAll");
+
 app.MapControllers();
+
+// =======================
+// RUN
+// =======================
 app.Run();

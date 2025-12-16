@@ -9,7 +9,7 @@ namespace Ecommerencesite.Model
           {
                     // [Key]
                    // [NotMapped]
-
+                   
                     public bool status { get; set; }
                    // [NotMapped]
 

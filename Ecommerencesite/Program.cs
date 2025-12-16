@@ -1,4 +1,4 @@
-//using Ecommerencesite.DAL;
+﻿//using Ecommerencesite.DAL;
 //using Ecommerencesite.Database;
 //using Microsoft.EntityFrameworkCore;
 
@@ -40,7 +40,17 @@ using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+var options = new WebApplicationOptions
+{
+          Args = args,
+          ContentRootPath = Directory.GetCurrentDirectory()
+};
+
+var builder = WebApplication.CreateBuilder(options);
+
+// 🔴 IMPORTANT: Disable file watching (Render fix)
+builder.Configuration
+       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
 
 // =======================
 // SERVICES
@@ -51,10 +61,9 @@ builder.Services.AddCors(options =>
 {
           options.AddPolicy("AllowAll", policy =>
           {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
           });
 });
 
@@ -75,31 +84,24 @@ builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Kestrel (Railway / Docker friendly)
-//builder.WebHost.ConfigureKestrel(options =>
-//{
-//          options.ListenAnyIP(8080);
-//});
-
 // =======================
-// BUILD APP (ONLY ONCE)
+// BUILD APP
 // =======================
 var app = builder.Build();
 
 // =======================
 // MIDDLEWARE
 // =======================
-if (app.Environment.IsDevelopment())
-{
-          app.UseSwagger();
-          app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
+// Swagger (Production me bhi ON rakh sakte ho)
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// 🔴 Render HTTPS already handle karta hai
+// app.UseHttpsRedirection(); ❌ REMOVE
 
 app.UseCors("AllowAll");
 
 app.MapControllers();
-
 
 app.Run();

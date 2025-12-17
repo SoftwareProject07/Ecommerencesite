@@ -50,7 +50,7 @@ namespace Ecommerencesite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("carts");
+                    b.ToTable("cartss");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.Medicine", b =>
@@ -90,7 +90,7 @@ namespace Ecommerencesite.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("medicines");
+                    b.ToTable("mediciness");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.Order", b =>
@@ -115,7 +115,7 @@ namespace Ecommerencesite.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("orders");
+                    b.ToTable("orderss");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.OrderItem", b =>
@@ -146,7 +146,7 @@ namespace Ecommerencesite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("orderItems");
+                    b.ToTable("orderItemss");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.UserMedicine", b =>
@@ -183,7 +183,7 @@ namespace Ecommerencesite.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("userMedicines");
+                    b.ToTable("userMediciness");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,4 @@
-﻿//using Ecommerencesite.DAL;
-//using Ecommerencesite.Database;
+﻿//using Ecommerencesite.Database;
 //using Microsoft.EntityFrameworkCore;
 
 //var builder = WebApplication.CreateBuilder(args);
@@ -18,14 +17,10 @@
 //// Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
+//          app.UseSwagger();
+//          app.UseSwaggerUI();
 //}
-//void ConfigureServices(IServiceCollection services)
-//{
-//          services.AddTransient<DALMODEL>();
-//          // other services
-//}
+
 
 //app.UseAuthorization();
 
@@ -34,29 +29,20 @@
 //app.Run();
 
 
-//using Ecommerencesite.DAL;
+
+
 using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
-var options = new WebApplicationOptions
-{
-          Args = args,
-          ContentRootPath = Directory.GetCurrentDirectory()
-};
-
-var builder = WebApplication.CreateBuilder(options);
-
-// 🔴 IMPORTANT: Disable file watching (Render fix)
-builder.Configuration
-       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
+var builder = WebApplication.CreateBuilder(args);
 
 // =======================
-// SERVICES
+// SERVICES (BEFORE BUILD)
 // =======================
 
-// CORS
 builder.Services.AddCors(options =>
 {
           options.AddPolicy("AllowAll", policy =>
@@ -67,40 +53,46 @@ builder.Services.AddCors(options =>
           });
 });
 
-// Controllers
 builder.Services.AddControllers();
 
-// Database
 builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("Ecommerecewebstedatabasecontext")
+        builder.Configuration.GetConnectionString("DefaultConnections")
     )
 );
 
-// Dependency Injection
 builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 
-// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//          c =>
+//{
+//          c.SwaggerDoc("v1", new OpenApiInfo
+//          {
+//                    Title = "Ecommerencesite API",
+//                    Version = "v1"
+//          });
+//});
 
 // =======================
-// BUILD APP
+// BUILD
 // =======================
 var app = builder.Build();
 
 // =======================
-// MIDDLEWARE
+// MIDDLEWARE (AFTER BUILD)
 // =======================
 
-// Swagger (Production me bhi ON rakh sakte ho)
 app.UseSwagger();
 app.UseSwaggerUI();
-
-// 🔴 Render HTTPS already handle karta hai
-// app.UseHttpsRedirection(); ❌ REMOVE
-
+//          options =>
+//{
+//          options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ecommerencesite v1");
+//          options.RoutePrefix = "swagger";
+//});
 app.UseCors("AllowAll");
+
+app.UseAuthorization();
 
 app.MapControllers();
 

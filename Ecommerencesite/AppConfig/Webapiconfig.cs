@@ -1,23 +1,21 @@
 ﻿using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace Ecommerencesite.AppConfig
-      
 {
-          public static  class Webapiconfig
+          public static class WebApiConfig
           {
                     public static void Register(HttpConfiguration config)
                     {
-                              // Web API configuration and services
-                              EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
-                              config.EnableCors(cors);
-                              // Web API routes
+                              // Enable CORS globally
+                            //config.enab();
+
                               config.MapHttpAttributeRoutes();
+
                               config.Routes.MapHttpRoute(
-                                        name: "DefaultApi",
-                                        routeTemplate: "api/{controller}/{id}",
-                                        defaults: new { id = RouteParameter.Optional }
+                                  name: "DefaultApi",
+                                  routeTemplate: "api/{controller}/{id}",
+                                  defaults: new { id = RouteParameter.Optional }
                               );
-                    }         
+                    }
           }
 }

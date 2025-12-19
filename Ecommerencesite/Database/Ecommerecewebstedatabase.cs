@@ -14,7 +14,7 @@ namespace Ecommerencesite.Database
                     public DbSet<Cart> cartss { get; set; }
                     public DbSet<Order> orderss { get; set; }
                     public DbSet<OrderItem> orderItemss{ get; set; }
-                    public DbSet<Medicine> mediciness { get; set; }
+                    public DbSet<Medicine> medicinesss { get; set; }
                     public DbSet<UserMedicine> userMediciness { get; set; }
 
           }

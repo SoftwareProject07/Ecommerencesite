@@ -55,9 +55,14 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
+//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString("DefaultConnections")
+//    )
+//);
 builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnections")
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
 

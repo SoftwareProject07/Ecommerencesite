@@ -14,7 +14,7 @@ namespace Ecommerencesite.Model
                    // [NotMapped]
 
                     public string? responseMessage { get; set; } = string.Empty;
-                    public List<UserMedicine>? LSTuserMedicines { get; set; } 
+                    public List<UserMedicine>? LSTuserMedicines {get; set; } 
                     public UserMedicine? userMedicine { get; set; }
                     public List<Medicine>? LSTmedicines { get; set; }
                     public Medicine? medicine { get; set; }

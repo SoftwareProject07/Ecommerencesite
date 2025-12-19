@@ -22,76 +22,7 @@ namespace Ecommerencesite.Controllers
                     {
                                 this._usermedicinerepository = usermedicinerepository;
                     }
-                    // private readonly DALMODEL _dalModel;
-
-                    // private readonly DALMODEL _dalModel;
-
-                    //public USERMEDICINEController(IConfiguration configuration)
-                    //{
-                    //          this._configuration = configuration;
-                    //         // _dalModel = dalModel;
-                    //}
-                    //public USERMEDICINEController()
-                    //{
-                    //          _configuration = configuration;
-                    //          _dalModel = dalModel;
-                    //}
-                    //[HttpPost]
-                    //[Route("CREATERegisterUser")]
-                    //public ResponseModel CREATERegisterUser(UserMedicine userMedicine)
-                    //{
-
-                    //          ResponseModel response = new ResponseModel();
-                    //          DALMODEL DL = new DALMODEL();
-                    //          SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
-                    //          response = DL.CREATERegisterUser(userMedicine, conn);
-
-                    //          return response;
-
-
-                    //}
-
-                    //[HttpPost]
-                    //public IActionResult CREATERegisterUser([FromBody] UserMedicine userMedicine)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-
-                    //          try
-                    //          {
-                    //                    string connectionString = _configuration.GetConnectionString("DefaultConnection");
-                    //                    if (string.IsNullOrEmpty(connectionString))
-                    //                    {
-                    //                              response.statusCode = 500;
-                    //                              response.responseMessage = "Connection string is empty";
-                    //                              return Ok(response);
-                    //                    }
-
-                    //                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    //                    {
-                    //                              if (_dalModel == null)
-                    //                              {
-                    //                                        response.statusCode = 500;
-                    //                                        response.responseMessage = "_dalModel is null";
-                    //                                        return Ok(response);
-                    //                              }
-                    //                              response = _dalModel.CREATERegisterUser(userMedicine, connection);
-                    //                    }
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    response.statusCode = 500;
-                    //                    response.responseMessage = "An error occurred: " + ex.Message;
-                    //          }
-
-                    //          return Ok(response);
-                    //}
-                    //[HttpPost("CREATERegisterUser")]
-                    //public IActionResult CREATERegisterUser([FromBody] UserMedicine userregistMedicine)
-                    //{
-                    //          var a = _usermedicinerepository.CREATERegisterUser(userregistMedicine);
-                    //          return Ok(a);
-
-                    //}
+                    
                     [HttpPost("CREATERegisterUser")]
                     public IActionResult CREATERegisterUser([FromBody] UserMedicine model)
                     {

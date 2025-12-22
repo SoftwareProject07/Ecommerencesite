@@ -15,31 +15,53 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this.dbcontext = _dbcontext;
                     }
 
+                    //public ResponseModel CreateMedicine(Medicine createMedicine)
+                    //{
+                    //          //var createmedicines = new ResponseModel();
+                    //          //res.medicine.id= createMedicine.id,
+                    //          //res.m
+                    //          //try
+                    //          //{
+                    //          dbcontext.medicinesss.Add(createMedicine);
+                    //          dbcontext.SaveChanges();
+                    //          return new ResponseModel
+                    //          {
+
+
+                    //                    status = true,
+                    //                    responseMessage = "Medicine Create successfully",
+                    //                    medicine = createMedicine
+                    //          };
+                    //}
                     public ResponseModel CreateMedicine(Medicine createMedicine)
                     {
-                              var createmedicines = new ResponseModel();
-                              //res.medicine.id= createMedicine.id,
-                              //res.m
-                              try
+                              if (createMedicine.ExpiryDate.HasValue)
                               {
-                                        dbcontext.medicinesss.Add(createMedicine);
-                                        dbcontext.SaveChanges();
-
-                                        createmedicines.status = true;
-                                        createmedicines.responseMessage = "Medicine Create successfully";
-                                        createmedicines.Data = createMedicine;
-                              }
-                              catch (Exception ex)
-                              {
-                                        createmedicines.status = false;
-                                        createmedicines.responseMessage = ex.Message;
+                                        createMedicine.ExpiryDate =
+                                            DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
                               }
 
-                              return createmedicines;
+                              createMedicine.STATUS = 1;
+
+                              dbcontext.medicinesss.Add(createMedicine);
+                              dbcontext.SaveChanges();
+
+                              return new ResponseModel
+                              {
+                                        status = true,
+                                        responseMessage = "Medicine Create successfully",
+                                        medicine = createMedicine
+                              };
                     }
-                    
 
-                    
+
+
+
+                    //return createmedicines;
+
+
+
+
 
                     public ResponseModel DeleteMedicine(int id)
                     {

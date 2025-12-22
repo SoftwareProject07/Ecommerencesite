@@ -17,15 +17,36 @@ namespace Ecommerencesite.Controllers
                               this.imedicineresp = _imedicineresp;
                     }
 
+                    //[HttpPost("CreateMedicine")]
+                    //public IActionResult CreateMedicine(Medicine createMedicine)
+                    //{
+                    //          try
+                    //          {
+                    //                    if (createMedicine == null)
+                    //                              return BadRequest("Invalid Data");
+                    //                    var createmedicine = imedicineresp.CreateMedicine(createMedicine);
+                    //                    return Ok(createmedicine);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+                    //}
                     [HttpPost("CreateMedicine")]
-                    public IActionResult CreateMedicine(Medicine createMedicine)
+                    public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
                     {
                               try
                               {
                                         if (createMedicine == null)
                                                   return BadRequest("Invalid Data");
-                                        var createmedicine = imedicineresp.CreateMedicine(createMedicine);
-                                        return Ok(createmedicine);
+
+                                        var result = imedicineresp.CreateMedicine(createMedicine);
+                                        return Ok(result);
                               }
                               catch (Exception ex)
                               {

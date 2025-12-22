@@ -15,6 +15,7 @@ namespace Ecommerencesite.Model
                     public DateTime? ExpiryDate { get; set; } = null;
                     public string? IMAGEURL { get; set; } = null!;
                     public int STATUS { get; set; }
-                    public string? Type { get; set; } = null;         
+                    public string? Type { get; set; } = null;   
+                    
           }
 }

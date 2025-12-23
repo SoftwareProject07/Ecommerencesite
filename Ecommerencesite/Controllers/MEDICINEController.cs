@@ -41,26 +41,72 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    [HttpDelete("DeleteMedicine")]
+                    //[HttpDelete("DeleteMedicine")]
+                    //public IActionResult DeleteMedicine(int id)
+                    //{
+                    //          try
+                    //          {
+                    //                    var delte = imedicineresp.DeleteMedicine(id);
+                    //                    return Ok(delte);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+
+
+                    //}
+                    //[HttpDelete("DeleteMedicine/{id}")]
+
+                    //public IActionResult DeleteMedicine(int id)
+                    //{
+                    //          try
+                    //          {
+                    //                    var result = imedicineresp.DeleteMedicine(id);
+                    //                    return Ok(result);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+                    //}
+                    //[HttpPut("DeleteMedicine/{id}")]
+                    //public IActionResult DeleteMedicine(int id)
+                    //{
+                    //          try
+                    //          {
+                    //                    var result = imedicineresp.DeleteMedicine(id);
+                    //                    return Ok(result);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Delete error",
+                    //                              Error = ex.Message
+                    //                    });
+                    //          }
+                    //}
+
+                    [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)
                     {
-                              try
-                              {
-                                        var delte = imedicineresp.DeleteMedicine(id);
-                                        return Ok(delte);
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, new
-                                        {
-                                                  Message = "Internal Error",
-                                                  Error = ex.Message,
-                                                  Detail = ex.InnerException?.Message
-                                        });
-                              }
-
-
+                              var result = imedicineresp.DeleteMedicine(id);
+                              return Ok(result);
                     }
+
+
+
                     [HttpGet("DetailsMedicine")]
                     public IActionResult DetailsMedicine(int id)
                     {
@@ -123,33 +169,10 @@ namespace Ecommerencesite.Controllers
                     //}
 
                     [HttpPut("UpdateMedicine")]
-                    public IActionResult UpdateMedicine([FromBody] Medicine updatemedicine)
+                    public IActionResult UpdateMedicine([FromBody] Medicine medicine)
                     {
-                              //try
-                              //{
-                              //          if (updatemedicine == null || updatemedicine.id == 0)
-                              //                    return BadRequest("Invalid Medicine Data");
-
-                              //          var result = imedicineresp.UpdateMedicine(updatemedicine);
-                              //          return Ok(result);
-                              //}
-                              //catch (Exception ex)
-                              //{
-                              //          return StatusCode(500, new
-                              //          {
-                              //                    Message = "Internal Error",
-                              //                    Error = ex.Message,
-                              //                    Detail = ex.InnerException?.Message
-                              //          });
-                              //}
-                              imedicineresp.UpdateMedicine(updatemedicine);
-                              return Ok(new
-                              {
-                                        status = true,
-                                        message = "Medicine updated successfully"
-                              });
-
-
+                              var result = imedicineresp.UpdateMedicine(medicine);
+                              return Ok(result);
                     }
 
                     [HttpGet("AllListMedicineProduct")]

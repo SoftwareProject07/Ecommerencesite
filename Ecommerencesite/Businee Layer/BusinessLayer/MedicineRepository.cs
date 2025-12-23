@@ -4,6 +4,7 @@ using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -15,7 +16,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this.dbcontext = _dbcontext;
                     }
 
-             
+
                     public ResponseModel CreateMedicine(Medicine createMedicine)
                     {
                               if (createMedicine.ExpiryDate.HasValue)
@@ -46,30 +47,89 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
 
 
+                    //public ResponseModel DeleteMedicine(int id)
+                    //{
+                    //          //var delemedicine = new ResponseModel();
+                    //          //try
+                    //          //{
+                    //                    var delemedicines = dbcontext.medicinesss.Where(s => s.id == id).FirstOrDefault();
+                    //          dbcontext.medicinesss.Remove(delemedicines);
+                    //          dbcontext.SaveChanges();
+
+                    //          return new ResponseModel
+                    //          {
+                    //                    status = true,
+                    //                    responseMessage = "Medicine Delete successfully",
+                    //                    medicine = delemedicines
+                    //          };
+                    //          return null;
+                    //          }
+
+                    //public ResponseModel DeleteMedicine(int id)
+                    //{
+                    //          try
+                    //          {
+                    //                    var medicine = dbcontext.medicinesss
+                    //                                            .FirstOrDefault(x => x.id == id);
+
+                    //                    if (medicine == null)
+                    //                    {
+                    //                              return new ResponseModel
+                    //                              {
+                    //                                        status = false,
+                    //                                        responseMessage = "Medicine not found"
+                    //                              };
+                    //                    }
+
+                    //                    // ✅ SOFT DELETE
+                    //                    medicine.STATUS = 0;
+
+                    //                    dbcontext.SaveChanges();
+
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Medicine deleted successfully"
+                    //                    };
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = ex.Message
+                    //                    };
+                    //          }
+                    //}
                     public ResponseModel DeleteMedicine(int id)
                     {
-                              //var delemedicine = new ResponseModel();
-                              //try
-                              //{
-                                        var delemedicines = dbcontext.medicinesss.Where(s => s.id == id).FirstOrDefault();
-                              dbcontext.medicinesss.Remove(delemedicines);
+                              var medicine = dbcontext.medicinesss.FirstOrDefault(x => x.id == id);
+
+                              if (medicine == null)
+                              {
+                                        return new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = "Medicine not found"
+                                        };
+                              }
+
+                              // ✅ SOFT DELETE
+                              medicine.STATUS = 0;
                               dbcontext.SaveChanges();
 
                               return new ResponseModel
                               {
                                         status = true,
-                                        responseMessage = "Medicine Delete successfully",
-                                        medicine = delemedicines
+                                        responseMessage = "Medicine deleted successfully"
                               };
-                              return null;
-                              }
-                                      
-                          
-                    
+                    }
+
+
 
                     public ResponseModel DetailsMedicine(int id)
                     {
-                             var details= new ResponseModel();
+                              var details = new ResponseModel();
                               try
                               {
                                         var detail = dbcontext.medicinesss.Where(m => m.id == id).FirstOrDefault();
@@ -83,7 +143,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         details.status = false;
                                         details.responseMessage = ex.Message;
                               }
-                                                                      return details;
+                              return details;
 
                     }
 
@@ -92,16 +152,17 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               try
                               {
                                         return dbcontext.medicinesss
-                                                       .Where(x => x.STATUS == 1).OrderBy(x=>x.id)
+                                                       .Where(x => x.STATUS == 1).OrderBy(x => x.id)
                                                        .ToList();
-                                      
+                                       // return Ok(new { status = true, data });
+
                               }
                               catch
                               {
                                         return new List<Medicine>(); // ❗ NEVER throw 500
                               }
                     }
-                   
+
 
                     public ResponseModel SearchMedicine(int id)
                     {
@@ -157,10 +218,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public ResponseModel UpdateMedicine(Medicine updatemedicine)
                     {
-                              var existingMedicine = dbcontext.medicinesss
-                                                              .FirstOrDefault(x => x.id == updatemedicine.id);
+                              var medicine = dbcontext.medicinesss
+                                  .FirstOrDefault(x => x.id == updatemedicine.id && x.STATUS == 1);
 
-                              if (existingMedicine == null)
+                              if (medicine == null)
                               {
                                         return new ResponseModel
                                         {
@@ -169,34 +230,26 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         };
                               }
 
-                              // 🔹 Fields update karo (Id ko kabhi mat chhedna)
-                              existingMedicine.Name = updatemedicine.Name;
-                              existingMedicine.Manufacturer = updatemedicine.Manufacturer;
-                              existingMedicine.UnitPrice = updatemedicine.UnitPrice;
-                              existingMedicine.Discount = updatemedicine.Discount;
-                              existingMedicine.Quantity = updatemedicine.Quantity;
-                              existingMedicine.ExpiryDate = updatemedicine.ExpiryDate;
-
-                              if (updatemedicine.ExpiryDate.HasValue)
-                              {
-                                        existingMedicine.ExpiryDate =
-                                            DateTime.SpecifyKind(updatemedicine.ExpiryDate.Value, DateTimeKind.Utc);
-                              }
-
-                              existingMedicine.STATUS = 1;
+                              medicine.Name = updatemedicine.Name;
+                              medicine.Manufacturer = updatemedicine.Manufacturer;
+                              medicine.UnitPrice = updatemedicine.UnitPrice;
+                              medicine.Discount = updatemedicine.Discount;
+                              medicine.Quantity = updatemedicine.Quantity;
+                              medicine.ExpiryDate = updatemedicine.ExpiryDate;
+                              medicine.STATUS = 1;
 
                               dbcontext.SaveChanges();
 
                               return new ResponseModel
                               {
                                         status = true,
-                                        responseMessage = "Medicine updated successfully",
-                                        medicine = existingMedicine
+                                        responseMessage = "Medicine Updated Successfully",
+                                        medicine = medicine
                               };
                     }
 
+          }
 
-                                 //return null;
-                    }
+
 }
 

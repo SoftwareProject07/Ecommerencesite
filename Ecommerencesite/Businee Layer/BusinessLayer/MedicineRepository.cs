@@ -104,20 +104,68 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     }
 
-                    public ResponseModel lstmedicine()
+                    public List<Medicine> lstmedicine()
                     {
-                                   var lstmedicine = dbcontext.medicinesss.ToList();
-
-                              return new ResponseModel
+                              try
                               {
-                                        status = true,
-                                        responseMessage = "Order List Retrieved Successfully",
-                                        LSTmedicines = lstmedicine
-                              };
-
-                              return null;
-                                        //  return lstm
+                                        return dbcontext.medicinesss
+                                                       .Where(x => x.STATUS == 1)
+                                                       .ToList();
                               }
+                              catch
+                              {
+                                        return new List<Medicine>(); // ❗ NEVER throw 500
+                              }
+                    }
+
+                    //public ResponseModel lstmedicine()
+                    //{
+                    //               var lstmedicine = dbcontext.medicinesss.ToList();
+
+                    //          return new ResponseModel
+                    //          {
+                    //                    status = true,
+                    //                    responseMessage = "Order List Retrieved Successfully",
+                    //                    LSTmedicines = lstmedicine
+                    //          };
+
+                    //          return null;
+                    //                    //  return lstm
+                    //          }
+
+                    //public ResponseModel lstmedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var medicines = dbcontext.medicinesss.ToList();
+
+                    //                    if (medicines == null || medicines.Count == 0)
+                    //                    {
+                    //                              return new ResponseModel
+                    //                              {
+                    //                                        status = false,
+                    //                                        responseMessage = "No medicines found",
+                    //                                        LSTmedicines = new List<Medicine>()
+                    //                              };
+                    //                    }
+
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Medicine List Retrieved Successfully",
+                    //                              LSTmedicines = medicines
+                    //                    };
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = "Database Error",
+                    //                            //  Error = ex.Message
+                    //                    };
+                    //          }
+                    //}
 
                     public ResponseModel SearchMedicine(int id)
                     {

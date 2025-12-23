@@ -3,6 +3,7 @@ using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Ecommerencesite.Controllers
@@ -139,24 +140,80 @@ namespace Ecommerencesite.Controllers
                               }
 
                     }
+                    // [HttpGet("AllListMedicineProduct")]
+                    //public IActionResult lstmedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var list = imedicineresp.lstmedicine();
+                    //                    return Ok(list);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+                    //}
+
                     [HttpGet("AllListMedicineProduct")]
                     public IActionResult lstmedicine()
                     {
                               try
                               {
                                         var list = imedicineresp.lstmedicine();
-                                        return Ok(list);
+
+                                        if (list == null || list.Count == 0)
+                                        {
+                                                  return Ok(new
+                                                  {
+                                                            status = false,
+                                                            data = new List<Medicine>(),
+                                                            message = "No medicine found"
+                                                  });
+                                        }
+
+                                        return Ok(new
+                                        {
+                                                  status = true,
+                                                  data = list
+                                        });
                               }
                               catch (Exception ex)
                               {
                                         return StatusCode(500, new
                                         {
-                                                  Message = "Internal Error",
+                                                  Message = "Internal Server Error",
                                                   Error = ex.Message,
                                                   Detail = ex.InnerException?.Message
                                         });
                               }
                     }
+
+
+                    //[HttpGet("AllListMedicineProduct")]
+                    //public IActionResult AllListMedicineProduct()
+                    //{
+                    //          try
+                    //          {
+                    //                    var list = imedicineresp.lstmedicine()
+                    //                                       (x => x.STATUS == 1)
+                    //                                       .ToList();
+
+                    //                    return Ok(list);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              message = "Internal Server Error",
+                    //                              error = ex.Message
+                    //                    });
+                    //          }
+                    //}
 
                     // AddToCART: Add other API methods here
                     //[HttpPost]

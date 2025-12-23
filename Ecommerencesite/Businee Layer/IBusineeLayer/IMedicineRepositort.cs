@@ -4,7 +4,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
           public interface IMedicineRepositort
           {
-                    public ResponseModel lstmedicine();
+                    public List<Medicine> lstmedicine();
                     public ResponseModel CreateMedicine(Medicine createMedicine);
                     public ResponseModel UpdateMedicine(Medicine updatemedicine);
                     public ResponseModel DeleteMedicine(int id);

@@ -18,26 +18,7 @@ namespace Ecommerencesite.Controllers
                               this.imedicineresp = _imedicineresp;
                     }
 
-                    //[HttpPost("CreateMedicine")]
-                    //public IActionResult CreateMedicine(Medicine createMedicine)
-                    //{
-                    //          try
-                    //          {
-                    //                    if (createMedicine == null)
-                    //                              return BadRequest("Invalid Data");
-                    //                    var createmedicine = imedicineresp.CreateMedicine(createMedicine);
-                    //                    return Ok(createmedicine);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-                    //          }
-                    //}
+                
                     [HttpPost("CreateMedicine")]
                     public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
                     {
@@ -119,34 +100,15 @@ namespace Ecommerencesite.Controllers
 
 
                     }
-                    [HttpPut("UpdateMedicine")]
-                    public IActionResult UpdateMedicine(Medicine updatemedicine)
-                    {
-                              try
-                              {
-                                        if (updatemedicine == null)
-                                                  return BadRequest("Invalid Data");
-                                        var updatemedicines = imedicineresp.UpdateMedicine(updatemedicine);
-                                        return Ok(updatemedicines);
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, new
-                                        {
-                                                  Message = "Internal Error",
-                                                  Error = ex.Message,
-                                                  Detail = ex.InnerException?.Message
-                                        });
-                              }
-
-                    }
-                    // [HttpGet("AllListMedicineProduct")]
-                    //public IActionResult lstmedicine()
+                    //[HttpPut("UpdateMedicine")]
+                    //public IActionResult UpdateMedicine(Medicine updatemedicine)
                     //{
                     //          try
                     //          {
-                    //                    var list = imedicineresp.lstmedicine();
-                    //                    return Ok(list);
+                    //                    if (updatemedicine == null)
+                    //                              return BadRequest("Invalid Data");
+                    //                    var updatemedicines = imedicineresp.UpdateMedicine(updatemedicine);
+                    //                    return Ok(updatemedicines);
                     //          }
                     //          catch (Exception ex)
                     //          {
@@ -157,7 +119,38 @@ namespace Ecommerencesite.Controllers
                     //                              Detail = ex.InnerException?.Message
                     //                    });
                     //          }
+
                     //}
+
+                    [HttpPut("UpdateMedicine")]
+                    public IActionResult UpdateMedicine([FromBody] Medicine updatemedicine)
+                    {
+                              //try
+                              //{
+                              //          if (updatemedicine == null || updatemedicine.id == 0)
+                              //                    return BadRequest("Invalid Medicine Data");
+
+                              //          var result = imedicineresp.UpdateMedicine(updatemedicine);
+                              //          return Ok(result);
+                              //}
+                              //catch (Exception ex)
+                              //{
+                              //          return StatusCode(500, new
+                              //          {
+                              //                    Message = "Internal Error",
+                              //                    Error = ex.Message,
+                              //                    Detail = ex.InnerException?.Message
+                              //          });
+                              //}
+                              imedicineresp.UpdateMedicine(updatemedicine);
+                              return Ok(new
+                              {
+                                        status = true,
+                                        message = "Medicine updated successfully"
+                              });
+
+
+                    }
 
                     [HttpGet("AllListMedicineProduct")]
                     public IActionResult lstmedicine()
@@ -165,55 +158,53 @@ namespace Ecommerencesite.Controllers
                               try
                               {
                                         var list = imedicineresp.lstmedicine();
-
-                                        if (list == null || list.Count == 0)
-                                        {
-                                                  return Ok(new
-                                                  {
-                                                            status = false,
-                                                            data = new List<Medicine>(),
-                                                            message = "No medicine found"
-                                                  });
-                                        }
-
-                                        return Ok(new
-                                        {
-                                                  status = true,
-                                                  data = list
-                                        });
+                                        return Ok(list);
                               }
                               catch (Exception ex)
                               {
                                         return StatusCode(500, new
                                         {
-                                                  Message = "Internal Server Error",
+                                                  Message = "Internal Error",
                                                   Error = ex.Message,
                                                   Detail = ex.InnerException?.Message
                                         });
                               }
                     }
 
-
                     //[HttpGet("AllListMedicineProduct")]
-                    //public IActionResult AllListMedicineProduct()
+                    //public IActionResult lstmedicine()
                     //{
                     //          try
                     //          {
-                    //                    var list = imedicineresp.lstmedicine()
-                    //                                       (x => x.STATUS == 1)
-                    //                                       .ToList();
+                    //                    var list = imedicineresp.lstmedicine();
 
-                    //                    return Ok(list);
+                    //                    if (list == null || list.Count == 0)
+                    //                    {
+                    //                              return Ok(new
+                    //                              {
+                    //                                        status = false,
+                    //                                        data = new List<Medicine>(),
+                    //                                        message = "No medicine found"
+                    //                              });
+                    //                    }
+
+                    //                    return Ok(new
+                    //                    {
+                    //                              status = true,
+                    //                              data = list
+                    //                    });
                     //          }
                     //          catch (Exception ex)
                     //          {
                     //                    return StatusCode(500, new
                     //                    {
-                    //                              message = "Internal Server Error",
-                    //                              error = ex.Message
+                    //                              Message = "Internal Server Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
                     //                    });
                     //          }
                     //}
+
 
                     // AddToCART: Add other API methods here
                     //[HttpPost]

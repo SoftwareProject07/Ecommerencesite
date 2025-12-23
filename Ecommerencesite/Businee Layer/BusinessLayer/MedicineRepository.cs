@@ -15,24 +15,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this.dbcontext = _dbcontext;
                     }
 
-                    //public ResponseModel CreateMedicine(Medicine createMedicine)
-                    //{
-                    //          //var createmedicines = new ResponseModel();
-                    //          //res.medicine.id= createMedicine.id,
-                    //          //res.m
-                    //          //try
-                    //          //{
-                    //          dbcontext.medicinesss.Add(createMedicine);
-                    //          dbcontext.SaveChanges();
-                    //          return new ResponseModel
-                    //          {
-
-
-                    //                    status = true,
-                    //                    responseMessage = "Medicine Create successfully",
-                    //                    medicine = createMedicine
-                    //          };
-                    //}
+             
                     public ResponseModel CreateMedicine(Medicine createMedicine)
                     {
                               if (createMedicine.ExpiryDate.HasValue)
@@ -109,63 +92,16 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               try
                               {
                                         return dbcontext.medicinesss
-                                                       .Where(x => x.STATUS == 1)
+                                                       .Where(x => x.STATUS == 1).OrderBy(x=>x.id)
                                                        .ToList();
+                                      
                               }
                               catch
                               {
                                         return new List<Medicine>(); // ❗ NEVER throw 500
                               }
                     }
-
-                    //public ResponseModel lstmedicine()
-                    //{
-                    //               var lstmedicine = dbcontext.medicinesss.ToList();
-
-                    //          return new ResponseModel
-                    //          {
-                    //                    status = true,
-                    //                    responseMessage = "Order List Retrieved Successfully",
-                    //                    LSTmedicines = lstmedicine
-                    //          };
-
-                    //          return null;
-                    //                    //  return lstm
-                    //          }
-
-                    //public ResponseModel lstmedicine()
-                    //{
-                    //          try
-                    //          {
-                    //                    var medicines = dbcontext.medicinesss.ToList();
-
-                    //                    if (medicines == null || medicines.Count == 0)
-                    //                    {
-                    //                              return new ResponseModel
-                    //                              {
-                    //                                        status = false,
-                    //                                        responseMessage = "No medicines found",
-                    //                                        LSTmedicines = new List<Medicine>()
-                    //                              };
-                    //                    }
-
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Medicine List Retrieved Successfully",
-                    //                              LSTmedicines = medicines
-                    //                    };
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = "Database Error",
-                    //                            //  Error = ex.Message
-                    //                    };
-                    //          }
-                    //}
+                   
 
                     public ResponseModel SearchMedicine(int id)
                     {
@@ -186,30 +122,81 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return SearchMedicine;
                     }
 
+                    //public void UpdateMedicine(Medicine updatemedicine)
+                    //{
+                    //        dbcontext.medicinesss.Update(updatemedicine);
+                    //          dbcontext.SaveChanges();
+                    //}
+
+                    //public ResponseModel UpdateMedicine(Medicine updatemedicine)
+                    //{
+                    //          //var updatemedicines= new ResponseModel();
+                    //          // try
+                    //          // {
+
+                    //          if (updatemedicine.ExpiryDate.HasValue)
+                    //          {
+                    //                    updatemedicine.ExpiryDate =
+                    //                        DateTime.SpecifyKind(updatemedicine.ExpiryDate.Value, DateTimeKind.Utc);
+                    //          }
+
+                    //          updatemedicine.STATUS = 1;
+                    //          dbcontext.medicinesss.Update(updatemedicine);
+                    //          dbcontext.SaveChanges();
+
+                    //          return new ResponseModel
+                    //          {
+
+                    //                    status = true,
+                    //                    responseMessage = "Medicine Update successfully",
+                    //                    medicine = updatemedicine
+
+
+
+                    //          };
+
                     public ResponseModel UpdateMedicine(Medicine updatemedicine)
                     {
-                              //var updatemedicines= new ResponseModel();
-                              // try
-                              // {
-                              dbcontext.medicinesss.Update(updatemedicine);
+                              var existingMedicine = dbcontext.medicinesss
+                                                              .FirstOrDefault(x => x.id == updatemedicine.id);
+
+                              if (existingMedicine == null)
+                              {
+                                        return new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = "Medicine not found"
+                                        };
+                              }
+
+                              // 🔹 Fields update karo (Id ko kabhi mat chhedna)
+                              existingMedicine.Name = updatemedicine.Name;
+                              existingMedicine.Manufacturer = updatemedicine.Manufacturer;
+                              existingMedicine.UnitPrice = updatemedicine.UnitPrice;
+                              existingMedicine.Discount = updatemedicine.Discount;
+                              existingMedicine.Quantity = updatemedicine.Quantity;
+                              existingMedicine.ExpiryDate = updatemedicine.ExpiryDate;
+
+                              if (updatemedicine.ExpiryDate.HasValue)
+                              {
+                                        existingMedicine.ExpiryDate =
+                                            DateTime.SpecifyKind(updatemedicine.ExpiryDate.Value, DateTimeKind.Utc);
+                              }
+
+                              existingMedicine.STATUS = 1;
+
                               dbcontext.SaveChanges();
 
                               return new ResponseModel
                               {
-
                                         status = true,
-                                        responseMessage = "Medicine Update successfully",
-                                        medicine = updatemedicine
-
-
-
+                                        responseMessage = "Medicine updated successfully",
+                                        medicine = existingMedicine
                               };
-                              //catch (Exception ex)
-                              //{
-                              //          updatemedicines.status = false;
-                              //          updatemedicines.responseMessage = ex.Message;
-                              //}
-                              return null;
                     }
-          }
+
+
+                                 //return null;
+                    }
 }
+

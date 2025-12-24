@@ -8,6 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
+
           public class MedicineRepository : IMedicineRepositort
           {
                     private readonly Ecommerecewebstedatabase dbcontext;

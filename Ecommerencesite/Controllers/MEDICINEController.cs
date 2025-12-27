@@ -1,4 +1,5 @@
-﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
+﻿using Azure;
+using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,78 +20,16 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-                    //[HttpPost("CreateMedicine")]
-                    //public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
-                    //{
-                    //          try
-                    //          {
-                    //                    if (createMedicine == null)
-                    //                              return BadRequest("Invalid Data");
-
-                    //                    var result = imedicineresp.CreateMedicine(createMedicine);
-                    //                    return Ok(result);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-                    //          }
-                    //}
-
                     [HttpPost("CreateMedicine")]
-                    public IActionResult CreateMedicine( Medicine createMedicine, IFormFile image)
+                    public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
                     {
                               try
                               {
                                         if (createMedicine == null)
-                                                  return BadRequest("Invalid data");
+                                                  return BadRequest("Invalid Data");
 
-                                        if (image == null || image.Length == 0)
-                                                  return BadRequest("Image is required");
-
-                                        // 📁 Folder create
-                                        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                                        if (!Directory.Exists(uploadPath))
-                                                  Directory.CreateDirectory(uploadPath);
-
-                                        // 📸 Unique file name
-                                        var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-                                        var filePath = Path.Combine(uploadPath, fileName);
-
-                                        // 💾 Save image
-                                        using (var stream = new FileStream(filePath, FileMode.Create))
-                                        {
-                                                    image.CopyToAsync(stream);
-                                        }
-
-                                        // 🌐 Image URL
-                                        createMedicine.IMAGEURL = "/images/" + fileName;
-
-                                        // 🔥 Save to DB
-                                        var medicine = new Medicine
-                                        {
-                                                  Name = createMedicine.Name,
-                                                  Manufacturer = createMedicine.Manufacturer,
-                                                  UnitPrice = createMedicine.UnitPrice,
-                                                  Discount = createMedicine.Discount,
-                                                  Quantity = createMedicine.Quantity,
-                                                  ExpiryDate = createMedicine.ExpiryDate,
-                                                  IMAGEURL = createMedicine.IMAGEURL,
-                                                  STATUS = 1
-                                        };
-
-                                        var result = imedicineresp.CreateMedicine(medicine);
-
-                                        return Ok(new
-                                        {
-                                                  status = true,
-                                                  message = "Medicine created successfully",
-                                                  image = createMedicine.IMAGEURL
-                                        });
+                                        var result = imedicineresp.CreateMedicine(createMedicine);
+                                        return Ok(result);
                               }
                               catch (Exception ex)
                               {
@@ -104,7 +43,6 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-                    // 🔥 S
 
                     //[HttpDelete("DeleteMedicine")]
                     //public IActionResult DeleteMedicine(int id)

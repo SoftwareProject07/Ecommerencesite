@@ -100,7 +100,7 @@ app.UseSwaggerUI();
 app.UseCors("AllowAll");
 
 app.UseAuthorization();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 
 app.MapControllers();
 

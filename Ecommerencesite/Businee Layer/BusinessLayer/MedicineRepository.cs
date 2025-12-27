@@ -2,6 +2,7 @@
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -17,7 +18,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this.dbcontext = _dbcontext;
                     }
 
-
+                    [HttpPost("CreateMedicine")]]
                     public ResponseModel CreateMedicine(Medicine createMedicine)
                     {
                               if (createMedicine.ExpiryDate.HasValue)
@@ -38,6 +39,19 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         medicine = createMedicine
                               };
                     }
+
+                    //[HttpPost("CreateMedicine")]
+                    //public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
+                    //{
+                    //          if (createMedicine == null)
+                    //                    return BadRequest("Invalid Data");
+
+                    //          if (string.IsNullOrEmpty(createMedicine.ImageUrl))
+                    //                    return BadRequest("Image URL required");
+
+                    //          var result = imedicineresp.CreateMedicine(createMedicine);
+                    //          return Ok(result);
+                    //}
 
 
 

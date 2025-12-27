@@ -42,8 +42,7 @@ namespace Ecommerencesite.Controllers
                     //}
 
                     [HttpPost("CreateMedicine")]
-                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine createMedicine,[FromForm] IFormFile image
- )
+                    public async Task<IActionResult> CreateMedicine( Medicine createMedicine, IFormFile image)
                     {
                               try
                               {

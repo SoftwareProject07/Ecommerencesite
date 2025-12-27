@@ -42,7 +42,7 @@ namespace Ecommerencesite.Controllers
                     //}
 
                     [HttpPost("CreateMedicine")]
-                    public async Task<IActionResult> CreateMedicine( Medicine createMedicine, IFormFile image)
+                    public IActionResult CreateMedicine( Medicine createMedicine, IFormFile image)
                     {
                               try
                               {
@@ -64,7 +64,7 @@ namespace Ecommerencesite.Controllers
                                         // 💾 Save image
                                         using (var stream = new FileStream(filePath, FileMode.Create))
                                         {
-                                                  await image.CopyToAsync(stream);
+                                                    image.CopyToAsync(stream);
                                         }
 
                                         // 🌐 Image URL

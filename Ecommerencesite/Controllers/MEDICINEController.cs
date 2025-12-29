@@ -41,89 +41,34 @@ namespace Ecommerencesite.Controllers
                     //          }
                     //}
 
-                    [HttpPost("CreateMedicine")]
-                    // [Consumes("multipart/form-data")]
-                    public async Task<IActionResult> CreateMedicine(
-         [FromForm] Medicine medicine,
-          IFormFile image
-     )
-                    {
-                              var isCreated = await imedicineresp.CreateMedicineAsync(medicine, image);
-
-                              if (!isCreated)
-                                        return BadRequest("Medicine creation failed");
-
-                              return Ok("Medicine created successfully");
-                    }
-
-
                     //               [HttpPost("CreateMedicine")]
-                    //               [Consumes("multipart/form-data")]
+                    //               // [Consumes("multipart/form-data")]
                     //               public async Task<IActionResult> CreateMedicine(
-                    //[FromForm] Medicine medicine,
-                    //[FromForm] string expiryDate,   // 👈 ONLY STRING
-                    //IFormFile image)
+                    //    [FromForm] Medicine medicine,
+                    //     IFormFile image
+                    //)
                     //               {
-                    //                         if (string.IsNullOrWhiteSpace(expiryDate))
-                    //                                   return BadRequest("ExpiryDate is required");
-
-                    //                         // ✅ Accept dd/MM/yyyy AND ISO
-                    //                         DateTime parsedDate;
-
-                    //                         if (!DateTime.TryParseExact(
-                    //                                 expiryDate,
-                    //                                 "dd/MM/yyyy",
-                    //                                 CultureInfo.InvariantCulture,
-                    //                                 DateTimeStyles.None,
-                    //                                 out parsedDate))
-                    //                         {
-                    //                                   if (!DateTime.TryParse(expiryDate, out parsedDate))
-                    //                                             return BadRequest("ExpiryDate must be dd/MM/yyyy");
-                    //                         }
-
-                    //                         medicine.ExpiryDate = parsedDate;
-
                     //                         var isCreated = await imedicineresp.CreateMedicineAsync(medicine, image);
 
                     //                         if (!isCreated)
                     //                                   return BadRequest("Medicine creation failed");
 
-                    //                         return Ok(new
-                    //                         {
-                    //                                   message = "Medicine created successfully",
-                    //                                   expiryDate = parsedDate.ToString("dd/MM/yyyy")
-                    //                         });
-                    //               }
+                    //                         return Ok("Medicine created successfully");
+                    [HttpPost("CreateMedicine")]
+                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                    {
+                              if (!ModelState.IsValid)
+                                        return BadRequest(ModelState);
 
-                    //[HttpPost("CreateMedicine")]
-                    //public IActionResult CreateMedicine( MedicineDto dto)
-                    //{
-                    //          DateTime? expiryDate = null;
+                              if (image == null || image.Length == 0)
+                                        return BadRequest("Image missing");
 
-                    //          if (!string.IsNullOrWhiteSpace(dto.ExpiryDate))
-                    //          {
-                    //                    expiryDate = DateTime.ParseExact(
-                    //                        dto.ExpiryDate,
-                    //                        "dd/MM/yyyy",
-                    //                        CultureInfo.InvariantCulture
-                    //                    );
-                    //          }
+                              await imedicineresp.CreateMedicineAsync(medicine, image);
 
-                    //          var medicine = new Medicine
-                    //          {
-                    //                   // Name = dto.Name,
-                    //                    ExpiryDate = expiryDate
-                    //          };
+                              return Ok("Medicine created successfully");
+                    }
 
-                    //          imedicineresp.CreateMedicineAsync.Add(medicine);
-                    //          _context.SaveChanges();
 
-                    //          return Ok(new
-                    //          {
-                    //                    message = "Medicine created successfully",
-                    //                    expiryDate = medicine.ExpiryDate?.ToString("dd/MM/yyyy")
-                    //          });
-                    //}
 
 
                     [HttpDelete("DeleteMedicine/{id}")]

@@ -1,6 +1,8 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 
 //DateTime expiryDateParsed;
@@ -12,12 +14,14 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           {
                     private readonly Ecommerecewebstedatabase dbcontext;
                     private readonly IWebHostEnvironment _env;
+                    private readonly IConfiguration _config;
 
-                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext, IWebHostEnvironment env)
+
+                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext, IWebHostEnvironment env, IConfiguration config)
                     {
                               this.dbcontext = _dbcontext;
                               _env = env;
-
+                              _config = config;
                     }
 
                     //[HttpPost("CreateMedicine")]
@@ -42,57 +46,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          };
                     //}
 
-                    public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
-                    {
-                              try
-                              {
-                                        // ✅ 1️⃣ Validation
-                                        if (medicine == null)
-                                                  throw new Exception("Medicine data is null");
-
-                                        if (image == null || image.Length == 0)
-                                                  throw new Exception("Image is null or empty");
-
-                                        // ✅ 2️⃣ WebRootPath safety
-                                        var webRoot = _env.WebRootPath;
-
-                                        if (string.IsNullOrEmpty(webRoot))
-                                                  throw new Exception("WebRootPath is null. Check wwwroot & UseStaticFiles");
-
-                                        // ✅ 3️⃣ Folder path
-                                        string folderPath = Path.Combine(webRoot, "uploads", "medicines");
-
-                                        if (!Directory.Exists(folderPath))
-                                                  Directory.CreateDirectory(folderPath);
-
-                                        // ✅ 4️⃣ Unique file name
-                                        string fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-                                        string filePath = Path.Combine(folderPath, fileName);
-
-                                        // ✅ 5️⃣ Save image
-                                        using (var stream = new FileStream(filePath, FileMode.Create))
-                                        {
-                                                  await image.CopyToAsync(stream);
-                                        }
-
-                                        // ✅ 6️⃣ Save image path in DB (PROPERTY NAME CHECK)
-                                        medicine.IMAGEURL = "/uploads/medicines/" + fileName;
-                                        //  medicine.CreatedDate = DateTime.Now;
-
-                                        // ✅ 7️⃣ DbSet NAME CHECK
-                                        dbcontext.medicinesss.Add(medicine);
-                                        await dbcontext.SaveChangesAsync();
-
-                                        return true;
-                              }
-                              catch (Exception ex)
-                              {
-                                        // 🔥 IMPORTANT: log this during debug
-                                        Console.WriteLine(ex.Message);
-                                        throw; // ❗ temporarily throw to SEE real error
-                              }
-                    }
-
                     //public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
                     //{
                     //          try
@@ -104,68 +57,66 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //                    if (image == null || image.Length == 0)
                     //                              throw new Exception("Image is null or empty");
 
-                    //                    // ✅ 2️⃣ Parse ExpiryDate (dd/MM/yyyy → DateTime)
-                    //                    DateTime expiryDateParsed; // ✅ DECLARED
-
-                    //                    if (!DateTime.TryParseExact(
-                    //                            medicine.ExpiryDate,              // string
-                    //                            "dd/MM/yyyy",
-                    //                            CultureInfo.InvariantCulture,
-                    //                            DateTimeStyles.None,
-                    //                            out expiryDateParsed))
-                    //                    {
-                    //                              throw new Exception("Invalid ExpiryDate format. Use dd/MM/yyyy");
-                    //                    }
-
-                    //                    // ✅ 3️⃣ WebRootPath
+                    //                    // ✅ 2️⃣ WebRootPath safety
                     //                    var webRoot = _env.WebRootPath;
+
                     //                    if (string.IsNullOrEmpty(webRoot))
                     //                              throw new Exception("WebRootPath is null. Check wwwroot & UseStaticFiles");
 
-                    //                    // ✅ 4️⃣ Folder
+                    //                    // ✅ 3️⃣ Folder path
                     //                    string folderPath = Path.Combine(webRoot, "uploads", "medicines");
+
                     //                    if (!Directory.Exists(folderPath))
                     //                              Directory.CreateDirectory(folderPath);
 
-                    //                    // ✅ 5️⃣ Image save
+                    //                    // ✅ 4️⃣ Unique file name
                     //                    string fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
                     //                    string filePath = Path.Combine(folderPath, fileName);
 
+                    //                    // ✅ 5️⃣ Save image
                     //                    using (var stream = new FileStream(filePath, FileMode.Create))
                     //                    {
                     //                              await image.CopyToAsync(stream);
                     //                    }
 
-                    //                    // ✅ 6️⃣ Create DB Entity
-                    //                    var medicineEntity = new Medicine
-                    //                    {
-                    //                              Name = medicine.Name,
-                    //                              Manufacturer = medicine.Manufacturer,
-                    //                              UnitPrice = medicine.UnitPrice,
-                    //                              Discount = medicine.Discount,
-                    //                              Quantity = medicine.Quantity,
-                    //                              ExpiryDate = medicine.ExpiryDate, // ✅ DateTime
-                    //                              IMAGEURL = "/uploads/medicines/" + fileName,
-                    //                              STATUS = medicine.STATUS,
-                    //                              // CreatedDate = DateTime.Now
-                    //                    };
+                    //                    // ✅ 6️⃣ Save image path in DB (PROPERTY NAME CHECK)
+                    //                    medicine.IMAGEURL = "/uploads/medicines/" + fileName;
+                    //                    //  medicine.CreatedDate = DateTime.Now;
 
-                    //                    // ✅ 7️⃣ Save to DB
-                    //                    dbcontext.medicinesss.Add(medicineEntity);
+                    //                    // ✅ 7️⃣ DbSet NAME CHECK
+                    //                    dbcontext.medicinesss.Add(medicine);
                     //                    await dbcontext.SaveChangesAsync();
 
                     //                    return true;
                     //          }
                     //          catch (Exception ex)
                     //          {
-                    //                    Console.WriteLine("CreateMedicine Error: " + ex.Message);
-                    //                    throw; // DEBUG MODE
+                    //                    // 🔥 IMPORTANT: log this during debug
+                    //                    Console.WriteLine(ex.Message);
+                    //                    throw; // ❗ temporarily throw to SEE real error
                     //          }
                     //}
 
+                    public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    {
+                              // Use the mock function
+                              var imageUrl = await UploadImageToImgBB(image);
 
-               
+                              medicine.IMAGEURL = imageUrl;
+                              medicine.STATUS = 1;
 
+                              dbcontext.medicinesss.Add(medicine);
+                              await dbcontext.SaveChangesAsync();
+
+                              return true;
+                    }
+
+                    private Task<string> UploadImageToImgBB(IFormFile image)
+                    {
+                              // Instead of uploading, just return a placeholder image URL
+                              string placeholderUrl = "https://via.placeholder.com/300x300.png?text=Medicine+Image";
+                              return Task.FromResult(placeholderUrl);
+                    }
 
 
                     public ResponseModel DeleteMedicine(int id)

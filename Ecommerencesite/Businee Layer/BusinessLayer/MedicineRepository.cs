@@ -27,7 +27,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //[HttpPost("CreateMedicine")]
                     //public ResponseModel CreateMedicine(Medicine createMedicine)
                     //{
-                    //          if (createMedicine.ExpiryDate.HasValue)
+                    //          if (createMedicine.ExpiryDate.GetHashCode)
                     //          {
                     //                    createMedicine.ExpiryDate =
                     //                        DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
@@ -80,7 +80,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //                    }
 
                     //                    // ✅ 6️⃣ Save image path in DB (PROPERTY NAME CHECK)
-                    //                    medicine.IMAGEURL = "/uploads/medicines/" + fileName;
+                    //                    medicine.Image = "/uploads/medicines/" + fileName;
                     //                    //  medicine.CreatedDate = DateTime.Now;
 
                     //                    // ✅ 7️⃣ DbSet NAME CHECK
@@ -102,7 +102,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               // Use the mock function
                               var imageUrl = await UploadImageToImgBB(image);
 
-                              medicine.IMAGEURL = imageUrl;
+                              medicine.Image = imageUrl;
                               medicine.STATUS = 1;
 
                               dbcontext.medicinesss.Add(medicine);

@@ -41,51 +41,52 @@ namespace Ecommerencesite.Controllers
                     //          }
                     //}
 
-                    //               [HttpPost("CreateMedicine")]
-                    //               // [Consumes("multipart/form-data")]
-                    //               public async Task<IActionResult> CreateMedicine(
-                    //    [FromForm] Medicine medicine,
-                    //     IFormFile image
-                    //)
-                    //               {
-                    //                         var isCreated = await imedicineresp.CreateMedicineAsync(medicine, image);
-
-                    //                         if (!isCreated)
-                    //                                   return BadRequest("Medicine creation failed");
-
-                    //                         return Ok("Medicine created successfully");
-                    //[HttpPost("CreateMedicine")]
-                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
-                    //{
-                    //          if (!ModelState.IsValid)
-                    //                    return BadRequest(ModelState);
-
-                    //          if (image == null || image.Length == 0)
-                    //                    return BadRequest("Image missing");
-
-                    //          await imedicineresp.CreateMedicineAsync(medicine, image);
-
-                    //          return Ok("Medicine created successfully");
-                    //}
                     [HttpPost("CreateMedicine")]
-                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                    // [Consumes("multipart/form-data")]
+                    public async Task<IActionResult> CreateMedicine(
+         [FromForm] Medicine medicine,
+          IFormFile image
+     )
                     {
-                              if (!ModelState.IsValid)
-                                        return BadRequest(ModelState);
+                              var isCreated = await imedicineresp.CreateMedicineAsync(medicine, image);
 
-                              if (image == null || image.Length == 0)
-                                        return BadRequest("Image missing");
-
-                              await imedicineresp.CreateMedicineAsync(medicine, image);
+                              if (!isCreated)
+                                        return BadRequest("Medicine creation failed");
 
                               return Ok("Medicine created successfully");
                     }
+                              //[HttpPost("CreateMedicine")]
+                              //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                              //{
+                              //          if (!ModelState.IsValid)
+                              //                    return BadRequest(ModelState);
+
+                              //          if (image == null || image.Length == 0)
+                              //                    return BadRequest("Image missing");
+
+                              //          await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                              //          return Ok("Medicine created successfully");
+                              //}
+                              //[HttpPost("CreateMedicine")]
+                              //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                              //{
+                              //          if (!ModelState.IsValid)
+                              //                    return BadRequest(ModelState);
+
+                              //          if (image == null || image.Length == 0)
+                              //                    return BadRequest("Image missing");
+
+                              //          await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                              //          return Ok("Medicine created successfully");
+                              //}
 
 
 
 
 
-                    [HttpDelete("DeleteMedicine/{id}")]
+                              [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)
                     {
                               var result = imedicineresp.DeleteMedicine(id);

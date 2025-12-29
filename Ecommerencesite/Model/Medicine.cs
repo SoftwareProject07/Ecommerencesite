@@ -20,7 +20,9 @@ namespace Ecommerencesite.Model
             ErrorMessage = "ExpiryDate must be DD/MM/YYYY"
         )]
                     public string? ExpiryDate { get; set; }
-                    public string? IMAGEURL { get; set; }
+                    //public string? IMAGEURL { get; set; }
+                    public string? Image { get; set; }
+
                     public int STATUS { get; set; } = 1;
                     public string? Type { get; set; }   
                     

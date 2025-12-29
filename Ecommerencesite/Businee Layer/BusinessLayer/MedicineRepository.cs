@@ -99,10 +99,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
                     {
-                              // Use the mock function
-                              var imageUrl = await UploadImageToImgBB(image);
+                              string imageUrl = null;
+                              if (image != null && image.Length > 0)
+                              {
+                                        imageUrl = await UploadImageToImgBB(image);
+                              }
 
-                              medicine.Image = imageUrl;
+                              medicine.Image = imageUrl ?? "https://via.placeholder.com/300x300.png?text=Medicine+Image";
                               medicine.STATUS = 1;
 
                               dbcontext.medicinesss.Add(medicine);
@@ -110,6 +113,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               return true;
                     }
+
 
                     private Task<string> UploadImageToImgBB(IFormFile image)
                     {

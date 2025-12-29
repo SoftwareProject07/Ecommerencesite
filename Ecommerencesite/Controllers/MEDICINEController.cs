@@ -54,6 +54,19 @@ namespace Ecommerencesite.Controllers
                     //                                   return BadRequest("Medicine creation failed");
 
                     //                         return Ok("Medicine created successfully");
+                    //[HttpPost("CreateMedicine")]
+                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                    //{
+                    //          if (!ModelState.IsValid)
+                    //                    return BadRequest(ModelState);
+
+                    //          if (image == null || image.Length == 0)
+                    //                    return BadRequest("Image missing");
+
+                    //          await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                    //          return Ok("Medicine created successfully");
+                    //}
                     [HttpPost("CreateMedicine")]
                     public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
                     {
@@ -67,6 +80,7 @@ namespace Ecommerencesite.Controllers
 
                               return Ok("Medicine created successfully");
                     }
+
 
 
 

@@ -1,11 +1,9 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
+
+//DateTime expiryDateParsed;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -13,109 +11,163 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class MedicineRepository : IMedicineRepositort
           {
                     private readonly Ecommerecewebstedatabase dbcontext;
-                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext)
+                    private readonly IWebHostEnvironment _env;
+
+                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext, IWebHostEnvironment env)
                     {
                               this.dbcontext = _dbcontext;
-                    }
+                              _env = env;
 
-                    [HttpPost("CreateMedicine")]]
-                    public ResponseModel CreateMedicine(Medicine createMedicine)
-                    {
-                              if (createMedicine.ExpiryDate.HasValue)
-                              {
-                                        createMedicine.ExpiryDate =
-                                            DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
-                              }
-
-                              createMedicine.STATUS = 1;
-
-                              dbcontext.medicinesss.Add(createMedicine);
-                              dbcontext.SaveChanges();
-
-                              return new ResponseModel
-                              {
-                                        status = true,
-                                        responseMessage = "Medicine Create successfully",
-                                        medicine = createMedicine
-                              };
                     }
 
                     //[HttpPost("CreateMedicine")]
-                    //public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
+                    //public ResponseModel CreateMedicine(Medicine createMedicine)
                     //{
-                    //          if (createMedicine == null)
-                    //                    return BadRequest("Invalid Data");
+                    //          if (createMedicine.ExpiryDate.HasValue)
+                    //          {
+                    //                    createMedicine.ExpiryDate =
+                    //                        DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
+                    //          }
 
-                    //          if (string.IsNullOrEmpty(createMedicine.ImageUrl))
-                    //                    return BadRequest("Image URL required");
+                    //          createMedicine.STATUS = 1;
 
-                    //          var result = imedicineresp.CreateMedicine(createMedicine);
-                    //          return Ok(result);
-                    //}
-
-
-
-
-                    //return createmedicines;
-
-
-
-
-
-                    //public ResponseModel DeleteMedicine(int id)
-                    //{
-                    //          //var delemedicine = new ResponseModel();
-                    //          //try
-                    //          //{
-                    //                    var delemedicines = dbcontext.medicinesss.Where(s => s.id == id).FirstOrDefault();
-                    //          dbcontext.medicinesss.Remove(delemedicines);
+                    //          dbcontext.medicinesss.Add(createMedicine);
                     //          dbcontext.SaveChanges();
 
                     //          return new ResponseModel
                     //          {
                     //                    status = true,
-                    //                    responseMessage = "Medicine Delete successfully",
-                    //                    medicine = delemedicines
+                    //                    responseMessage = "Medicine Create successfully",
+                    //                    medicine = createMedicine
                     //          };
-                    //          return null;
-                    //          }
+                    //}
 
-                    //public ResponseModel DeleteMedicine(int id)
+                    public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    {
+                              try
+                              {
+                                        // ✅ 1️⃣ Validation
+                                        if (medicine == null)
+                                                  throw new Exception("Medicine data is null");
+
+                                        if (image == null || image.Length == 0)
+                                                  throw new Exception("Image is null or empty");
+
+                                        // ✅ 2️⃣ WebRootPath safety
+                                        var webRoot = _env.WebRootPath;
+
+                                        if (string.IsNullOrEmpty(webRoot))
+                                                  throw new Exception("WebRootPath is null. Check wwwroot & UseStaticFiles");
+
+                                        // ✅ 3️⃣ Folder path
+                                        string folderPath = Path.Combine(webRoot, "uploads", "medicines");
+
+                                        if (!Directory.Exists(folderPath))
+                                                  Directory.CreateDirectory(folderPath);
+
+                                        // ✅ 4️⃣ Unique file name
+                                        string fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                                        string filePath = Path.Combine(folderPath, fileName);
+
+                                        // ✅ 5️⃣ Save image
+                                        using (var stream = new FileStream(filePath, FileMode.Create))
+                                        {
+                                                  await image.CopyToAsync(stream);
+                                        }
+
+                                        // ✅ 6️⃣ Save image path in DB (PROPERTY NAME CHECK)
+                                        medicine.IMAGEURL = "/uploads/medicines/" + fileName;
+                                        //  medicine.CreatedDate = DateTime.Now;
+
+                                        // ✅ 7️⃣ DbSet NAME CHECK
+                                        dbcontext.medicinesss.Add(medicine);
+                                        await dbcontext.SaveChangesAsync();
+
+                                        return true;
+                              }
+                              catch (Exception ex)
+                              {
+                                        // 🔥 IMPORTANT: log this during debug
+                                        Console.WriteLine(ex.Message);
+                                        throw; // ❗ temporarily throw to SEE real error
+                              }
+                    }
+
+                    //public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
                     //{
                     //          try
                     //          {
-                    //                    var medicine = dbcontext.medicinesss
-                    //                                            .FirstOrDefault(x => x.id == id);
-
+                    //                    // ✅ 1️⃣ Validation
                     //                    if (medicine == null)
+                    //                              throw new Exception("Medicine data is null");
+
+                    //                    if (image == null || image.Length == 0)
+                    //                              throw new Exception("Image is null or empty");
+
+                    //                    // ✅ 2️⃣ Parse ExpiryDate (dd/MM/yyyy → DateTime)
+                    //                    DateTime expiryDateParsed; // ✅ DECLARED
+
+                    //                    if (!DateTime.TryParseExact(
+                    //                            medicine.ExpiryDate,              // string
+                    //                            "dd/MM/yyyy",
+                    //                            CultureInfo.InvariantCulture,
+                    //                            DateTimeStyles.None,
+                    //                            out expiryDateParsed))
                     //                    {
-                    //                              return new ResponseModel
-                    //                              {
-                    //                                        status = false,
-                    //                                        responseMessage = "Medicine not found"
-                    //                              };
+                    //                              throw new Exception("Invalid ExpiryDate format. Use dd/MM/yyyy");
                     //                    }
 
-                    //                    // ✅ SOFT DELETE
-                    //                    medicine.STATUS = 0;
+                    //                    // ✅ 3️⃣ WebRootPath
+                    //                    var webRoot = _env.WebRootPath;
+                    //                    if (string.IsNullOrEmpty(webRoot))
+                    //                              throw new Exception("WebRootPath is null. Check wwwroot & UseStaticFiles");
 
-                    //                    dbcontext.SaveChanges();
+                    //                    // ✅ 4️⃣ Folder
+                    //                    string folderPath = Path.Combine(webRoot, "uploads", "medicines");
+                    //                    if (!Directory.Exists(folderPath))
+                    //                              Directory.CreateDirectory(folderPath);
 
-                    //                    return new ResponseModel
+                    //                    // ✅ 5️⃣ Image save
+                    //                    string fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                    //                    string filePath = Path.Combine(folderPath, fileName);
+
+                    //                    using (var stream = new FileStream(filePath, FileMode.Create))
                     //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Medicine deleted successfully"
+                    //                              await image.CopyToAsync(stream);
+                    //                    }
+
+                    //                    // ✅ 6️⃣ Create DB Entity
+                    //                    var medicineEntity = new Medicine
+                    //                    {
+                    //                              Name = medicine.Name,
+                    //                              Manufacturer = medicine.Manufacturer,
+                    //                              UnitPrice = medicine.UnitPrice,
+                    //                              Discount = medicine.Discount,
+                    //                              Quantity = medicine.Quantity,
+                    //                              ExpiryDate = medicine.ExpiryDate, // ✅ DateTime
+                    //                              IMAGEURL = "/uploads/medicines/" + fileName,
+                    //                              STATUS = medicine.STATUS,
+                    //                              // CreatedDate = DateTime.Now
                     //                    };
+
+                    //                    // ✅ 7️⃣ Save to DB
+                    //                    dbcontext.medicinesss.Add(medicineEntity);
+                    //                    await dbcontext.SaveChangesAsync();
+
+                    //                    return true;
                     //          }
                     //          catch (Exception ex)
                     //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = ex.Message
-                    //                    };
+                    //                    Console.WriteLine("CreateMedicine Error: " + ex.Message);
+                    //                    throw; // DEBUG MODE
                     //          }
                     //}
+
+
+               
+
+
+
                     public ResponseModel DeleteMedicine(int id)
                     {
                               var medicine = dbcontext.medicinesss.FirstOrDefault(x => x.id == id);
@@ -198,38 +250,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return SearchMedicine;
                     }
 
-                    //public void UpdateMedicine(Medicine updatemedicine)
-                    //{
-                    //        dbcontext.medicinesss.Update(updatemedicine);
-                    //          dbcontext.SaveChanges();
-                    //}
-
-                    //public ResponseModel UpdateMedicine(Medicine updatemedicine)
-                    //{
-                    //          //var updatemedicines= new ResponseModel();
-                    //          // try
-                    //          // {
-
-                    //          if (updatemedicine.ExpiryDate.HasValue)
-                    //          {
-                    //                    updatemedicine.ExpiryDate =
-                    //                        DateTime.SpecifyKind(updatemedicine.ExpiryDate.Value, DateTimeKind.Utc);
-                    //          }
-
-                    //          updatemedicine.STATUS = 1;
-                    //          dbcontext.medicinesss.Update(updatemedicine);
-                    //          dbcontext.SaveChanges();
-
-                    //          return new ResponseModel
-                    //          {
-
-                    //                    status = true,
-                    //                    responseMessage = "Medicine Update successfully",
-                    //                    medicine = updatemedicine
-
-
-
-                    //          };
+                   
 
                     public ResponseModel UpdateMedicine(Medicine updatemedicine)
                     {

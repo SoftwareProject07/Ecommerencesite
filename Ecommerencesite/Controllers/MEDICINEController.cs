@@ -1,11 +1,10 @@
 ﻿using Azure;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
-using Microsoft.AspNetCore.Http;
+using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+
+using System.Globalization;
 
 namespace Ecommerencesite.Controllers
 {
@@ -20,86 +19,112 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-                    [HttpPost("CreateMedicine")]
-                    public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
-                    {
-                              try
-                              {
-                                        if (createMedicine == null)
-                                                  return BadRequest("Invalid Data");
+                    //[HttpPost("CreateMedicine")]
+                    //public IActionResult CreateMedicine([FromBody] Medicine createMedicine)
+                    //{
+                    //          try
+                    //          {
+                    //                    if (createMedicine == null)
+                    //                              return BadRequest("Invalid Data");
 
-                                        var result = imedicineresp.CreateMedicine(createMedicine);
-                                        return Ok(result);
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, new
-                                        {
-                                                  Message = "Internal Error",
-                                                  Error = ex.Message,
-                                                  Detail = ex.InnerException?.Message
-                                        });
-                              }
+                    //                    var result = imedicineresp.CreateMedicine(createMedicine);
+                    //                    return Ok(result);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+                    //}
+
+                    [HttpPost("CreateMedicine")]
+                    // [Consumes("multipart/form-data")]
+                    public async Task<IActionResult> CreateMedicine(
+         [FromForm] Medicine medicine,
+          IFormFile image
+     )
+                    {
+                              var isCreated = await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                              if (!isCreated)
+                                        return BadRequest("Medicine creation failed");
+
+                              return Ok("Medicine created successfully");
                     }
 
 
+                    //               [HttpPost("CreateMedicine")]
+                    //               [Consumes("multipart/form-data")]
+                    //               public async Task<IActionResult> CreateMedicine(
+                    //[FromForm] Medicine medicine,
+                    //[FromForm] string expiryDate,   // 👈 ONLY STRING
+                    //IFormFile image)
+                    //               {
+                    //                         if (string.IsNullOrWhiteSpace(expiryDate))
+                    //                                   return BadRequest("ExpiryDate is required");
 
-                    //[HttpDelete("DeleteMedicine")]
-                    //public IActionResult DeleteMedicine(int id)
+                    //                         // ✅ Accept dd/MM/yyyy AND ISO
+                    //                         DateTime parsedDate;
+
+                    //                         if (!DateTime.TryParseExact(
+                    //                                 expiryDate,
+                    //                                 "dd/MM/yyyy",
+                    //                                 CultureInfo.InvariantCulture,
+                    //                                 DateTimeStyles.None,
+                    //                                 out parsedDate))
+                    //                         {
+                    //                                   if (!DateTime.TryParse(expiryDate, out parsedDate))
+                    //                                             return BadRequest("ExpiryDate must be dd/MM/yyyy");
+                    //                         }
+
+                    //                         medicine.ExpiryDate = parsedDate;
+
+                    //                         var isCreated = await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                    //                         if (!isCreated)
+                    //                                   return BadRequest("Medicine creation failed");
+
+                    //                         return Ok(new
+                    //                         {
+                    //                                   message = "Medicine created successfully",
+                    //                                   expiryDate = parsedDate.ToString("dd/MM/yyyy")
+                    //                         });
+                    //               }
+
+                    //[HttpPost("CreateMedicine")]
+                    //public IActionResult CreateMedicine( MedicineDto dto)
                     //{
-                    //          try
+                    //          DateTime? expiryDate = null;
+
+                    //          if (!string.IsNullOrWhiteSpace(dto.ExpiryDate))
                     //          {
-                    //                    var delte = imedicineresp.DeleteMedicine(id);
-                    //                    return Ok(delte);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
+                    //                    expiryDate = DateTime.ParseExact(
+                    //                        dto.ExpiryDate,
+                    //                        "dd/MM/yyyy",
+                    //                        CultureInfo.InvariantCulture
+                    //                    );
                     //          }
 
+                    //          var medicine = new Medicine
+                    //          {
+                    //                   // Name = dto.Name,
+                    //                    ExpiryDate = expiryDate
+                    //          };
 
-                    //}
-                    //[HttpDelete("DeleteMedicine/{id}")]
+                    //          imedicineresp.CreateMedicineAsync.Add(medicine);
+                    //          _context.SaveChanges();
 
-                    //public IActionResult DeleteMedicine(int id)
-                    //{
-                    //          try
+                    //          return Ok(new
                     //          {
-                    //                    var result = imedicineresp.DeleteMedicine(id);
-                    //                    return Ok(result);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-                    //          }
+                    //                    message = "Medicine created successfully",
+                    //                    expiryDate = medicine.ExpiryDate?.ToString("dd/MM/yyyy")
+                    //          });
                     //}
-                    //[HttpPut("DeleteMedicine/{id}")]
-                    //public IActionResult DeleteMedicine(int id)
-                    //{
-                    //          try
-                    //          {
-                    //                    var result = imedicineresp.DeleteMedicine(id);
-                    //                    return Ok(result);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Delete error",
-                    //                              Error = ex.Message
-                    //                    });
-                    //          }
-                    //}
+
 
                     [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)
@@ -149,27 +174,7 @@ namespace Ecommerencesite.Controllers
 
 
                     }
-                    //[HttpPut("UpdateMedicine")]
-                    //public IActionResult UpdateMedicine(Medicine updatemedicine)
-                    //{
-                    //          try
-                    //          {
-                    //                    if (updatemedicine == null)
-                    //                              return BadRequest("Invalid Data");
-                    //                    var updatemedicines = imedicineresp.UpdateMedicine(updatemedicine);
-                    //                    return Ok(updatemedicines);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-                    //          }
-
-                    //}
+                   
 
                     [HttpPut("UpdateMedicine")]
                     public IActionResult UpdateMedicine([FromBody] Medicine medicine)
@@ -197,40 +202,7 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    //[HttpGet("AllListMedicineProduct")]
-                    //public IActionResult lstmedicine()
-                    //{
-                    //          try
-                    //          {
-                    //                    var list = imedicineresp.lstmedicine();
-
-                    //                    if (list == null || list.Count == 0)
-                    //                    {
-                    //                              return Ok(new
-                    //                              {
-                    //                                        status = false,
-                    //                                        data = new List<Medicine>(),
-                    //                                        message = "No medicine found"
-                    //                              });
-                    //                    }
-
-                    //                    return Ok(new
-                    //                    {
-                    //                              status = true,
-                    //                              data = list
-                    //                    });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Server Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-                    //          }
-                    //}
-
+                  
 
                     // AddToCART: Add other API methods here
                     //[HttpPost]

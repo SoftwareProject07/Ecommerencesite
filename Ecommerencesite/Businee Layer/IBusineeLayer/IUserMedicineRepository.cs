@@ -7,6 +7,9 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
           {
 
                     public ResponseModel CREATERegisterUser(UserMedicine userregistMedicine);
+
+                  //  Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image);
+
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto);
                     public ResponseModel ViewUser(int id );// DETAILS 
                     public ResponseModel UpdateUserMedicine(UserMedicine userUpdateMedicine);

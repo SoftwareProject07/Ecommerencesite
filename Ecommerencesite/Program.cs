@@ -53,6 +53,11 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader();
           });
 });
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//              options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+//    });
 
 builder.Services.AddControllers();
 
@@ -89,6 +94,7 @@ var app = builder.Build();
 // =======================
 // MIDDLEWARE (AFTER BUILD)
 // =======================
+//app.UseStaticFiles(); // 🔥 REQUIRED for image access
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -98,9 +104,13 @@ app.UseSwaggerUI();
 //          options.RoutePrefix = "swagger";
 //});
 app.UseCors("AllowAll");
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseStaticFiles();
+//app.UseAuthentication();
+//app.UseAntiforgery();
+
+//app.UseStaticFiles();
 
 app.MapControllers();
 

@@ -64,8 +64,8 @@ namespace Ecommerencesite.Migrations
                     b.Property<decimal?>("Discount")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime?>("ExpiryDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("ExpiryDate")
+                        .HasColumnType("text");
 
                     b.Property<string>("IMAGEURL")
                         .HasColumnType("text");

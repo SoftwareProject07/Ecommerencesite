@@ -13,6 +13,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class UserMedicineRepository : IUserMedicineRepository
           {
                     private readonly Ecommerecewebstedatabase _context;
+
                     public UserMedicineRepository(Ecommerecewebstedatabase context)
                     {
                               _context = context;
@@ -42,6 +43,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               return res;
                     }
+
 
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {

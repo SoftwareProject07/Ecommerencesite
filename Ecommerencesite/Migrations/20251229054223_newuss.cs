@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     /// <inheritdoc />
-    public partial class newupdd : Migration
+    public partial class newuss : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,7 @@ namespace Ecommerencesite.Migrations
                     UnitPrice = table.Column<decimal>(type: "numeric", nullable: true),
                     Discount = table.Column<decimal>(type: "numeric", nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ExpiryDate = table.Column<string>(type: "text", nullable: true),
                     IMAGEURL = table.Column<string>(type: "text", nullable: true),
                     STATUS = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: true)

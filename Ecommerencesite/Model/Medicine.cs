@@ -9,6 +9,8 @@ namespace Ecommerencesite.Model
 
                     [Key]
                     public int id { get; set; }
+                    public int UserId { get; set; }
+
                     public string? Name { get; set; } 
                     public string? Manufacturer { get; set; }
                     public Decimal? UnitPrice { get; set; } 

@@ -79,6 +79,8 @@ builder.Services.AddControllers()
 
 builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

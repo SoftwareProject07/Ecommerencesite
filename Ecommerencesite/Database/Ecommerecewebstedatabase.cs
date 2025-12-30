@@ -15,7 +15,9 @@ namespace Ecommerencesite.Database
                     public DbSet<Order> orderss { get; set; }
                     public DbSet<OrderItem> orderItemss{ get; set; }
                     public DbSet<Medicine> medicinesss { get; set; }
-                    public DbSet<UserMedicine> userMediciness { get; set; }
-
+                    public DbSet<UserMedicine> userMediciness { get; set; }//User 
+                    // medicine getmodel helath check data
+                    public DbSet<Medicationgetmodel> Medications { get; set; }
+                    public DbSet<HealthReport> HealthReports { get; set; }
           }
 }

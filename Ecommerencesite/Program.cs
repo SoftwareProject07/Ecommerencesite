@@ -71,11 +71,11 @@ builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-builder.Services.AddControllers()
-    .AddJsonOptions(opt =>
-    {
-              opt.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
-    });
+//builder.Services.AddControllers()
+//    .AddJsonOptions(opt =>
+//    {
+//              opt.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+//    });
 
 builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();

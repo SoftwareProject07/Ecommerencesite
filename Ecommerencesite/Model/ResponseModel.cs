@@ -14,19 +14,19 @@ namespace Ecommerencesite.Model
                    // [NotMapped]
 
                     public string? responseMessage { get; set; } = string.Empty;
-                    public List<UserMedicine>? LSTuserMedicines {get; set; } 
-                    public UserMedicine? userMedicine { get; set; }
-                    public List<Medicine>? LSTmedicines { get; set; }
-                    public Medicine? medicine { get; set; }
-                    public List<Cart>? LSTcarts { get; set; }          
-                    public Cart? cart { get; set; }
-                    public List<Order>? LSTorders { get; set; }
-                    public Order? order { get; set; }
-                    public List<OrderItem>? LSTorderItems { get; set; }          
-                    public OrderItem? orderItem { get; set; }
+                    public List<UserMedicine>? LSTuserMedicines {get; set; }
+                    public UserMedicine? userMedicine { get; set; } = null;
+                    public List<Medicine>? LSTmedicines { get; set; } = null;
+                    public Medicine? medicine { get; set; } = null;
+                    public List<Cart>? LSTcarts { get; set; }   = null;
+                    public Cart? cart { get; set; }= null;
+                    public List<Order>? LSTorders { get; set; } = null;
+                    public Order? order { get; set; } = null;
+                    public List<OrderItem>? LSTorderItems { get; set; }         = null;
+                    public OrderItem? orderItem { get; set; } = null;
                     //[NotMapped]
 
-                    public object? Data { get; set; }
+                    public object? Data { get; set; } = null;
 
           }
 }

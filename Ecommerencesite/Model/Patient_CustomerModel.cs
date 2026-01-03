@@ -10,11 +10,14 @@ namespace Ecommerencesite.Model
                     public string? MiddleName { get; set; } = null;   
 
                     public string? LastName { get; set; } = null;
+
+                    public string? Gender { get; set; } = null;
                     [EmailAddress]      
                     public string? Email { get; set; } = null;
                     public string? PhoneNumber { get; set; } = null;
                     public string? Address { get; set; } = null;
-                    public string? DateOfBirth { get; set; }
+                    public int ? Age { get; set; }
+
                     public DateTime? CreatedOn { get; set; } = DateTime.Now;
 
           }

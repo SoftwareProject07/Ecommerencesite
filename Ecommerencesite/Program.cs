@@ -80,6 +80,7 @@ builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
 builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 
 builder.Services.AddEndpointsApiExplorer();

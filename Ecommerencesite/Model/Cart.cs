@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerencesite.Model
 {
@@ -7,11 +7,28 @@ namespace Ecommerencesite.Model
           {
                     [Key]
                     public int Id { get; set; }
+
+                    [Required]
                     public int UserId { get; set; }
-                    public Decimal?  UnitPrice { get; set; } = null;
-                    public Decimal?  Discount { get; set; } = null;
+
+                    // Price snapshot (order/cart time)
+                    [Column(TypeName = "decimal(18,2)")]
+                    public decimal? UnitPrice { get; set; }
+
+                    [Column(TypeName = "decimal(18,2)")]
+                    public decimal? Discount { get; set; }
+
+                    [Required]
                     public int Quantity { get; set; }
-                    public Decimal? Totalprice { get; set; } = null;
-                    public int MedicineId { get; set; }     
+
+                    [Column(TypeName = "decimal(18,2)")]
+                    public decimal? TotalPrice { get; set; }
+
+                    [Required]
+                    public int MedicineId { get; set; }
+
+                    // 🔗 Navigation Property
+                    [ForeignKey("MedicineId")]
+                    public Medicine Medicine { get; set; }
           }
 }

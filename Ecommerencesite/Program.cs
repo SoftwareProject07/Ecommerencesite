@@ -81,6 +81,8 @@ builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IPatient_CustomerRepository, Patient_CustomerRepository>();
 
 
 builder.Services.AddEndpointsApiExplorer();

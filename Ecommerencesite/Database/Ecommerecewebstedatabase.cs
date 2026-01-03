@@ -19,5 +19,7 @@ namespace Ecommerencesite.Database
                     // medicine getmodel helath check data
                     public DbSet<Medicationgetmodel> Medications { get; set; }
                     public DbSet<HealthReport> HealthReports { get; set; }
+                    public DbSet<AdminREGMODEL> adminREGMODELSs { get; set; }  
+                    public DbSet<Patient_CustomerModel> patient_CustomerModels { get; set; }
           }
 }

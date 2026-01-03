@@ -24,6 +24,8 @@ namespace Ecommerencesite.Model
                     public Order? order { get; set; } = null;
                     public List<OrderItem>? LSTorderItems { get; set; }         = null;
                     public OrderItem? orderItem { get; set; } = null;
+                    public List<AdminREGMODEL>? LSTadminREGMODELS { get; set; } = null;
+                    public AdminREGMODEL? adminREGMODEL { get; set; } = null;
                     //[NotMapped]
 
                     public object? Data { get; set; } = null;

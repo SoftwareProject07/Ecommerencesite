@@ -59,7 +59,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         return new ResponseModel
                                         {
                                                   status = true,
-                                                  responseMessage = "Login Successful",
+                                                  responseMessage = "Customer Login Successful",
                                                   userMedicine = user     // return actual user data
                                         };
                               }

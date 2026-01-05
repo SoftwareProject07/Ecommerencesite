@@ -40,11 +40,11 @@ namespace Ecommerencesite.Controllers
                               }
 
                     }
-                    [HttpPost]
-                    [Route("LOGINUserMedicine")]
-                    public ResponseModel LOGINUserMedicine([FromBody] AdminLogindto adminloginDto)
+                    [HttpPost("LOGINAdmin")]
+                  //  [Route("LOGINUserMedicine")]
+                    public ResponseModel LoginAdmin([FromBody]  AdminLogindto adminloginDto)
                     {
-                              return _adminrepostiory.LOGINAdmin(adminloginDto);
+                            return  _adminrepostiory.LOGINAdmin(adminloginDto);
                     }
 
 

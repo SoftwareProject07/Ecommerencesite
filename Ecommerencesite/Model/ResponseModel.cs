@@ -14,7 +14,7 @@ namespace Ecommerencesite.Model
                    // [NotMapped]
 
                     public string? responseMessage { get; set; } = string.Empty;
-                    public List<UserMedicine>? LSTuserMedicines {get; set; }
+                    public List<UserMedicine>? LSTuserMedicines { get; set; } = null;
                     public UserMedicine? userMedicine { get; set; } = null;
                     public List<Medicine>? LSTmedicines { get; set; } = null;
                     public Medicine? medicine { get; set; } = null;
@@ -22,7 +22,7 @@ namespace Ecommerencesite.Model
                     public Cart? cart { get; set; }= null;
                     public List<Order>? LSTorders { get; set; } = null;
                     public Order? order { get; set; } = null;
-                    public List<OrderItem>? LSTorderItems { get; set; }         = null;
+                    public List<OrderItem>? LSTorderItems { get; set; } = null;
                     public OrderItem? orderItem { get; set; } = null;
                     public List<AdminREGMODEL>? LSTadminREGMODELS { get; set; } = null;
                     public AdminREGMODEL? adminREGMODEL { get; set; } = null;

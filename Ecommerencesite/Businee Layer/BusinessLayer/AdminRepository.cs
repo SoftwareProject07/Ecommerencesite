@@ -6,10 +6,10 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
           public class AdminRepository : IAdminRepository
           {
-                    private readonly Ecommerecewebstedatabase _context;
-                    public AdminRepository(Ecommerecewebstedatabase context)
+                    private readonly Ecommerecewebstedatabase context;
+                    public AdminRepository(Ecommerecewebstedatabase _context)
                     {
-                              this._context = context;
+                              this.context = _context;
                     }
 
                     public ResponseModel CREATERegistoryAdmin(AdminREGMODEL adminREGMODEL)
@@ -21,8 +21,8 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         if (adminREGMODEL.CreateOn == null)
                                                   adminREGMODEL.CreateOn = DateTime.Now;
 
-                                        _context.adminREGMODELSs.Add(adminREGMODEL);
-                                        _context.SaveChanges();
+                                        context.adminREGMODELSs.Add(adminREGMODEL);
+                                        context.SaveChanges();
 
                                         res.status = true;
                                         res.responseMessage = "User registered successfully";
@@ -40,20 +40,20 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public ResponseModel LOGINAdmin(AdminLogindto _adminlogindto)
                     {
 
-                              var user = _context.userMediciness
+                              var adminlogindto = context.adminREGMODELSs
                                   .FirstOrDefault(u => u.Email == _adminlogindto.Email
                                                     && u.Password == _adminlogindto.Password);
                               //var user = _context.userMedicines
                               //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
 
 
-                              if (user != null)
+                              if (adminlogindto != null)
                               {
                                         return new ResponseModel
                                         {
                                                   status = true,
-                                                  responseMessage = "Login Successful",
-                                                  userMedicine = user     // return actual user data
+                                                  responseMessage = "Admin Login Successful",
+                                                  adminREGMODEL = adminlogindto     // return actual adminlogin data
                                         };
                               }
                               else
@@ -62,7 +62,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         {
                                                   status = false,
                                                   responseMessage = "Invalid Email or Password",
-                                                  userMedicine = null
+                                                  adminREGMODEL = null
                                         };
                               }
                     }

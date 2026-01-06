@@ -15,7 +15,7 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine);
                     public ResponseModel PlaceOrder(UserMedicine userOrder);
                     // public ResponseModel OrderList(UserMedicine userMedicine
-                    public ResponseModel OrderList();// Usermedicine --- order list dat
+                    public ResponseModel OrderList();// Usermedicine --- order list dat--All List
                     public ResponseModel UserList();// usermedicine list dta 
 
 

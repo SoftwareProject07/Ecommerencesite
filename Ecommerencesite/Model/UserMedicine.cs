@@ -10,6 +10,7 @@ namespace Ecommerencesite.Model
                     public string? MiddleName { get; set; }  = null;
                     public string? LastName { get; set; } = null;
                     public string? Password { get; set; } = null;
+                    public string? MobileNumber { get; set; } = null; 
                     public string? Email { get; set; } = null;
                     public Decimal? Fund { get; set; } = 0;
                     public string? type { get; set; } = null; //OrderType="User" or "Admin"

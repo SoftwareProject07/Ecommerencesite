@@ -45,14 +45,46 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
+                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
+                    //{
+                    //          var user = _context.userMediciness
+                    //              .FirstOrDefault(u => u.Email == _userlogindto.Email
+                    //                                && u.Password == _userlogindto.Password);
+                    //          //var user = _context.userMedicines
+                    //          //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
+
+
+                    //          if (user != null)
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Customer Login Successful",
+                    //                              userMedicine = user     // return actual user data
+                    //                    };
+                    //          }
+                    //          else
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = "Invalid Email or Password",
+                    //                              userMedicine = null
+                    //                    };
+                    //          }
+                    //}
+
+
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {
                               var user = _context.userMediciness
-                                  .FirstOrDefault(u => u.Email == _userlogindto.Email
-                                                    && u.Password == _userlogindto.Password);
-                              //var user = _context.userMedicines
-                              //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
-
+                                  .FirstOrDefault(u =>
+                                      (u.Email == _userlogindto.Email &&
+                                       u.Password == _userlogindto.Password)
+                                      ||
+                                      (u.MobileNumber == _userlogindto.MobileNumber &&
+                                       u.Password == _userlogindto.Password)
+                                  );
 
                               if (user != null)
                               {
@@ -65,17 +97,41 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               }
                               else
                               {
+                                        if (!string.IsNullOrEmpty(_userlogindto.Email) && !string.IsNullOrEmpty(_userlogindto.MobileNumber))
+                                        {
+                                                  return new ResponseModel
+                                                  {
+                                                            status = false,
+                                                            responseMessage = "Invalid Email or Mobile Number or Password",
+                                                            userMedicine = null
+                                                  };
+                                        }
+                                        else if (!string.IsNullOrEmpty(_userlogindto.Email))
+                                        {
+                                                  return new ResponseModel
+                                                  {
+                                                            status = false,
+                                                            responseMessage = "Invalid Email or Password",
+                                                            userMedicine = null
+                                                  };
+                                        }
+                                        else if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
+                                        {
+                                                  return new ResponseModel
+                                                  {
+                                                            status = false,
+                                                            responseMessage = "Invalid Mobile Number or Password",
+                                                            userMedicine = null
+                                                  };
+                                        }
                                         return new ResponseModel
                                         {
                                                   status = false,
-                                                  responseMessage = "Invalid Email or Password",
+                                                  responseMessage = "Invalid Email or Password ",
                                                   userMedicine = null
                                         };
                               }
                     }
-
-
-
 
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine)
                     {

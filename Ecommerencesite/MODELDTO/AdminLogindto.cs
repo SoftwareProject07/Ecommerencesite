@@ -6,5 +6,6 @@ namespace Ecommerencesite.MODELDTO
           {
                     public string? Email { get; set; } = null;
                     public string? Password { get; set; } = null;
+                    public string? MobileNumber { get; set; } = null;
           }
 }

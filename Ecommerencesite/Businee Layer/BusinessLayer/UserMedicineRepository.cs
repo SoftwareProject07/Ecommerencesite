@@ -6,6 +6,7 @@ using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
@@ -86,7 +87,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                        u.Password == _userlogindto.Password)
                                   );
 
-                              if (user != null)
+                              var a = new UserMedicine();
+                              a.FirstName = user.FirstName;
+                              a.LastName = user.LastName;
+                              if (a != null)
                               {
                                         return new ResponseModel
                                         {
@@ -94,7 +98,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                   responseMessage = "Customer Login Successful",
                                                   userMedicine = user     // return actual user data
                                         };
+                                       
+
+
                               }
+
                               else
                               {
                                         if (!string.IsNullOrEmpty(_userlogindto.Email) && !string.IsNullOrEmpty(_userlogindto.MobileNumber))
@@ -106,6 +114,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                             userMedicine = null
                                                   };
                                         }
+
                                         else if (!string.IsNullOrEmpty(_userlogindto.Email))
                                         {
                                                   return new ResponseModel
@@ -115,6 +124,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                             userMedicine = null
                                                   };
                                         }
+
                                         else if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
                                         {
                                                   return new ResponseModel
@@ -130,9 +140,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                   responseMessage = "Invalid Email or Password ",
                                                   userMedicine = null
                                         };
+
+
                               }
                     }
 
+             
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine)
                     {
                               var user = _context.userMediciness.Find(userdeleteMedicine.id);

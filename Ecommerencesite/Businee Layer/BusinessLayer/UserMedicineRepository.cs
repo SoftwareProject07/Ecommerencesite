@@ -75,77 +75,44 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          }
                     //}
 
-
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {
+                              // Find user by email+password OR mobile+password
                               var user = _context.userMediciness
                                   .FirstOrDefault(u =>
-                                      (u.Email == _userlogindto.Email &&
-                                       u.Password == _userlogindto.Password)
+                                      (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
                                       ||
-                                      (u.MobileNumber == _userlogindto.MobileNumber &&
-                                       u.Password == _userlogindto.Password)
+                                      (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
                                   );
 
-                              var a = new UserMedicine();
-                              a.FirstName = user.FirstName;
-                              a.LastName = user.LastName;
-                              if (a != null)
+                              if (user != null)
                               {
+                                        // ✅ user found
                                         return new ResponseModel
                                         {
                                                   status = true,
                                                   responseMessage = "Customer Login Successful",
-                                                  userMedicine = user     // return actual user data
+                                                  userMedicine = user
                                         };
-                                       
-
-
                               }
-
                               else
                               {
-                                        if (!string.IsNullOrEmpty(_userlogindto.Email) && !string.IsNullOrEmpty(_userlogindto.MobileNumber))
-                                        {
-                                                  return new ResponseModel
-                                                  {
-                                                            status = false,
-                                                            responseMessage = "Invalid Email or Mobile Number or Password",
-                                                            userMedicine = null
-                                                  };
-                                        }
+                                        // ❌ user not found
+                                        string message = "Invalid Email or Password";
 
-                                        else if (!string.IsNullOrEmpty(_userlogindto.Email))
-                                        {
-                                                  return new ResponseModel
-                                                  {
-                                                            status = false,
-                                                            responseMessage = "Invalid Email or Password",
-                                                            userMedicine = null
-                                                  };
-                                        }
+                                        if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
+                                                  message = "Invalid Mobile Number or Password";
 
-                                        else if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
-                                        {
-                                                  return new ResponseModel
-                                                  {
-                                                            status = false,
-                                                            responseMessage = "Invalid Mobile Number or Password",
-                                                            userMedicine = null
-                                                  };
-                                        }
                                         return new ResponseModel
                                         {
                                                   status = false,
-                                                  responseMessage = "Invalid Email or Password ",
+                                                  responseMessage = message,
                                                   userMedicine = null
                                         };
-
-
                               }
                     }
 
-             
+
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine)
                     {
                               var user = _context.userMediciness.Find(userdeleteMedicine.id);

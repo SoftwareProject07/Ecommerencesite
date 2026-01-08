@@ -211,7 +211,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               // Reset Password Logic
                               user.Password = dto.NewPassword;
-                              user.ConfirmPassword = dto.ConfirmPassword;// Ideally hashed, e.g., using BCrypt or Identity
+                            //  user.ConfirmPassword = dto.ConfirmPassword;// Ideally hashed, e.g., using BCrypt or Identity
                               await _context.SaveChangesAsync();
                               return true;
                     }

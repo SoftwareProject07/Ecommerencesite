@@ -108,17 +108,7 @@ namespace Ecommerencesite.Controllers
 
                     // forget password ----rest foreget password otp  
 
-                    //          // forgetpassword check 
-                    //          [HttpPost("reset-password")]
-                    //          public async Task<IActionResult> ResetPassword([FromBody] ForgetPasswordUserDto dto)
-                    //          {
-                    //                    var result = await _usermedicinerepository.ResetPasswordAsync(dto); 
-                    //                    if (!result) return BadRequest(new { message = "Email not found or password mismatch." });
-                    //                    return Ok(new { message = "Password updated successfully." }); }
-
-
-
-                    //}
+                 
 
 
                     [HttpPost("ForgetPassword")]
@@ -130,9 +120,9 @@ namespace Ecommerencesite.Controllers
                               var isReset = await _usermedicinerepository.ResetPasswordAsync(dto);
 
                               if (!isReset)
-                                        return NotFound("User  with the given New Password  and ConfirmNewPassword does not exist.");
+                                        return NotFound("User  with the given New Password  does not exist.");
 
-                              return Ok("NewPassword and ConfirmNewPassword has been successfully ForgetPassword.");
+                              return Ok("NewPassword has been successfully ForgetPassword.");
                     }
           }
 

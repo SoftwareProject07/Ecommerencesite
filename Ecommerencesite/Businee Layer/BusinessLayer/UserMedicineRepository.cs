@@ -196,13 +196,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
                     {
-                              //if (dto.NewPassword != dto.ConfirmPassword) return false; // 2. Find user by emai
-                              //var user = await _context.userMediciness.FirstOrDefaultAsync(u => u.Email == dto.Email);
-                              //if (user == null) return false; // 3. Hash password before saving
-                              //user.Password = PasswordHasher.Hash(dto.NewPassword);
-                              //_context.Entry(user).State = EntityState.Modified;
-                              //await _context.SaveChangesAsync();
-                              //return true;
+                             
                        
                               var user = await _context.userMediciness
                              .FirstOrDefaultAsync(u => u.Email == dto.Email);

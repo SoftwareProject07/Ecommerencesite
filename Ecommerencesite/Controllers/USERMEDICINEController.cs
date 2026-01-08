@@ -112,7 +112,7 @@ namespace Ecommerencesite.Controllers
 
 
                     [HttpPost("ForgetPassword")]
-                    public async Task<IActionResult> ResetPassword([FromBody] ForgetPasswordUserDto dto)
+                    public async Task<IActionResult> ResetPassword( ForgetPasswordUserDto dto)
                     {
                               if (!ModelState.IsValid)
                                         return BadRequest(ModelState);

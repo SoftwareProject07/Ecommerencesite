@@ -108,22 +108,55 @@ namespace Ecommerencesite.Controllers
 
                     // forget password ----rest foreget password otp  
 
-                 
 
+
+
+                    //[HttpPost("ForgetPassword")]
+                    //public async Task<IActionResult> ResetPassword(ForgetPasswordUserDto dto)
+                    //{
+                    //          if (!ModelState.IsValid)
+                    //                    return BadRequest(ModelState);
+
+                    //          var isReset = await _usermedicinerepository.ResetPasswordAsync(dto);
+
+                    //          if (!isReset)
+                    //                    return NotFound("User  with the given New Password  does not exist.");
+
+                    //          return Ok("NewPassword has been successfully ForgetPassword.");
+                    //}
 
                     [HttpPost("ForgetPassword")]
-                    public async Task<IActionResult> ResetPassword( ForgetPasswordUserDto dto)
+                    public async Task<IActionResult> ResetPassword([FromBody] ForgetPasswordUserDto dto)
                     {
                               if (!ModelState.IsValid)
-                                        return BadRequest(ModelState);
+                              {
+                                        return BadRequest(new
+                                        {
+                                                  status = false,
+                                                  message = "Invalid request data"
+                                        });
+                              }
 
                               var isReset = await _usermedicinerepository.ResetPasswordAsync(dto);
 
                               if (!isReset)
-                                        return NotFound("User  with the given New Password  does not exist.");
+                              {
+                                        return Ok(new
+                                        {
+                                                  status = false,
+                                                  message = "Invalid Email"
+                                        });
+                              }
 
-                              return Ok("NewPassword has been successfully ForgetPassword.");
+                              return Ok(new
+                              {
+                                        status = true,
+                                        message = "Password reset successfully"
+                              });
                     }
+
+
+
           }
 
 }

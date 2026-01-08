@@ -194,20 +194,34 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     }
 
+                    //public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
+                    //{
+
+
+                    //          var user = await _context.userMediciness
+                    //         .FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+                    //          if (user == null) return false;
+
+                    //          // Reset Password Logic
+                    //          user.Password = dto.NewPassword;
+                    //        //  user.ConfirmPassword = dto.ConfirmPassword;// Ideally hashed, e.g., using BCrypt or Identity
+                    //          await _context.SaveChangesAsync();
+                    //          return true;
+                    //}
                     public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
                     {
-                             
-                       
                               var user = await _context.userMediciness
-                             .FirstOrDefaultAsync(u => u.Email == dto.Email);
+                                  .FirstOrDefaultAsync(x => x.Email.ToLower() == dto.Email.ToLower());
 
-                              if (user == null) return false;
+                              if (user == null)
+                                        return false;
 
-                              // Reset Password Logic
                               user.Password = dto.NewPassword;
-                            //  user.ConfirmPassword = dto.ConfirmPassword;// Ideally hashed, e.g., using BCrypt or Identity
                               await _context.SaveChangesAsync();
+
                               return true;
                     }
+
           }
-          }
+}

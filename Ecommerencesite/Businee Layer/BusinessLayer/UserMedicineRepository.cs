@@ -1,13 +1,14 @@
 ﻿
 
 
+using CRUDAPPLICATION.ModelDTO;
 using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -46,34 +47,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
-                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
-                    //{
-                    //          var user = _context.userMediciness
-                    //              .FirstOrDefault(u => u.Email == _userlogindto.Email
-                    //                                && u.Password == _userlogindto.Password);
-                    //          //var user = _context.userMedicines
-                    //          //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
 
-
-                    //          if (user != null)
-                    //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Customer Login Successful",
-                    //                              userMedicine = user     // return actual user data
-                    //                    };
-                    //          }
-                    //          else
-                    //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = "Invalid Email or Password",
-                    //                              userMedicine = null
-                    //                    };
-                    //          }
-                    //}
 
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {
@@ -139,7 +113,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
-                 
+
 
 
                     public ResponseModel OrderList()
@@ -217,9 +191,29 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                   userMedicine = null
                                         };
                               }
+
                     }
 
+                    public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
+                    {
+                              //if (dto.NewPassword != dto.ConfirmPassword) return false; // 2. Find user by emai
+                              //var user = await _context.userMediciness.FirstOrDefaultAsync(u => u.Email == dto.Email);
+                              //if (user == null) return false; // 3. Hash password before saving
+                              //user.Password = PasswordHasher.Hash(dto.NewPassword);
+                              //_context.Entry(user).State = EntityState.Modified;
+                              //await _context.SaveChangesAsync();
+                              //return true;
+                       
+                              var user = await _context.userMediciness
+                             .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
+                              if (user == null) return false;
 
+                              // Reset Password Logic
+                              user.Password = dto.NewPassword;
+                              user.ConfirmPassword = dto.ConfirmPassword;// Ideally hashed, e.g., using BCrypt or Identity
+                              await _context.SaveChangesAsync();
+                              return true;
+                    }
           }
-}
+          }

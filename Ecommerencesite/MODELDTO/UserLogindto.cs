@@ -7,7 +7,10 @@
                     public string? Email { get; set; } = null;
                     public string? Password { get; set; } = null;   
                     
-                    public string? MobileNumber { get; set; } = null; 
+                    public string? MobileNumber { get; set; } = null;
+
+                    //public string NewPassword { get; set; } = string.Empty;
+                    //public string ConfirmPassword { get; set; } = string.Empty;
 
 
           }

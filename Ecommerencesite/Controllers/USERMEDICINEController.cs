@@ -1,4 +1,5 @@
 ﻿using Azure;
+using CRUDAPPLICATION.ModelDTO;
 using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Model;
@@ -20,9 +21,9 @@ namespace Ecommerencesite.Controllers
                     private readonly IUserMedicineRepository _usermedicinerepository;
                     public USERMEDICINEController(IUserMedicineRepository usermedicinerepository)
                     {
-                                this._usermedicinerepository = usermedicinerepository;
+                              this._usermedicinerepository = usermedicinerepository;
                     }
-                    
+
                     [HttpPost("CREATERegisterUser")]
                     public IActionResult CREATERegisterUser([FromBody] UserMedicine model)
                     {
@@ -63,7 +64,7 @@ namespace Ecommerencesite.Controllers
                     [HttpGet("ViewUser)")]
                     public ResponseModel ViewUser(int id)// DETAILS OF USER      
                     {
-                            var view= _usermedicinerepository.ViewUser(id);
+                              var view = _usermedicinerepository.ViewUser(id);
                               return view;
                     }
                     [HttpPut]
@@ -75,7 +76,7 @@ namespace Ecommerencesite.Controllers
                               //SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
                               //response = DL.UpdateUserMedicine(userMedicine, conn);
                               //return response;
-                              var update= _usermedicinerepository.UpdateUserMedicine(userMedicine);
+                              var update = _usermedicinerepository.UpdateUserMedicine(userMedicine);
                               return update;
                     }
                     [HttpDelete]
@@ -87,22 +88,52 @@ namespace Ecommerencesite.Controllers
                               //SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
                               //response = DL.DELETEUserMedicine(userMedicine, conn);
                               //return response;
-                              var delete= _usermedicinerepository.DELETEUserMedicine(userMedicine);
+                              var delete = _usermedicinerepository.DELETEUserMedicine(userMedicine);
                               return delete;
                     }
                     [HttpGet("AllUserList")]
                     public ResponseModel UserList() // usermedicine list dta 
                     {
-                              var userlist= _usermedicinerepository.UserList();
+                              var userlist = _usermedicinerepository.UserList();
                               return userlist;
                     }
                     [HttpGet("AllOrderList")]
                     public ResponseModel OrderList() // Usermedicine --- order list dat
                     {
-                              var orderlist= _usermedicinerepository.OrderList();
+                              var orderlist = _usermedicinerepository.OrderList();
                               return orderlist;
                     }
 
 
+
+                    // forget password ----rest foreget password otp  
+
+                    //          // forgetpassword check 
+                    //          [HttpPost("reset-password")]
+                    //          public async Task<IActionResult> ResetPassword([FromBody] ForgetPasswordUserDto dto)
+                    //          {
+                    //                    var result = await _usermedicinerepository.ResetPasswordAsync(dto); 
+                    //                    if (!result) return BadRequest(new { message = "Email not found or password mismatch." });
+                    //                    return Ok(new { message = "Password updated successfully." }); }
+
+
+
+                    //}
+
+
+                    [HttpPost("ForgetPassword")]
+                    public async Task<IActionResult> ResetPassword([FromBody] ForgetPasswordUserDto dto)
+                    {
+                              if (!ModelState.IsValid)
+                                        return BadRequest(ModelState);
+
+                              var isReset = await _usermedicinerepository.ResetPasswordAsync(dto);
+
+                              if (!isReset)
+                                        return NotFound("User  with the given New Password  and ConfirmNewPassword does not exist.");
+
+                              return Ok("NewPassword and ConfirmNewPassword has been successfully ForgetPassword.");
+                    }
           }
+
 }

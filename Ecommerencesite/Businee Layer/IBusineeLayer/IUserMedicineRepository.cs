@@ -1,4 +1,5 @@
-﻿using Ecommerencesite.Model;
+﻿using CRUDAPPLICATION.ModelDTO;
+using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 
 namespace Ecommerencesite.Businee_Layer.BusineeLayer
@@ -17,6 +18,9 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
                     // public ResponseModel OrderList(UserMedicine userMedicine
                     public ResponseModel OrderList();// Usermedicine --- order list dat--All List
                     public ResponseModel UserList();// usermedicine list dta 
+
+                    //forget password
+                    Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto);
 
 
 

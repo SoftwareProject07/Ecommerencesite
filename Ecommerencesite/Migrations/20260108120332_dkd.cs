@@ -8,6 +8,7 @@ namespace Ecommerencesite.Migrations
     public partial class dkd : Migration
     {
         /// <inheritdoc />
+        /// 
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(

@@ -9,6 +9,8 @@ using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.Arm;
+using System.Text;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -29,6 +31,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               {
                                         if (userregistMedicine.CreateOn == null)
                                                   userregistMedicine.CreateOn = DateTime.Now;
+                                        // 🔒 Hash the password before saving
+                                        //userregistMedicine.PasswordHash = HashPassword(userregistMedicine.Password ?? string.Empty);
+                                        //userregistMedicine.Password = null; // clear plain password
 
                                         _context.userMediciness.Add(userregistMedicine);
                                         _context.SaveChanges();
@@ -46,6 +51,15 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return res;
                     }
 
+                    //private static string HashPassword(string password)
+                    //{
+                    //          using var sha = Sha256.Create();
+                    //          var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                    //          return Convert.ToBase64String(bytes);
+                    //}
+
+                    //private static bool VerifyPassword(string password, string hash) =>
+                    //    HashPassword(password) == hash;
 
 
 

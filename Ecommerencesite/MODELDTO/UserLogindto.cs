@@ -14,7 +14,8 @@ namespace Ecommerencesite.MODELDTO
 
                     //public string NewPassword { get; set; } = string.Empty;
                     //public string ConfirmPassword { get; set; } = string.Empty;
-
+                    public string? PhotoUrl { get; set; } // e.g. "/uploads/user_123.jpg"
+                   //public string? PhotoBase64 { get; set; } // optional inline image
 
           }
 }

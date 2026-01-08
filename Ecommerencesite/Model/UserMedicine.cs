@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerencesite.Model
 {
@@ -11,7 +12,7 @@ namespace Ecommerencesite.Model
 
                     public string? FirstName { get; set; } = null;
 
-                    public string? MiddleName { get; set; }  = null;
+                    public string? MiddleName { get; set; } = null;
                     [Required(ErrorMessage = "LastName Will be required")]
                     [StringLength(100)]
 
@@ -26,7 +27,7 @@ namespace Ecommerencesite.Model
                     public string ConfirmPassword { get; set; } = string.Empty; // ✅ Only for validation
                     [Required(ErrorMessage = "Contact No is required.")]
                     [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Contact Number.")]
-                    public string? MobileNumber { get; set; } 
+                    public string? MobileNumber { get; set; }
                     [Required]
                     [EmailAddress]
                     public string? Email { get; set; } = null;
@@ -35,9 +36,15 @@ namespace Ecommerencesite.Model
                     public DateTime? CreateOn { get; set; } = DateTime.Now;
 
 
-                    //  public int Active { get; set; }
-                    //public string? OrderType { get; set; }
+                    //Persisted photo info
+                    public string? PhotoFileName { get; set; }
+                    public string? PhotoUrl
+                    {
+                              get; set;
+                              //  public int Active { get; set; }
+                              //public string? OrderType { get; set; }
+
+                    }
 
           }
-
 }

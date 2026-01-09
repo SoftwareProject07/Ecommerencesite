@@ -21,13 +21,13 @@ namespace Ecommerencesite.Model
                     [StringLength(100, MinimumLength = 6)]
                     [DataType(DataType.Password)]
                     public string? Password { get; set; } = null;
-                    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+                    //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 
-                    [Display(Name = "The password and confirmation password do not match")]
-                    public string ConfirmPassword { get; set; } = string.Empty; // ✅ Only for validation
-                    [RegularExpression(@"^([0-9]{10})$")]
+                    //[Display(Name = "The password and confirmation password do not match")]
+                    //public string ConfirmPassword { get; set; } = string.Empty; // ✅ Only for validation
+                  //  [RegularExpression(@"^([0-9]{10})$")]
                     public string? MobileNumber { get; set; }
-                    [Required]
+                   // [Required]
                     [EmailAddress]
                     public string? Email { get; set; } = null;
                     public Decimal? Fund { get; set; } = 0;

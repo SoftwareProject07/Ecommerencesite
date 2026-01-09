@@ -61,7 +61,7 @@ namespace Ecommerencesite.Controllers
                     //                              await PhotoFile.CopyToAsync(stream);
                     //                    }
 
-                    //                    model.Photo = fileName;
+                    //                    model.Photo = { fileName};
                     //                    model.PhotoUrl = "/uploads/" + fileName; // ✅ persisted URL
                     //          }
 
@@ -123,7 +123,7 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    //[HttpGet("LOGINUserMedicine")]
+                    //[HttpPost("LOGINUserMedicine")]
                     //public IActionResult LOGINUserMedicine(UserLogindto logindto)
                     //{
 

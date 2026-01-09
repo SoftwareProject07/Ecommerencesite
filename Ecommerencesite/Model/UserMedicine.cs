@@ -25,8 +25,7 @@ namespace Ecommerencesite.Model
 
                     [Display(Name = "The password and confirmation password do not match")]
                     public string ConfirmPassword { get; set; } = string.Empty; // ✅ Only for validation
-                    [Required(ErrorMessage = "Contact No is required.")]
-                    [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Contact Number.")]
+                    [RegularExpression(@"^([0-9]{10})$")]
                     public string? MobileNumber { get; set; }
                     [Required]
                     [EmailAddress]

@@ -105,7 +105,7 @@ namespace Ecommerencesite.Controllers
                                         // model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
                                         _usermedicinerepository.CREATERegisterUser(model);
-                                      //  await _context.SaveChangesAsync();
+                                        //  await _context.SaveChangesAsync();
 
                                         return Ok(new
                                         {

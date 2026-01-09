@@ -8,8 +8,8 @@ namespace Ecommerencesite.MODELDTO
                     //public string? LastName { get; set; } = null;
                     public string? Email { get; set; } = null;
                     public string? Password { get; set; } = null;
-                    [Required(ErrorMessage = "Contact No is required.")]
-                    [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Contact Number.")]
+                   
+                    [RegularExpression(@"^([0-9]{10})$")]
                     public string? MobileNumber { get; set; } = null;
 
                  

@@ -24,25 +24,101 @@ namespace Ecommerencesite.Controllers
                               this._usermedicinerepository = usermedicinerepository;
                     }
 
+                    //[HttpPost("CREATERegisterUser")]
+                    //public IActionResult CREATERegisterUser([FromBody] UserMedicine model)
+                    //{
+                    //          try
+                    //          {
+                    //                    if (model == null)
+                    //                              return BadRequest("Invalid Data");
+
+                    //                    var result = _usermedicinerepository.CREATERegisterUser(model);
+
+                    //                    return Ok(result);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+                    //}
+
+
+                    //[HttpPost("CREATERegisterUser")]
+                    //public async Task<IActionResult> CreateRegisterUser([FromForm] UserMedicine model, IFormFile PhotoFile)
+                    //{
+                    //          if (PhotoFile != null && PhotoFile.Length > 0)
+                    //          {
+                    //                    var fileName = Guid.NewGuid() + Path.GetExtension(PhotoFile.FileName);
+                    //                    var filePath = Path.Combine("wwwroot/uploads", fileName);
+
+                    //                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //                    {
+                    //                              await PhotoFile.CopyToAsync(stream);
+                    //                    }
+
+                    //                    model.Photo = fileName;
+                    //                    model.PhotoUrl = "/uploads/" + fileName; // ✅ persisted URL
+                    //          }
+
+                    //          // Save model to DB
+                    //          _usermedicinerepository.CREATERegisterUser(model);
+                    //          // return Ok(a);
+                    //          return Ok(new { isSuccess = true, token = "..." });
+                    //}
+
                     [HttpPost("CREATERegisterUser")]
-                    public IActionResult CREATERegisterUser([FromBody] UserMedicine model)
+                    public async Task<IActionResult> CreateRegisterUser([FromForm] UserMedicine model)
                     {
                               try
                               {
-                                        if (model == null)
-                                                  return BadRequest("Invalid Data");
+                                        // ✅ PHOTO UPLOAD LOGIC (YAHAN)
+                                        if (model.Photo != null)
+                                        {
+                                                  var uploadsFolder = Path.Combine(
+                                                      Directory.GetCurrentDirectory(),
+                                                      "wwwroot",
+                                                      "uploads"
+                                                  );
 
-                                        var result = _usermedicinerepository.CREATERegisterUser(model);
+                                                  if (!Directory.Exists(uploadsFolder))
+                                                            Directory.CreateDirectory(uploadsFolder);
 
-                                        return Ok(result);
+                                                  var fileName = Guid.NewGuid() + Path.GetExtension(model.Photo.FileName);
+                                                  var filePath = Path.Combine(uploadsFolder, fileName);
+
+                                                  using (var stream = new FileStream(filePath, FileMode.Create))
+                                                  {
+                                                            await model.Photo.CopyToAsync(stream);
+                                                  }
+
+                                                  // 🔥 dynamic base url
+                                                  var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                                                  model.PhotoUrl = $"{baseUrl}/uploads/{fileName}";
+                                        }
+
+                                        // 🔐 password hash (optional but recommended)
+                                        // model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+                                        _usermedicinerepository.CREATERegisterUser(model);
+                                      //  await _context.SaveChangesAsync();
+
+                                        return Ok(new
+                                        {
+                                                  isSuccess = true,
+                                                  userMedicine = model
+                                        });
                               }
                               catch (Exception ex)
                               {
                                         return StatusCode(500, new
                                         {
-                                                  Message = "Internal Error",
-                                                  Error = ex.Message,
-                                                  Detail = ex.InnerException?.Message
+                                                  isSuccess = false,
+                                                  message = ex.Message
                                         });
                               }
                     }
@@ -71,11 +147,7 @@ namespace Ecommerencesite.Controllers
                     [Route("UpdateUserMedicine")]
                     public ResponseModel UpdateUserMedicine(UserMedicine userMedicine)
                     {
-                              //ResponseModel response = new ResponseModel();
-                              //DALMODEL DL = new DALMODEL();
-                              //SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
-                              //response = DL.UpdateUserMedicine(userMedicine, conn);
-                              //return response;
+                            
                               var update = _usermedicinerepository.UpdateUserMedicine(userMedicine);
                               return update;
                     }
@@ -83,11 +155,7 @@ namespace Ecommerencesite.Controllers
                     [Route("DELETEUserMedicine")]
                     public ResponseModel DELETEUserMedicine(UserMedicine userMedicine)
                     {
-                              //ResponseModel response = new ResponseModel();
-                              //DALMODEL DL = new DALMODEL();
-                              //SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
-                              //response = DL.DELETEUserMedicine(userMedicine, conn);
-                              //return response;
+                          
                               var delete = _usermedicinerepository.DELETEUserMedicine(userMedicine);
                               return delete;
                     }
@@ -111,20 +179,7 @@ namespace Ecommerencesite.Controllers
 
 
 
-                    //[HttpPost("ForgetPassword")]
-                    //public async Task<IActionResult> ResetPassword(ForgetPasswordUserDto dto)
-                    //{
-                    //          if (!ModelState.IsValid)
-                    //                    return BadRequest(ModelState);
-
-                    //          var isReset = await _usermedicinerepository.ResetPasswordAsync(dto);
-
-                    //          if (!isReset)
-                    //                    return NotFound("User  with the given New Password  does not exist.");
-
-                    //          return Ok("NewPassword has been successfully ForgetPassword.");
-                    //}
-
+            
                     [HttpPost("ForgetPassword")]
                     public async Task<IActionResult> ResetPassword([FromBody] ForgetPasswordUserDto dto)
                     {

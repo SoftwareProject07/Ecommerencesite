@@ -37,7 +37,8 @@ namespace Ecommerencesite.Model
 
 
                     //Persisted photo info
-                    public string? PhotoFileName { get; set; }
+                    [NotMapped] // ❗ DB me save nahi hoga
+                    public IFormFile? Photo { get; set; }
                     public string? PhotoUrl
                     {
                               get; set;

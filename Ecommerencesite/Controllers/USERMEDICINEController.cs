@@ -71,57 +71,85 @@ namespace Ecommerencesite.Controllers
                     //          return Ok(new { isSuccess = true, token = "..." });
                     //}
 
+                    //[HttpPost("CREATERegisterUser")]
+                    //public async Task<IActionResult> CreateRegisterUser([FromForm] UserMedicine model)
+                    //{
+                    //          try
+                    //          {
+                    //                    // ✅ PHOTO UPLOAD LOGIC (YAHAN)
+                    //                    if (model.Photo != null)
+                    //                    {
+                    //                              var uploadsFolder = Path.Combine(
+                    //                                  Directory.GetCurrentDirectory(),
+                    //                                  "wwwroot",
+                    //                                  "uploads"
+                    //                              );
+
+                    //                              if (!Directory.Exists(uploadsFolder))
+                    //                                        Directory.CreateDirectory(uploadsFolder);
+
+                    //                              var fileName = Guid.NewGuid() + Path.GetExtension(model.Photo.FileName);
+                    //                              var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    //                              using (var stream = new FileStream(filePath, FileMode.Create))
+                    //                              {
+                    //                                        await model.Photo.CopyToAsync(stream);
+                    //                              }
+
+                    //                              // 🔥 dynamic base url
+                    //                              var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                    //                              model.PhotoUrl = $"{baseUrl}/uploads/{fileName}";
+                    //                    }
+
+                    //                    // 🔐 password hash (optional but recommended)
+                    //                    // model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+                    //                    _usermedicinerepository.CREATERegisterUser(model);
+                    //                    //  await _context.SaveChangesAsync();
+
+                    //                    return Ok(new
+                    //                    {
+                    //                              isSuccess = true,
+                    //                              userMedicine = model
+                    //                    });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              isSuccess = false,
+                    //                              message = ex.Message
+                    //                    });
+                    //          }
+                    //}
+
                     [HttpPost("CREATERegisterUser")]
-                    public async Task<IActionResult> CreateRegisterUser([FromForm] UserMedicine model)
+                    public async Task<IActionResult> RegisterUser([FromForm] UserMedicine model, IFormFile Photo)
                     {
-                              try
+                              if (Photo != null && Photo.Length > 0)
                               {
-                                        // ✅ PHOTO UPLOAD LOGIC (YAHAN)
-                                        if (model.Photo != null)
+                                        var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                                        if (!Directory.Exists(uploads))
+                                                  Directory.CreateDirectory(uploads);
+
+                                        var fileName = Guid.NewGuid() + Path.GetExtension(Photo.FileName);
+                                        var filePath = Path.Combine(uploads, fileName);
+
+                                        using (var stream = new FileStream(filePath, FileMode.Create))
                                         {
-                                                  var uploadsFolder = Path.Combine(
-                                                      Directory.GetCurrentDirectory(),
-                                                      "wwwroot",
-                                                      "uploads"
-                                                  );
-
-                                                  if (!Directory.Exists(uploadsFolder))
-                                                            Directory.CreateDirectory(uploadsFolder);
-
-                                                  var fileName = Guid.NewGuid() + Path.GetExtension(model.Photo.FileName);
-                                                  var filePath = Path.Combine(uploadsFolder, fileName);
-
-                                                  using (var stream = new FileStream(filePath, FileMode.Create))
-                                                  {
-                                                            await model.Photo.CopyToAsync(stream);
-                                                  }
-
-                                                  // 🔥 dynamic base url
-                                                  var baseUrl = $"{Request.Scheme}://{Request.Host}";
-                                                  model.PhotoUrl = $"{baseUrl}/uploads/{fileName}";
+                                                  await Photo.CopyToAsync(stream);
                                         }
 
-                                        // 🔐 password hash (optional but recommended)
-                                        // model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
-
-                                        _usermedicinerepository.CREATERegisterUser(model);
-                                        //  await _context.SaveChangesAsync();
-
-                                        return Ok(new
-                                        {
-                                                  isSuccess = true,
-                                                  userMedicine = model
-                                        });
+                                        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                                        model.PhotoUrl = $"{baseUrl}/uploads/{fileName}";
                               }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, new
-                                        {
-                                                  isSuccess = false,
-                                                  message = ex.Message
-                                        });
-                              }
+
+                                              _usermedicinerepository.CREATERegisterUser(model);
+                              //  await _context.SaveChangesAsync();
+
+                              return Ok(new { isSuccess = true, message = "User Registered" });
                     }
+
 
                     //[HttpPost("LOGINUserMedicine")]
                     //public IActionResult LOGINUserMedicine(UserLogindto logindto)

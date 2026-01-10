@@ -25,8 +25,8 @@ namespace Ecommerencesite.Model
 
                     //[Display(Name = "The password and confirmation password do not match")]
                     //public string ConfirmPassword { get; set; } = string.Empty; // ✅ Only for validation
-                  //  [RegularExpression(@"^([0-9]{10})$")]
-                    public string? MobileNumber { get; set; }
+                    //  [RegularExpression(@"^([0-9]{10})$")]
+                    public string? MobileNumber { get; set; } = null;
                    // [Required]
                     [EmailAddress]
                     public string? Email { get; set; } = null;

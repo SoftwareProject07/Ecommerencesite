@@ -123,31 +123,76 @@ namespace Ecommerencesite.Controllers
                     //          }
                     //}
 
+                    //[HttpPost("CREATERegisterUser")]
+                    //public async Task<IActionResult> RegisterUser([FromForm] UserMedicine model, IFormFile Photo)
+                    //{
+                    //          if (Photo != null && Photo.Length > 0)
+                    //          {
+                    //                    var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                    //                    if (!Directory.Exists(uploads))
+                    //                              Directory.CreateDirectory(uploads);
+
+                    //                    var fileName = Guid.NewGuid() + Path.GetExtension(Photo.FileName);
+                    //                    var filePath = Path.Combine(uploads, fileName);
+
+                    //                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //                    {
+                    //                              await Photo.CopyToAsync(stream);
+                    //                    }
+
+                    //                    var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                    //                    model.PhotoUrl = $"{baseUrl}/uploads/{fileName}";
+                    //          }
+
+                    //                          _usermedicinerepository.CREATERegisterUser(model);
+                    //          //  await _context.SaveChangesAsync();
+
+                    //          return Ok(new { isSuccess = true, message = "User Registered" });
+                    //}
+
+
                     [HttpPost("CREATERegisterUser")]
-                    public async Task<IActionResult> RegisterUser([FromForm] UserMedicine model, IFormFile Photo)
+                    public async Task<IActionResult> RegisterUser([FromForm] UserMedicine model)
                     {
-                              if (Photo != null && Photo.Length > 0)
+                              try
                               {
-                                        var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
-                                        if (!Directory.Exists(uploads))
-                                                  Directory.CreateDirectory(uploads);
-
-                                        var fileName = Guid.NewGuid() + Path.GetExtension(Photo.FileName);
-                                        var filePath = Path.Combine(uploads, fileName);
-
-                                        using (var stream = new FileStream(filePath, FileMode.Create))
+                                        // ✅ PHOTO UPLOAD
+                                        if (model.Photo != null && model.Photo.Length > 0)
                                         {
-                                                  await Photo.CopyToAsync(stream);
+                                                  var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+
+                                                  if (!Directory.Exists(uploadsFolder))
+                                                            Directory.CreateDirectory(uploadsFolder);
+
+                                                  var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
+                                                  var filePath = Path.Combine(uploadsFolder, fileName);
+
+                                                  using (var stream = new FileStream(filePath, FileMode.Create))
+                                                  {
+                                                            await model.Photo.CopyToAsync(stream); // ✅ CORRECT
+                                                  }
+
+                                                  // ✅ PHOTO URL SAVE
+                                                  model.PhotoUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
                                         }
 
-                                        var baseUrl = $"{Request.Scheme}://{Request.Host}";
-                                        model.PhotoUrl = $"{baseUrl}/uploads/{fileName}";
+                                        _usermedicinerepository.CREATERegisterUser(model);
+
+                                        return Ok(new
+                                        {
+                                                  isSuccess = true,
+                                                  message = "User Registered Successfully",
+                                                  user = model
+                                        });
                               }
-
-                                              _usermedicinerepository.CREATERegisterUser(model);
-                              //  await _context.SaveChangesAsync();
-
-                              return Ok(new { isSuccess = true, message = "User Registered" });
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new
+                                        {
+                                                  isSuccess = false,
+                                                  message = ex.Message
+                                        });
+                              }
                     }
 
 

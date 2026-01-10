@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="uploads\" />
     <Folder Include="wwwroot\uploads\medicines\" />
   </ItemGroup>
 

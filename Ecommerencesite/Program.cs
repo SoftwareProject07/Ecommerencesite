@@ -36,6 +36,7 @@ using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -106,7 +107,30 @@ var app = builder.Build();
 // MIDDLEWARE (AFTER BUILD)
 // =======================
 //app.UseStaticFiles(); // 🔥 REQUIRED for image access
+// ✅ STATIC FILES (wwwroot)
+app.UseStaticFiles();
 
+// ✅ UPLOADS FOLDER (CUSTOM)
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//          FileProvider = new PhysicalFileProvider(
+//        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+//          RequestPath = "/uploads"
+//});
+
+//var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+
+//if (!Directory.Exists(uploadsPath))
+//{
+//          Directory.CreateDirectory(uploadsPath);
+//}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+          FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+          RequestPath = "/uploads"
+});
 app.UseSwagger();
 app.UseSwaggerUI();
 //          options =>
@@ -116,7 +140,13 @@ app.UseSwaggerUI();
 //});
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+//app.UseStaticFiles();
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(
+//        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+//    RequestPath = "/uploads"
+//});
 
 app.UseAuthorization();
 //app.UseAuthentication();

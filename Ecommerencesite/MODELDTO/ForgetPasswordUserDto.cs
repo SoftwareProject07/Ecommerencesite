@@ -9,6 +9,8 @@ namespace CRUDAPPLICATION.ModelDTO
                     //[StringLength(100, MinimumLength = 6)]
                     //[DataType(DataType.Password)]
                     public string NewPassword { get; set; }
+                    public string PhoenNumber { get; set; } 
+                    public string UserName { get; set; }    
                     
           }
          

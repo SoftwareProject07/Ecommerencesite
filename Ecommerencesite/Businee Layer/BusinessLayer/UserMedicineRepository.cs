@@ -201,7 +201,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
                     {
                               var user = await _context.userMediciness
-                                  .FirstOrDefaultAsync(x => (x.Email.ToLower() == dto.Email.ToLower() ||x.MobileNumber==dto.PhoenNumber ||x.FirstName==dto.UserName));
+                                  .FirstOrDefaultAsync(x => (x.Email.ToLower() == dto.Email.ToLower() ||x.MobileNumber==dto.PhoneNumber ||x.FirstName==dto.UserName));
 
                               if (user == null)
                                         return false;

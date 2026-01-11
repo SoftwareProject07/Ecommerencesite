@@ -86,10 +86,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               else
                               {
                                         // ❌ user not found
-                                        string message = "Invalid Email or Password";
+                                        string message = "Invalid Email/MobileNumber or Password";
 
                                         if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
-                                                  message = "Invalid Mobile Number or Password";
+                                                  message = "Invalid Email/MobileNumber or Password";
 
                                         return new ResponseModel
                                         {

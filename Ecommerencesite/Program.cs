@@ -150,7 +150,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 //app.UseAuthentication();
-app.UseAntiforgery();
+//app.UseAntiforgery();
 
 app.UseStaticFiles();
 

@@ -272,7 +272,7 @@ namespace Ecommerencesite.Controllers
                                         return Ok(new
                                         {
                                                   status = false,
-                                                  message = "Invalid Email"
+                                                  message = "Invalid Email/phoneNumber/UserName"
                                         });
                               }
 

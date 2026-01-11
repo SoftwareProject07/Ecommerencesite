@@ -72,7 +72,7 @@ builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-//builder.Services.AddControllers()
+////builder.Services.AddControllers()
 //    .AddJsonOptions(opt =>
 //    {
 //              opt.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
@@ -125,12 +125,12 @@ app.UseStaticFiles();
 //          Directory.CreateDirectory(uploadsPath);
 //}
 
-app.UseStaticFiles(new StaticFileOptions
-{
-          FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
-          RequestPath = "/uploads"
-});
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//          FileProvider = new PhysicalFileProvider(
+//        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+//          RequestPath = "/uploads"
+//});
 app.UseSwagger();
 app.UseSwaggerUI();
 //          options =>
@@ -150,9 +150,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 //app.UseAuthentication();
-//app.UseAntiforgery();
+app.UseAntiforgery();
 
-//app.UseStaticFiles();
+app.UseStaticFiles();
 
 app.MapControllers();
 

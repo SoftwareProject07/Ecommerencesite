@@ -25,7 +25,7 @@ namespace Ecommerencesite.Controllers
                     [Route("DeletePatient/{id}")]
                     public IActionResult DeletePatient(int id)
                     {
-                              var deletepatient= _patient_CustomerRepository.DeltePatient(id);
+                              var deletepatient= _patient_CustomerRepository.DeletePatient(id);
                               return Ok(deletepatient);
                     }
                     [HttpPut]
@@ -33,6 +33,12 @@ namespace Ecommerencesite.Controllers
                     public void UpdatePatient_Customer( Patient_CustomerModel _patientcustoermmodel)
                     {
                               _patient_CustomerRepository.Update( _patientcustoermmodel);
+                    }
+                    [HttpGet("GetAllPatients_Customers")] 
+                    public List<Patient_CustomerModel> GetAllPatients_Customers()
+                    {
+                              var listpatients= _patient_CustomerRepository.GetAllPatients_Customers();
+                              return listpatients;
                     }
           }
 }

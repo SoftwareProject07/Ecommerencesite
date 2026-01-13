@@ -17,6 +17,15 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                 _dbcontext.SaveChanges();
                     }
 
+                    public Patient_CustomerModel DeletePatient(int id)
+                    {
+                           var delete= _dbcontext.patient_CustomerModels.Find(id);     
+                            
+                                        _dbcontext.patient_CustomerModels.Remove(delete);
+                                        _dbcontext.SaveChanges();
+                              return delete;
+                    }
+
                     public Patient_CustomerModel DeltePatient(int id)
                     {
                               var delete= _dbcontext.patient_CustomerModels.Find(id);     
@@ -26,15 +35,18 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return delete;
                     }
 
+                    public List<Patient_CustomerModel> GetAllPatients_Customers()
+                    {
+                            var listpatient=  _dbcontext.patient_CustomerModels.ToList();
+                              return listpatient;
+                    }
+
                     public void Update(Patient_CustomerModel _patientcustoermmodel)
                     {
                               _dbcontext.patient_CustomerModels.Update(_patientcustoermmodel);
                               _dbcontext.SaveChanges();
                     }
 
-                    //public void Update(Patient_CustomerModel _patientcustoermmodel l)
-                    //{
-                    //          throw new NotImplementedException();
-                    //}
+                   
           }
 }

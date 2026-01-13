@@ -34,11 +34,27 @@ namespace Ecommerencesite.Controllers
                     {
                               _patient_CustomerRepository.Update( _patientcustoermmodel);
                     }
-                    [HttpGet("GetAllPatients_Customers")] 
-                    public List<Patient_CustomerModel> GetAllPatients_Customers()
+                    //[HttpGet("GetAllPatients_Customers")] 
+                    //public List<Patient_CustomerModel> GetAllPatients_Customers()
+                    //{
+                    //          var listpatients= _patient_CustomerRepository.GetAllPatients_Customers();
+                    //          return listpatients;
+                    //}
+                    [HttpGet("GetAllPatients_Customers")]
+                    public IActionResult GetAllPatients_Customers()
                     {
-                              var listpatients= _patient_CustomerRepository.GetAllPatients_Customers();
-                              return listpatients;
+                              try
+                              {
+                                        var result = _patient_CustomerRepository.GetAllPatients_Customers().ToList();
+
+                                        return Ok(result);
+                              }
+                              catch (Exception ex)
+                              {
+                                        // 🔴 Ye error Render logs me dikhega
+                                        return StatusCode(500, ex.Message);
+                              }
                     }
+
           }
 }

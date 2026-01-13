@@ -17,7 +17,7 @@ namespace Ecommerencesite.Model
                     public string? PhoneNumber { get; set; } = null;
                     public string? Address { get; set; } = null;
                     public int ? Age { get; set; }
-                    public string? CustomerAddress { get; set; } = null;
+                   // public string? CustomerAddress { get; set; } = null;
                     public string? CustomerCity { get; set; } = null;
                     public string? CustomerState { get; set; } = null;
                     public string? CustomerZipCode { get; set; } = null;

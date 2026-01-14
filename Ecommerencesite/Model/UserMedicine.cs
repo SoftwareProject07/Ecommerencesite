@@ -32,7 +32,7 @@ namespace Ecommerencesite.Model
                     public string? Email { get; set; } = null;
                     public Decimal? Fund { get; set; } = 0;
                     public string? type { get; set; } = null; //OrderType="User" or "Admin"
-                    public DateTime? CreateOn { get; set; } = DateTime.Now;
+                    public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
 
 
                     //Persisted photo info

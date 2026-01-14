@@ -18,8 +18,8 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                               try
                               {
-                                        if (adminREGMODEL.CreateOn == null)
-                                                  adminREGMODEL.CreateOn = DateTime.Now;
+                                        if (adminREGMODEL.CreatedOn == null)
+                                                  adminREGMODEL.CreatedOn = DateTime.Now;
 
                                         context.adminREGMODELSs.Add(adminREGMODEL);
                                         context.SaveChanges();

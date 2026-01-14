@@ -21,9 +21,9 @@ namespace Ecommerencesite.Model
                     public string? CustomerCity { get; set; } = null;
                     public string? CustomerState { get; set; } = null;
                     public string? CustomerZipCode { get; set; } = null;
-                 //   public string? CustomerCountry { get; set; } = null;
+                    //   public string? CustomerCountry { get; set; } = null;
 
-                    public DateTime? CreatedOn { get; set; } = DateTime.Now;
+                    public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
 
           }
 }

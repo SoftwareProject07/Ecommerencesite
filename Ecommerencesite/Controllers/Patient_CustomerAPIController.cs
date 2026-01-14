@@ -33,6 +33,7 @@ namespace Ecommerencesite.Controllers
                     public void UpdatePatient_Customer( Patient_CustomerModel _patientcustoermmodel)
                     {
                               _patient_CustomerRepository.Update( _patientcustoermmodel);
+                              //return Ok(_patientcustoermmodel);
                     }
                     //[HttpGet("GetAllPatients_Customers")] 
                     //public List<Patient_CustomerModel> GetAllPatients_Customers()

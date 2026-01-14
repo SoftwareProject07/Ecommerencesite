@@ -29,8 +29,8 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               try
                               {
-                                        if (userregistMedicine.CreateOn == null)
-                                                  userregistMedicine.CreateOn = DateTime.Now;
+                                        if (userregistMedicine.CreatedOn == null)
+                                                  userregistMedicine.CreatedOn = DateTime.Now;
                                         // 🔒 Hash the password before saving
                                         //userregistMedicine.PasswordHash = HashPassword(userregistMedicine.Password ?? string.Empty);
                                         //userregistMedicine.Password = null; // clear plain password

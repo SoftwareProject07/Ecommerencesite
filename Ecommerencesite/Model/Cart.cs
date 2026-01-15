@@ -8,7 +8,7 @@ namespace Ecommerencesite.Model
                     [Key]
                     public int Id { get; set; }
 
-                    [Required]
+                 //   [Required]
                     public int UserId { get; set; }
 
                     // Price snapshot (order/cart time)
@@ -24,11 +24,10 @@ namespace Ecommerencesite.Model
                     [Column(TypeName = "decimal(18,2)")]
                     public decimal? TotalPrice { get; set; }
 
-                    [Required]
                     public int MedicineId { get; set; }
 
                     // 🔗 Navigation Property
-                    [ForeignKey("MedicineId")]
-                    public Medicine Medicine { get; set; }
+                    //[ForeignKey("MedicineId")]
+                    //public Medicine Medicine { get; set; }
           }
 }

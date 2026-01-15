@@ -9,8 +9,8 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
 
                     public ResponseModel CREATERegisterUser(UserMedicine userregistMedicine);
 
-
-                    public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto);
+                  //  public UserMedicine LOGINUserMedicine(string email, string password,string mobilenumber);
+                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto);
                     public ResponseModel ViewUser(int id );// DETAILS 
                     public ResponseModel UpdateUserMedicine(UserMedicine userUpdateMedicine);
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine);

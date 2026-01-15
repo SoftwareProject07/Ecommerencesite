@@ -10,7 +10,8 @@ namespace Ecommerencesite.Model
 
                     [Key]
                     public int id { get; set; }
-                    public int UserId { get; set; }
+                    public int UserId { get; set; }    // 🔑 OWNER OF MEDICINE
+
 
                     public string? Name { get; set; } = null;
                     public string? Manufacturer { get; set; } = null;

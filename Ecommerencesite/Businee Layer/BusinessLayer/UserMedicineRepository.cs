@@ -20,12 +20,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class UserMedicineRepository : IUserMedicineRepository
           {
                     private readonly Ecommerecewebstedatabase _context;
-                    private readonly IConfiguration _configuration;
+                 //   private readonly IConfiguration _configuration;
 
-                    public UserMedicineRepository(Ecommerecewebstedatabase context, IConfiguration configuration)
+                    public UserMedicineRepository(Ecommerecewebstedatabase context)//, IConfiguration configuration
                     {
                               _context = context;
-                              _configuration = configuration;
+                          //    _configuration = configuration;
                     }
 
                     public ResponseModel CREATERegisterUser(UserMedicine userregistMedicine)
@@ -57,9 +57,47 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
+                    public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
+                    {
+                              // Find user by email+password OR mobile+password
+                              var user = _context.userMediciness
+                                  .FirstOrDefault(u =>
+                                      (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
+                                      ||
+                                      (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
+                                  );
+
+                              if (user != null)
+                              {
+                                        // ✅ user found
+                                        return new ResponseModel
+                                        {
+                                                  status = true,
+                                                  responseMessage = "Customer Login Successful",
+                                                  userMedicine = user
+                                        };
+                              }
+                              else
+                              {
+                                        // ❌ user not found
+                                        string message = "Invalid Email/MobileNumber or Password";
+
+                                        if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
+                                                  message = "Invalid Email/MobileNumber or Password";
+
+                                        return new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = message,
+                                                  userMedicine = null
+                                        };
+                              }
+                    }
+
                     //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     //{
-                    //          // Find user by email+password OR mobile+password
+                    //          var response = new ResponseModel();
+
                     //          var user = _context.userMediciness
                     //              .FirstOrDefault(u =>
                     //                  (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
@@ -92,64 +130,45 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //                              userMedicine = null
                     //                    };
                     //          }
-                    //}
+                    
+        //            // 🔐 JWT TOKEN
+        //            var claims = new[]
+        //                      {
+        //    new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+        //    new Claim(ClaimTypes.Role, user.type ?? "User")
+        //};
 
-                    public ResponseModel LOGINUserMedicine(UserLogindto userlogindto)
-                    {
-                              var response = new ResponseModel();
+        //                      var key = new SymmetricSecurityKey(
+        //                          Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
+        //                      );
 
-                              var user = _context.userMediciness
-                                  .FirstOrDefault(x =>
-                                      x.Email == userlogindto.Email &&
-                                      x.Password == userlogindto.Password
-                                  );
+        //                      var creds = new SigningCredentials(
+        //                          key, SecurityAlgorithms.HmacSha256
+        //                      );
 
-                              if (user == null)
-                              {
-                                        response.status = false;
-                                        response.responseMessage = "Invalid Email or Password";
-                                        response.Data = null;
-                                        return response;
-                              }
+        //                      var token = new JwtSecurityToken(
+        //                          issuer: _configuration["Jwt:Issuer"],
+        //                          audience: _configuration["Jwt:Audience"],
+        //                          claims: claims,
+        //                          expires: DateTime.UtcNow.AddDays(1),
+        //                          signingCredentials: creds
+        //                      );
 
-                              // 🔐 JWT TOKEN
-                              var claims = new[]
-                              {
-            new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
-            new Claim(ClaimTypes.Role, user.type ?? "User")
-        };
+        //                      response.status = true;
+        //                      response.responseMessage = "Login Successful";
+        //                      response.Data = new
+        //                      {
+        //                                token = new JwtSecurityTokenHandler().WriteToken(token),
+        //                                userId = user.id,
+        //                                role = user.type,
+        //                                email = user.Email
+        //                      };
 
-                              var key = new SymmetricSecurityKey(
-                                  Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
-                              );
+                    //        return response;
+                //  }
 
-                              var creds = new SigningCredentials(
-                                  key, SecurityAlgorithms.HmacSha256
-                              );
 
-                              var token = new JwtSecurityToken(
-                                  issuer: _configuration["Jwt:Issuer"],
-                                  audience: _configuration["Jwt:Audience"],
-                                  claims: claims,
-                                  expires: DateTime.Now.AddDays(1),
-                                  signingCredentials: creds
-                              );
-
-                              response.status = true;
-                              response.responseMessage = "Login Successful";
-                              response.Data = new
-                              {
-                                        token = new JwtSecurityTokenHandler().WriteToken(token),
-                                        userId = user.id,
-                                        role = user.type,
-                                        email = user.Email
-                              };
-
-                              return response;
-                    }
-
-         
-
+                    
 
 
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine)

@@ -67,16 +67,17 @@ builder.Services.AddControllers();
 //        builder.Configuration.GetConnectionString("DefaultConnections")
 //    )
 //);
+//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString("DefaultConnection")
+//    )
+//);
 builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    )
-);
-////builder.Services.AddControllers()
-//    .AddJsonOptions(opt =>
-//    {
-//              opt.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
-//    });
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
 
 builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();
@@ -108,7 +109,7 @@ var app = builder.Build();
 // =======================
 //app.UseStaticFiles(); // 🔥 REQUIRED for image access
 // ✅ STATIC FILES (wwwroot)
-app.UseStaticFiles();
+//app.UseStaticFiles();
 
 // ✅ UPLOADS FOLDER (CUSTOM)
 //app.UseStaticFiles(new StaticFileOptions

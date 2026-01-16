@@ -76,23 +76,13 @@ namespace Ecommerencesite.Controllers
 
 
 
-                    //[HttpPost]
-                    //[Route("LOGINUserMedicine")]
-                    //public ResponseModel LOGINUserMedicine( UserLogindto loginDto)
-                    //{
-                    //          return _usermedicinerepository.LOGINUserMedicine(loginDto);
-                    //}
-                    [HttpPost("LOGINUserMedicine")]
-                    public IActionResult Login(UserLogindto loginDto)
+                    [HttpPost]
+                    [Route("LOGINUserMedicine")]
+                    public ResponseModel LOGINUserMedicine(UserLogindto loginDto)
                     {
-                              var result = _usermedicinerepository.LOGINUserMedicine(loginDto);
-
-                              if (!result.status)
-                                        return Unauthorized(result);
-
-                              return Ok(result);
+                              return _usermedicinerepository.LOGINUserMedicine(loginDto);
                     }
-
+                 
 
                     [HttpGet("ViewUser)")]
                     public ResponseModel ViewUser(int id)// DETAILS OF USER      

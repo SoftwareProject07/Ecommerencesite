@@ -9,8 +9,8 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
 
                     public ResponseModel CREATERegisterUser(UserMedicine userregistMedicine);
 
-                  //  public UserMedicine LOGINUserMedicine(string email, string password,string mobilenumber);
-                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto);
+                    //  public UserMedicine LOGINUserMedicine(string email, string password,string mobilenumber);
+                    ResponseModel LOGINUserMedicine(UserLogindto userLogindto);
                     public ResponseModel ViewUser(int id );// DETAILS 
                     public ResponseModel UpdateUserMedicine(UserMedicine userUpdateMedicine);
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine);
@@ -21,6 +21,7 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
 
                     //forget password
                     Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto);
+
 
 
 

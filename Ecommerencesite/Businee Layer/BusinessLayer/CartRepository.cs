@@ -7,7 +7,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
           public class CartRepository : ICartRepository
           {
-                    public  readonly Ecommerecewebstedatabase _context;
+                    private   readonly Ecommerecewebstedatabase _context;
                               public CartRepository(Ecommerecewebstedatabase context)
                     {
                               this._context= context;
@@ -52,5 +52,33 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               await _context.SaveChangesAsync();
                     }
+
+                    //public async Task AddToCart(int userId, int medicineId, int quantity)
+                    //{
+                    //          var medicine = await _context.medicinesss.FindAsync(medicineId);
+                    //          if (medicine == null) throw new Exception("Medicine not found");
+
+                    //          var cartItem = new Cart
+                    //          {
+                    //                    UserId = userId,
+                    //                    MedicineId = medicineId,
+                    //                    Quantity = quantity,
+                    //                    UnitPrice = medicine.UnitPrice,
+                    //                    Discount = medicine.Discount,
+                    //                    TotalPrice = (medicine.UnitPrice - medicine.Discount) * quantity
+                    //          };
+
+                    //          _context.cartss.Add(cartItem);
+                    //          await _context.SaveChangesAsync();
+                    //}
+
+                    public async Task<List<Cart>> GetMyCart(int userId)
+                    {
+                              return await _context.cartss
+                                  .Where(c => c.UserId == userId)
+                                  .ToListAsync();
+                    }
+
+
           }
-          }
+}

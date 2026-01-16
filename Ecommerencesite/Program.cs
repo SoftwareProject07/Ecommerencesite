@@ -36,7 +36,9 @@ using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,27 +56,34 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader();
           });
 });
-//builder.Services.AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//              options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
-//    });
 
 builder.Services.AddControllers();
 
+
 //builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-//    options.UseSqlServer(
-//        builder.Configuration.GetConnectionString("DefaultConnections")
-//    )
-//);
-//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-//    options.UseSqlServer(
+//    options.UseNpgsql(
 //        builder.Configuration.GetConnectionString("DefaultConnection")
 //    )
 //);
+
 builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsqlOptions =>
+        {
+                  npgsqlOptions.CommandTimeout(300); // ⬅️ 3 minutes
+        }
+    )
+);
+
+//optionsBuilder.UseNpgsql(
+//    configuration.GetConnectionString("DefaultConnection"),
+//    o => o.CommandTimeout(300)
+//);
+
+//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 

@@ -23,15 +23,7 @@ namespace Ecommerencesite.Database
                     public DbSet<Patient_CustomerModel> patient_CustomerModels { get; set; }
 
 
-                    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-                    //{
-                    //          modelBuilder.Entity<Patient_CustomerModel>()
-                    //              .Property(e => e.CreatedOn)
-                    //              .HasConversion(
-                    //                  v => v.touniver(),
-                    //                  v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
-                    //              );
-                    //}
+                
 
           }
 }

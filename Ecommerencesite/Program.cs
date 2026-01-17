@@ -40,6 +40,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,15 +67,20 @@ builder.Services.AddControllers();
 //    )
 //);
 
+//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
+//    options.UseNpgsql(
+//        builder.Configuration.GetConnectionString("DefaultConnection"),
+//        npgsqlOptions =>
+//        {
+//                  npgsqlOptions.CommandTimeout(300); // ⬅️ 3 minutes
+//        }
+//    )
+//);
 builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        npgsqlOptions =>
-        {
-                  npgsqlOptions.CommandTimeout(300); // ⬅️ 3 minutes
-        }
-    )
-);
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+
 
 //optionsBuilder.UseNpgsql(
 //    configuration.GetConnectionString("DefaultConnection"),

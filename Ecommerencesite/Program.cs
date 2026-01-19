@@ -82,6 +82,7 @@ builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
     ));
 
 
+
 //optionsBuilder.UseNpgsql(
 //    configuration.GetConnectionString("DefaultConnection"),
 //    o => o.CommandTimeout(300)

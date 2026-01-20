@@ -1,6 +1,7 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
@@ -13,25 +14,25 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class MedicineRepository : IMedicineRepositort
           {
                     private readonly Ecommerecewebstedatabase dbcontext;
-                    private readonly IWebHostEnvironment _env;
-                    private readonly IConfiguration _config;
+                    //private readonly IWebHostEnvironment _env;
+                    //private readonly IConfiguration _config;
 
-
-                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext, IWebHostEnvironment env, IConfiguration config)
+                    // IWebHostEnvironment env, IConfiguration config
+                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext)
                     {
                               this.dbcontext = _dbcontext;
-                              _env = env;
-                              _config = config;
+                              //_env = env;
+                              //_config = config;
                     }
 
-                    //[HttpPost("CreateMedicine")]
+                   
                     //public ResponseModel CreateMedicine(Medicine createMedicine)
                     //{
-                    //          if (createMedicine.ExpiryDate.GetHashCode)
-                    //          {
-                    //                    createMedicine.ExpiryDate =
-                    //                        DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
-                    //          }
+                    //          //if (createMedicine.ExpiryDate.HasValue)
+                    //          //{
+                    //          //          createMedicine.ExpiryDate =
+                    //          //              DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
+                    //          //}
 
                     //          createMedicine.STATUS = 1;
 
@@ -41,10 +42,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          return new ResponseModel
                     //          {
                     //                    status = true,
-                    //                    responseMessage = "Medicine Create successfully",
+                    //                    responseMessage = "Medicine created successfully",
                     //                    medicine = createMedicine
                     //          };
                     //}
+
+
+
 
                     //public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
                     //{

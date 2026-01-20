@@ -8,8 +8,7 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
           {
 
                     public ResponseModel CREATERegisterUser(UserMedicine userregistMedicine);
-
-                    //  public UserMedicine LOGINUserMedicine(string email, string password,string mobilenumber);
+                    
                     ResponseModel LOGINUserMedicine(UserLogindto userLogindto);
                     public ResponseModel ViewUser(int id );// DETAILS 
                     public ResponseModel UpdateUserMedicine(UserMedicine userUpdateMedicine);
@@ -17,7 +16,7 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
                     public ResponseModel PlaceOrder(UserMedicine userOrder);
                     // public ResponseModel OrderList(UserMedicine userMedicine
                     public ResponseModel OrderList();// Usermedicine --- order list dat--All List
-                    public ResponseModel UserList();// usermedicine list dta 
+                    public ResponseModel CUSTOMERUserList();// usermedicine list dta 
 
                     //forget password
                     Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto);

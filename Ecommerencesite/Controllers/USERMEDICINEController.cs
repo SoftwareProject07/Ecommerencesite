@@ -109,7 +109,7 @@ namespace Ecommerencesite.Controllers
                     [HttpGet("AllUserList")]
                     public ResponseModel UserList() // usermedicine list dta 
                     {
-                              var userlist = _usermedicinerepository.UserList();
+                              var userlist = _usermedicinerepository.CUSTOMERUserList();
                               return userlist;
                     }
                     [HttpGet("AllOrderList")]

@@ -131,7 +131,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                   userMedicine = null
                                         };
                               }
-
                               // 🔐 JWT TOKEN
                               var claims = new[]
                                         {
@@ -162,7 +161,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         token = new JwtSecurityTokenHandler().WriteToken(token),
                                         userId = user.id,
                                         role = user.type,
-                                        email = user.Email
+                                        email = user.Email,
+                                        mobile=user.MobileNumber
+
                               };
 
                               return response;
@@ -243,7 +244,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
-                    public ResponseModel UserList()
+                    public ResponseModel CUSTOMERUserList()
                     {
                               var users = _context.userMediciness.ToList();
                               return new ResponseModel

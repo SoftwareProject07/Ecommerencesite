@@ -107,10 +107,10 @@ namespace Ecommerencesite.Controllers
                               return delete;
                     }
                     [HttpGet("AllUserList")]
-                    public List<UserMedicine> UserList() // usermedicine list dta 
+                    public IActionResult UserList() // usermedicine list dta 
                       {
                             var a= _usermedicinerepository.CUSTOMERUserList().ToList();
-                              return a;
+                              return Ok(a);
                     }
                     [HttpGet("AllOrderList")]
                     public ResponseModel OrderList() // Usermedicine --- order list dat

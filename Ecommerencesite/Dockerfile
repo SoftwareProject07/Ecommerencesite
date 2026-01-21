@@ -29,9 +29,9 @@ COPY . .
 RUN dotnet publish *.csproj -c Release -o /app/publish
 
 # 2. Runtime Stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-COPY --from=build /app/publish .
+#FROM mcr.microsoft.com/dotnet/aspnet:8.0
+#WORKDIR /app
+#COPY --from=build /app/publish .
 
 # Render ka default port
 ENV ASPNETCORE_URLS=http://+:10000

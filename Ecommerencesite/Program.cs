@@ -61,21 +61,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 
-//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-//    options.UseNpgsql(
-//        builder.Configuration.GetConnectionString("DefaultConnection")
-//    )
-//);
 
-//builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
-//    options.UseNpgsql(
-//        builder.Configuration.GetConnectionString("DefaultConnection"),
-//        npgsqlOptions =>
-//        {
-//                  npgsqlOptions.CommandTimeout(300); // ⬅️ 3 minutes
-//        }
-//    )
-//);
 builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
@@ -120,54 +106,15 @@ builder.Services.AddSwaggerGen();
 // =======================
 var app = builder.Build();
 
-// =======================
-// MIDDLEWARE (AFTER BUILD)
-// =======================
-//app.UseStaticFiles(); // 🔥 REQUIRED for image access
-// ✅ STATIC FILES (wwwroot)
-//app.UseStaticFiles();
 
-// ✅ UPLOADS FOLDER (CUSTOM)
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//          FileProvider = new PhysicalFileProvider(
-//        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
-//          RequestPath = "/uploads"
-//});
 
-//var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-
-//if (!Directory.Exists(uploadsPath))
-//{
-//          Directory.CreateDirectory(uploadsPath);
-//}
-
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//          FileProvider = new PhysicalFileProvider(
-//        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
-//          RequestPath = "/uploads"
-//});
 app.UseSwagger();
 app.UseSwaggerUI();
-//          options =>
-//{
-//          options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ecommerencesite v1");
-//          options.RoutePrefix = "swagger";
-//});
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-//app.UseStaticFiles();
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//    FileProvider = new PhysicalFileProvider(
-//        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
-//    RequestPath = "/uploads"
-//});
+
 
 app.UseAuthorization();
-//app.UseAuthentication();
-//app.UseAntiforgery();
 
 app.UseStaticFiles();
 

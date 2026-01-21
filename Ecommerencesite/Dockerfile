@@ -19,22 +19,25 @@
 
 
 # 1. Build Stage
+# Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /app
 
-# Sari files copy karein
+# Sab kuch copy karein (kyuki humne Root Directory set kar di hai)
 COPY . .
 
-# Publish karein (Wildcard se .csproj khud dhund lega)
-RUN dotnet publish *.csproj -c Release -o /app/publish
+# Restore aur Publish karein
+RUN dotnet restore
+RUN dotnet publish -c Release -o /out
 
-# 2. Runtime Stage
-#FROM mcr.microsoft.com/dotnet/aspnet:8.0
-#WORKDIR /app
-#COPY --from=build /app/publish .
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /out .
 
-# Render ka default port
+# Render default port
 ENV ASPNETCORE_URLS=http://+:10000
 EXPOSE 10000
 
+# Dhyan dein: file ka naam sahi ho
 ENTRYPOINT ["dotnet", "Ecommerencesite.dll"]

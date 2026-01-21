@@ -211,7 +211,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         responseMessage = "Order List Retrieved Successfully",
                                         LSTuserMedicines = orders
                               };
-                              return null;
+                           //   return null;
 
                     }
 
@@ -225,7 +225,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         responseMessage = "Order Placed Successfully",
                                         userMedicine = userOrder
                               };
-                              return null;
+                             // return null;
                     }
 
 
@@ -240,20 +240,20 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         responseMessage = "User Updated Successfully",
                                         userMedicine = userUpdateMedicine
                               };
-                              return null;
+                              //return null;
                     }
 
 
-                    public ResponseModel CUSTOMERUserList()
+                    public List<UserMedicine> CUSTOMERUserList()
                     {
                               var users = _context.userMediciness.ToList();
-                              return new ResponseModel
-                              {
-                                        status = true,
-                                        responseMessage = "User List Retrieved Successfully",
-                                        LSTuserMedicines = users
-                              };
-                              return null;
+                              //return new ResponseModel
+                              //{
+                              //          status = true,
+                              //          responseMessage = "User List Retrieved Successfully",
+                              //          LSTuserMedicines = users
+                              //};
+                              return users;
                     }
 
                     public ResponseModel ViewUser(int id)//UserMedicine userViewMedicine

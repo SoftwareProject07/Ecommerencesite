@@ -36,24 +36,24 @@ namespace Ecommerencesite.Controllers
                               try
                               {
                                         // ✅ PHOTO UPLOAD
-                                        if (model.Photo != null && model.Photo.Length > 0)
-                                        {
-                                                  var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+                                        //if (model.Photo != null && model.Photo.Length > 0)
+                                        //{
+                                        //          var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
 
-                                                  if (!Directory.Exists(uploadsFolder))
-                                                            Directory.CreateDirectory(uploadsFolder);
+                                        //          if (!Directory.Exists(uploadsFolder))
+                                        //                    Directory.CreateDirectory(uploadsFolder);
 
-                                                  var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
-                                                  var filePath = Path.Combine(uploadsFolder, fileName);
+                                        //          var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
+                                        //          var filePath = Path.Combine(uploadsFolder, fileName);
 
-                                                  using (var stream = new FileStream(filePath, FileMode.Create))
-                                                  {
-                                                            await model.Photo.CopyToAsync(stream); // ✅ CORRECT
-                                                  }
+                                        //          using (var stream = new FileStream(filePath, FileMode.Create))
+                                        //          {
+                                        //                    await model.Photo.CopyToAsync(stream); // ✅ CORRECT
+                                        //          }
 
-                                                  // ✅ PHOTO URL SAVE
-                                                  model.PhotoUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
-                                        }
+                                        //          // ✅ PHOTO URL SAVE
+                                        //          model.PhotoUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+                                        //}
 
                                         _usermedicinerepository.CREATERegisterUser(model);
 
@@ -107,10 +107,10 @@ namespace Ecommerencesite.Controllers
                               return delete;
                     }
                     [HttpGet("AllUserList")]
-                    public ResponseModel UserList() // usermedicine list dta 
-                    {
-                              var userlist = _usermedicinerepository.CUSTOMERUserList();
-                              return userlist;
+                    public List<UserMedicine> UserList() // usermedicine list dta 
+                      {
+                            var a= _usermedicinerepository.CUSTOMERUserList().ToList();
+                              return a;
                     }
                     [HttpGet("AllOrderList")]
                     public ResponseModel OrderList() // Usermedicine --- order list dat

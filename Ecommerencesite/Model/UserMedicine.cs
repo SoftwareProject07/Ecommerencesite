@@ -45,10 +45,10 @@ namespace Ecommerencesite.Model
                     //           //public string? OrderType { get; set; }
 
                     // }
-                    [NotMapped]
-                    public IFormFile? Photo { get; set; }
+                    //[NotMapped]
+                    //public IFormFile? Photo { get; set; }
 
-                    public string? PhotoUrl { get; set; }
+                    //public string? PhotoUrl { get; set; }
 
 
           }

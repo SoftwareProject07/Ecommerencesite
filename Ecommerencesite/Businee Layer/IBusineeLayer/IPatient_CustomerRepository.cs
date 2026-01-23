@@ -8,6 +8,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void  Update(Patient_CustomerModel _patientcustoermmodel);
                     public Patient_CustomerModel DeletePatient(int id);
                     public  List<Patient_CustomerModel> GetAllPatients_Customers();
+                    public Patient_CustomerModel SearchCustomerProfile(int id);
 
           }
 }

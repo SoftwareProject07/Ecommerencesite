@@ -95,79 +95,124 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          }
                     //}
 
+                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
+                    //{
+                    //          var response = new ResponseModel();
+
+                    //          var user = _context.userMediciness
+                    //              .FirstOrDefault(u =>
+                    //                  (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
+                    //                  ||
+                    //                  (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
+                    //              );
+
+                    //          if (user != null)
+                    //          {
+                    //                    // ✅ user found
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Customer Login Successful",
+                    //                              userMedicine = user
+                    //                    };
+                    //          }
+                    //          else
+                    //          {
+                    //                    // ❌ user not found
+                    //                    string message = "Invalid Email/MobileNumber or Password";
+
+                    //                    if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
+                    //                              message = "Invalid Email/MobileNumber or Password";
+
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = message,
+                    //                              userMedicine = null
+                    //                    };
+                    //          }
+                    //}
+
+                    // 2. Login Logic
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {
-                              var response = new ResponseModel();
-
-                              var user = _context.userMediciness
+                              // 1. Authenticate user from login table
+                              var userAccount = _context.userMediciness
                                   .FirstOrDefault(u =>
                                       (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
                                       ||
                                       (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
                                   );
 
-                              if (user != null)
+                              if (userAccount != null)
                               {
-                                        // ✅ user found
+                                        // 2. ✅ User mil gaya. Ab usi person ki Details Patient table se nikaalte hain.
+                                        // Hum Email ya Phone Number use karenge dono tables ko match karne ke liye.
+                                        var customerDetails = _context.patient_CustomerModels
+                                            .FirstOrDefault(S=>S.Patient_CustomerId==userAccount.id
+
+                                            //  c =>
+                                            //c.Email == userAccount.Email ||
+                                            //c.PhoneNumber == userAccount.MobileNumber
+                                            );
+
+
                                         return new ResponseModel
                                         {
                                                   status = true,
-                                                  responseMessage = "Customer Login Successful",
-                                                  userMedicine = user
+                                                  responseMessage = "Login Successful",
+                                                  // Ab userMedicine ki jagah hum pura Customer Profile bhej rahe hain
+                                                  Patient_CustomerProfiless = customerDetails
                                         };
                               }
                               else
                               {
-                                        // ❌ user not found
-                                        string message = "Invalid Email/MobileNumber or Password";
-
-                                        if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
-                                                  message = "Invalid Email/MobileNumber or Password";
-
+                                        // 3. ❌ Login Failed
                                         return new ResponseModel
                                         {
                                                   status = false,
-                                                  responseMessage = message,
-                                                  userMedicine = null
+                                                  responseMessage = "Invalid Credentials",
+                                                  Patient_CustomerProfiless = null
                                         };
                               }
-                              // 🔐 JWT TOKEN
-                              var claims = new[]
-                                        {
-            new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
-            new Claim(ClaimTypes.Role, user.type ?? "User")
-        };
-
-                              var key = new SymmetricSecurityKey(
-                                  Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
-                              );
-
-                              var creds = new SigningCredentials(
-                                  key, SecurityAlgorithms.HmacSha256
-                              );
-
-                              var token = new JwtSecurityToken(
-                                  issuer: _configuration["Jwt:Issuer"],
-                                  audience: _configuration["Jwt:Audience"],
-                                  claims: claims,
-                                  expires: DateTime.UtcNow.AddDays(1),
-                                  signingCredentials: creds
-                              );
-
-                              response.status = true;
-                              response.responseMessage = "Login Successful";
-                              response.Data = new
-                              {
-                                        token = new JwtSecurityTokenHandler().WriteToken(token),
-                                        userId = user.id,
-                                        role = user.type,
-                                        email = user.Email,
-                                        mobile=user.MobileNumber
-
-                              };
-
-                              return response;
                     }
+                    // 🔐 JWT TOKEN
+                    //                      var claims = new[]
+                    //                                {
+                    //    new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+                    //    new Claim(ClaimTypes.Role, user.type ?? "User")
+                    //};
+
+                    //                      var key = new SymmetricSecurityKey(
+                    //                          Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
+                    //                      );
+
+                    //                      var creds = new SigningCredentials(
+                    //                          key, SecurityAlgorithms.HmacSha256
+                    //                      );
+
+                    //                      var token = new JwtSecurityToken(
+                    //                          issuer: _configuration["Jwt:Issuer"],
+                    //                          audience: _configuration["Jwt:Audience"],
+                    //                          claims: claims,
+                    //                          expires: DateTime.UtcNow.AddDays(1),
+                    //                          signingCredentials: creds
+                    //                      );
+
+                    //                      response.status = true;
+                    //                      response.responseMessage = "Login Successful";
+                    //                      response.Data = new
+                    //                      {
+                    //                                token = new JwtSecurityTokenHandler().WriteToken(token),
+                    //                                userId = user.id,
+                    //                                role = user.type,
+                    //                                email = user.Email,
+                    //                                mobile=user.MobileNumber
+
+                    //                      };
+
+                    //                      return response;
+                    //            }
 
 
 
@@ -247,12 +292,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     public List<UserMedicine> CUSTOMERUserList()
                     {
                               var users = _context.userMediciness.ToList();
-                              //return new ResponseModel
-                              //{
-                              //          status = true,
-                              //          responseMessage = "User List Retrieved Successfully",
-                              //          LSTuserMedicines = users
-                              //};
+                              
                               return users;
                     }
 

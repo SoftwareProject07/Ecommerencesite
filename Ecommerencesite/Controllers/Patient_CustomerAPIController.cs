@@ -2,6 +2,7 @@
 using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 
 namespace Ecommerencesite.Controllers
@@ -35,12 +36,43 @@ namespace Ecommerencesite.Controllers
                               _patient_CustomerRepository.Update( _patientcustoermmodel);
                               //return Ok(_patientcustoermmodel);
                     }
-                    //[HttpGet("GetAllPatients_Customers")] 
-                    //public List<Patient_CustomerModel> GetAllPatients_Customers()
+                    [HttpGet("SearchCustomerProfile")]
+                    public IActionResult SearchCustomerProfile(int id)
+                    {
+                              var serach = _patient_CustomerRepository.SearchCustomerProfile(id);
+                              return Ok(serach);
+                    }
+                    //[HttpGet("SearchCustomerProfile")]
+                    //public IActionResult SearchCustomerProfile(string email, string phone)
                     //{
-                    //          var listpatients= _patient_CustomerRepository.GetAllPatients_Customers();
-                    //          return listpatients;
+                    //          if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone))
+                    //          {
+                    //                    return BadRequest(new
+                    //                    {
+                    //                              status = false,
+                    //                              message = "Email and Phone required"
+                    //                    });
+                    //          }
+
+                    //          var customer = _patient_CustomerRepository
+                    //              .FirstOrDefault(x => x.Email == email && x.Phone == phone);
+
+                    //          if (customer == null)
+                    //          {
+                    //                    return NotFound(new
+                    //                    {
+                    //                              status = false,
+                    //                              message = "Customer not found"
+                    //                    });
+                    //          }
+
+                    //          return Ok(new
+                    //          {
+                    //                    status = true,
+                    //                    data = customer
+                    //          });
                     //}
+
                     [HttpGet("GetAllPatients_Customers")]
                     public IActionResult GetAllPatients_Customers()
                     {

@@ -41,6 +41,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return listpatient;
                     }
 
+                    public Patient_CustomerModel SearchCustomerProfile(int id)
+                    {
+                              var customerprofile = _dbcontext.patient_CustomerModels.Where(s => s.Patient_CustomerId == id).FirstOrDefault();
+                              return customerprofile;
+                    }
+
                     public void Update(Patient_CustomerModel _patientcustoermmodel)
                     {
                               _dbcontext.patient_CustomerModels.Update(_patientcustoermmodel);

@@ -146,22 +146,15 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               if (userAccount != null)
                               {
-                                        // 2. ✅ User mil gaya. Ab usi person ki Details Patient table se nikaalte hain.
-                                        // Hum Email ya Phone Number use karenge dono tables ko match karne ke liye.
+                                        // 2. ✅ User mil gaya. Patient table se details fetch karein.
+                                        // Yahan 'userAccount.Patient_CustomerId' use karein (jo bhi aapki table mein column name hai)
                                         var customerDetails = _context.patient_CustomerModels
-                                            .FirstOrDefault(S=>S.Patient_CustomerId==userAccount.id
-
-                                            //  c =>
-                                            //c.Email == userAccount.Email ||
-                                            //c.PhoneNumber == userAccount.MobileNumber
-                                            );
-
+                                            .FirstOrDefault(s => s.Patient_CustomerId == userAccount.id);
 
                                         return new ResponseModel
                                         {
                                                   status = true,
                                                   responseMessage = "Login Successful",
-                                                  // Ab userMedicine ki jagah hum pura Customer Profile bhej rahe hain
                                                   Patient_CustomerProfiless = customerDetails
                                         };
                               }

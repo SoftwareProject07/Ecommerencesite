@@ -58,42 +58,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
-                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
-                    //{
-                    //          // Find user by email+password OR mobile+password
-                    //          var user = _context.userMediciness
-                    //              .FirstOrDefault(u =>
-                    //                  (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
-                    //                  ||
-                    //                  (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
-                    //              );
-
-                    //          if (user != null)
-                    //          {
-                    //                    // ✅ user found
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Customer Login Successful",
-                    //                              userMedicine = user
-                    //                    };
-                    //          }
-                    //          else
-                    //          {
-                    //                    // ❌ user not found
-                    //                    string message = "Invalid Email/MobileNumber or Password";
-
-                    //                    if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
-                    //                              message = "Invalid Email/MobileNumber or Password";
-
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = message,
-                    //                              userMedicine = null
-                    //                    };
-                    //          }
-                    //}
+                    // 1. correct login logic
 
                     //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     //{
@@ -133,39 +98,79 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          }
                     //}
 
-                    // 2. Login Logic
+                    // 2. Login Logic trail based on fetching additional details from Patient_CustomerModel
+                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
+                    //{
+                    //          var response = new ResponseModel();
+
+                    //          // 1. Pehle UserMedicine table mein check karein login credentials
+                    //          var user = _context.userMediciness
+                    //              .FirstOrDefault(u =>
+                    //                  (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
+                    //                  ||
+                    //                  (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
+                    //              );
+
+                    //          if (user != null)
+                    //          {
+                    //                    // 2. Agar login successful hai, toh Patient_CustomerModel se details layein
+                    //                    // Hum Email ya Phone match kar sakte hain kyunki ID dono tables mein alag ho sakti hai
+                    //                    //var customerDetails = _context.patient_CustomerModels
+                    //                    //    .FirstOrDefault(p => p.Email == user.Email || p.PhoneNumber == user.MobileNumber);
+                    //                    var customerDetails =  _context.patient_CustomerModels.Where(s=>s.Patient_CustomerId==user.id).FirstOrDefault();
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Customer Login Successful",
+                    //                              userMedicine = user, // Aapka login user data
+                    //                              Patient_CustomerProfiless = customerDetails // Ye naya field ResponseModel mein add karna hoga
+                    //                    };
+                    //          }
+                    //          else
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = "Invalid Email/MobileNumber or Password",
+                    //                              userMedicine = null
+                    //                    };
+                    //          }
+                    //}
+                    //3.
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {
-                              // 1. Authenticate user from login table
-                              var userAccount = _context.userMediciness
+                              // 1. User check karein Email/Mobile aur Password se
+                              var user = _context.userMediciness
                                   .FirstOrDefault(u =>
                                       (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
                                       ||
                                       (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
                                   );
 
-                              if (userAccount != null)
+                              if (user != null)
                               {
-                                        // 2. ✅ User mil gaya. Patient table se details fetch karein.
-                                        // Yahan 'userAccount.Patient_CustomerId' use karein (jo bhi aapki table mein column name hai)
-                                        var customerDetails = _context.patient_CustomerModels
-                                            .FirstOrDefault(s => s.Patient_CustomerId == userAccount.id);
+                                        // 2. Sirf usi User ki ID se match hone wale addresses fetch karein
+                                        // Isse Shivam (ID: 5) ko Gautam (ID: 10) ka data kabhi nahi dikhega
+                                        var userAddresses = _context.patient_CustomerModels
+                                                                    .Where(p => p.UserId == user.id)
+                                                                    .ToList();
 
                                         return new ResponseModel
                                         {
                                                   status = true,
                                                   responseMessage = "Login Successful",
-                                                  Patient_CustomerProfiless = customerDetails
+                                                  userMedicine = user,
+                                                  lstcustomeraddress = userAddresses // Agar address nahi hai toh ye empty list [] jayegi
                                         };
                               }
                               else
                               {
-                                        // 3. ❌ Login Failed
                                         return new ResponseModel
                                         {
                                                   status = false,
-                                                  responseMessage = "Invalid Credentials",
-                                                  Patient_CustomerProfiless = null
+                                                  responseMessage = "Invalid Email/MobileNumber or Password",
+                                                  userMedicine = null,
+                                                  lstcustomeraddress = null
                                         };
                               }
                     }

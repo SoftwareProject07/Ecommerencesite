@@ -1,6 +1,7 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -11,9 +12,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     {
                               this._dbcontext = dbcontext;
                     }
-                    public void AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
+                    public void  AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
                     {
-                             _dbcontext.patient_CustomerModels.Add(patientcustoermmodel);
+                           _dbcontext.patient_CustomerModels.Add(patientcustoermmodel);
+                           //   return Ok(a);
                                 _dbcontext.SaveChanges();
                     }
 
@@ -35,6 +37,20 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return delete;
                     }
 
+                    //public Patient_CustomerModel DetailsCustomerProfile(int id)
+                    //{
+                    //        var a= _dbcontext.patient_CustomerModels.Where(s => s.Patient_CustomerId == id).FirstOrDefault();
+                    //          return a;
+                    //}
+                    public Patient_CustomerModel DetailsCustomerProfile(int loginUserId)
+                    {
+                              var customer = _dbcontext.patient_CustomerModels
+                                             .FirstOrDefault(x => x.UserId == loginUserId);
+
+                              return customer;
+                    }
+
+
                     public List<Patient_CustomerModel> GetAllPatients_Customers()
                     {
                             var listpatient=  _dbcontext.patient_CustomerModels.ToList();
@@ -52,6 +68,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _dbcontext.patient_CustomerModels.Update(_patientcustoermmodel);
                               _dbcontext.SaveChanges();
                     }
+
 
                    
           }

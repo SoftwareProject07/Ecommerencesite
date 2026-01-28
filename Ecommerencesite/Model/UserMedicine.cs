@@ -35,20 +35,7 @@ namespace Ecommerencesite.Model
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
 
 
-                    //Persisted photo info
-                    // [NotMapped] // ❗ DB me save nahi hoga
-                    //// public IFormFile? Photo { get; set; }
-                    // public string? PhotoUrl
-                    // {
-                    //           get; set;
-                    //           //  public int Active { get; set; }
-                    //           //public string? OrderType { get; set; }
-
-                    // }
-                    //[NotMapped]
-                    //public IFormFile? Photo { get; set; }
-
-                    //public string? PhotoUrl { get; set; }
+                  
 
 
           }

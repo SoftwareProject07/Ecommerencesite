@@ -16,12 +16,63 @@ namespace Ecommerencesite.Controllers
                     {
                               this._patient_CustomerRepository = patient_CustomerRepository;
                     }
+                    //[HttpPost]
+                    //[Route("AddPatient_Customer")]
+                    //public void AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
+                    //{
+                    //          _patient_CustomerRepository.AddPatient_Customer(patientcustoermmodel);
+                    //}
+
+                    //[HttpPost]
+                    //[Route("AddPatient_Customer")]
+                    //public IActionResult AddPatient_Customer(Patient_CustomerModel model)
+                    //{
+                    //          try
+                    //          {
+                    //                    // 1. Check karein ki UserId model mein aa rahi hai ya nahi
+                    //                    // Frontend se user ki login id model.UserId mein bhejni hogi
+                    //                    if (model.UserId <= 0)
+                    //                    {
+                    //                              return Ok(new { status = false, message = "User ID is required" });
+                    //                    }
+
+                    //                    // 2. Data context mein add karein
+                    //                    _patient_CustomerRepository.AddPatient_Customer(model);
+
+                    //                    // 3. Database mein save karein
+                    //                    //    _patient_CustomerRepository.();
+
+                    //                    return Ok(new { status = true, message = "Address saved successfully!" });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return BadRequest(new { status = false, message = ex.Message });
+                    //          }
+                    //}
+
                     [HttpPost]
                     [Route("AddPatient_Customer")]
-                    public void AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
+                    public IActionResult AddPatient_Customer(Patient_CustomerModel model)
                     {
-                              _patient_CustomerRepository.AddPatient_Customer(patientcustoermmodel);
+
+                              // Agar model null hai ya UserId 0 hai
+                              if (model == null || model.UserId == 0)
+                              {
+                                        return Ok(new { status = false, message = "User ID is required" });
+                              }
+
+                              try
+                              {
+                                        // Void method ko call kar rahe hain
+                                        _patient_CustomerRepository.AddPatient_Customer(model);
+                                        return Ok(new { status = true, message = "Address Saved Successfully!" });
+                              }
+                              catch (Exception ex)
+                              {
+                                        return Ok(new { status = false, message = "Error: " + ex.Message });
+                              }
                     }
+                  
                     [HttpDelete]
                     [Route("DeletePatient/{id}")]
                     public IActionResult DeletePatient(int id)
@@ -88,6 +139,18 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, ex.Message);
                               }
                     }
+
+                    [HttpGet("customer-profile/{userId}")]
+                    public IActionResult GetCustomerProfile(int userId)
+                    {
+                              var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
+
+                              if (data == null)
+                                        return NotFound("Customer profile not found");
+
+                              return Ok(data);
+                    }
+
 
           }
 }

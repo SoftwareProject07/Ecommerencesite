@@ -24,7 +24,6 @@ namespace Ecommerencesite.Model
                     //   public string? CustomerCountry { get; set; } = null;
 
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
-                    //[ForeignKey("UserId")]
-                    //public UserMedicine User { get; set; }
+                   
           }
 }

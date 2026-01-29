@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
@@ -9,7 +10,11 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public Patient_CustomerModel DeletePatient(int id);
                     public  List<Patient_CustomerModel> GetAllPatients_Customers();
                     public Patient_CustomerModel SearchCustomerProfile(int id);
-                    public Patient_CustomerModel  DetailsCustomerProfile(int id);
+                    //public Patient_CustomerModel  DetailsCustomerProfile(int id);
+
+                    public Patient_CustomerModel DetailsCustomerProfile(int userId);
+                    
+
 
           }
 }

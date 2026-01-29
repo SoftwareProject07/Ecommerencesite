@@ -20,12 +20,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class UserMedicineRepository : IUserMedicineRepository
           {
                     private readonly Ecommerecewebstedatabase _context;
-                    private readonly IConfiguration _configuration;
 
-                    public UserMedicineRepository(Ecommerecewebstedatabase context, IConfiguration configuration)//, IConfiguration configuration
+                    public UserMedicineRepository(Ecommerecewebstedatabase context)//, IConfiguration configuration
                     {
                               _context = context;
-                              _configuration = configuration;
                               //    _configuration = configuration;
                     }
 
@@ -152,7 +150,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         // 2. Sirf usi User ki ID se match hone wale addresses fetch karein
                                         // Isse Shivam (ID: 5) ko Gautam (ID: 10) ka data kabhi nahi dikhega
                                         var userAddresses = _context.patient_CustomerModels
-                                                                    .Where(p => p.UserId == user.id)
+                                                                    .Where(p => p.UsersId == user.id)
                                                                     .ToList();
 
                                         return new ResponseModel
@@ -173,45 +171,42 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                   lstcustomeraddress = null
                                         };
                               }
+
+
+                              //                          var user = _usermedicinerepository.USER
+                              //                           .FirstOrDefault(x =>
+                              //                               (x.Email == model.Email || x.PhoneNumber == model.Email)
+                              //                               && x.Password == model.Password);
+
+                              //                          if (user == null)
+                              //                                    return Unauthorized(new { status = false, message = "Invalid credentials" });
+
+                              //                          // 🔐 JWT Generate
+                              //                          var claims = new[]
+                              //                          {
+                              //    new Claim("UserId", user.Id.ToString()),
+                              //    new Claim(ClaimTypes.Email, user.Email)
+                              //};
+
+                              //                          var key = new SymmetricSecurityKey(
+                              //                              Encoding.UTF8.GetBytes(_config["Jwt:Key"])
+                              //                          );
+
+                              //                          var token = new JwtSecurityToken(
+                              //                              issuer: _config["Jwt:Issuer"],
+                              //                              audience: _config["Jwt:Audience"],
+                              //                              claims: claims,
+                              //                              expires: DateTime.Now.AddDays(1),
+                              //                              signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+                              //                          );
+
+                              //                          return Ok(new
+                              //                          {
+                              //                                    status = true,
+                              //                                    token = new JwtSecurityTokenHandler().WriteToken(token)
+                              //                          });
                     }
-                    // 🔐 JWT TOKEN
-                    //                      var claims = new[]
-                    //                                {
-                    //    new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
-                    //    new Claim(ClaimTypes.Role, user.type ?? "User")
-                    //};
-
-                    //                      var key = new SymmetricSecurityKey(
-                    //                          Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
-                    //                      );
-
-                    //                      var creds = new SigningCredentials(
-                    //                          key, SecurityAlgorithms.HmacSha256
-                    //                      );
-
-                    //                      var token = new JwtSecurityToken(
-                    //                          issuer: _configuration["Jwt:Issuer"],
-                    //                          audience: _configuration["Jwt:Audience"],
-                    //                          claims: claims,
-                    //                          expires: DateTime.UtcNow.AddDays(1),
-                    //                          signingCredentials: creds
-                    //                      );
-
-                    //                      response.status = true;
-                    //                      response.responseMessage = "Login Successful";
-                    //                      response.Data = new
-                    //                      {
-                    //                                token = new JwtSecurityTokenHandler().WriteToken(token),
-                    //                                userId = user.id,
-                    //                                role = user.type,
-                    //                                email = user.Email,
-                    //                                mobile=user.MobileNumber
-
-                    //                      };
-
-                    //                      return response;
-                    //            }
-
+           
 
 
 

@@ -9,13 +9,8 @@ namespace Ecommerencesite.Model
                     public int Patient_CustomerId { get; set; }
 
                     // ✅ IMPORTANT: Ye field link karegi Login User ki ID se
-                    public int UserId { get; set; }
+                    public int UsersId { get; set; }
                     public string? FullName { get; set; } = null;
-
-                    //public string? MiddleName { get; set; } = null;   AAAAAAAAAAAAAAAA
-
-                    //public string? LastName { get; set; } = null;
-
                     public string? Gender { get; set; } = null;
                     [EmailAddress]      
                     public string? Email { get; set; } = null;
@@ -29,7 +24,7 @@ namespace Ecommerencesite.Model
                     //   public string? CustomerCountry { get; set; } = null;
 
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
-                    [ForeignKey("UserId")]
-                    public UserMedicine User { get; set; }
+                    //[ForeignKey("UserId")]
+                    //public UserMedicine User { get; set; }
           }
 }

@@ -82,7 +82,45 @@ namespace Ecommerencesite.Controllers
                     {
                               return _usermedicinerepository.LOGINUserMedicine(loginDto);
                     }
-                 
+
+                    //                [HttpPost("login")]
+                    //                public IActionResult Login(UserLogindto model)
+                    //                {
+                    //                          var user = _usermedicinerepository.USER
+                    //                              .FirstOrDefault(x =>
+                    //                                  (x.Email == model.Email || x.PhoneNumber == model.Email)
+                    //                                  && x.Password == model.Password);
+
+                    //                          if (user == null)
+                    //                                    return Unauthorized(new { status = false, message = "Invalid credentials" });
+
+                    //                          // 🔐 JWT Generate
+                    //                          var claims = new[]
+                    //                          {
+                    //    new Claim("UserId", user.Id.ToString()),
+                    //    new Claim(ClaimTypes.Email, user.Email)
+                    //};
+
+                    //                          var key = new SymmetricSecurityKey(
+                    //                              Encoding.UTF8.GetBytes(_config["Jwt:Key"])
+                    //                          );
+
+                    //                          var token = new JwtSecurityToken(
+                    //                              issuer: _config["Jwt:Issuer"],
+                    //                              audience: _config["Jwt:Audience"],
+                    //                              claims: claims,
+                    //                              expires: DateTime.Now.AddDays(1),
+                    //                              signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+                    //                          );
+
+                    //                          return Ok(new
+                    //                          {
+                    //                                    status = true,
+                    //                                    token = new JwtSecurityTokenHandler().WriteToken(token)
+                    //                          });
+                    //                }
+
+
 
                     [HttpGet("ViewUser)")]
                     public ResponseModel ViewUser(int id)// DETAILS OF USER      

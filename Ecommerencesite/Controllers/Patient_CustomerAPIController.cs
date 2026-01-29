@@ -56,7 +56,7 @@ namespace Ecommerencesite.Controllers
                     {
 
                               // Agar model null hai ya UserId 0 hai
-                              if (model == null || model.UserId == 0)
+                              if (model == null || model.UsersId == 0)
                               {
                                         return Ok(new { status = false, message = "User ID is required" });
                               }
@@ -140,7 +140,18 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    [HttpGet("customer-profile/{userId}")]
+                    //[HttpGet("customer-profile")]
+                    //public IActionResult GetCustomerProfile(int userId)
+                    //{
+                    //          var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
+
+                    //          if (data == null)
+                    //                    return NotFound("Customer profile not found");
+
+                    //          return Ok(data);
+                    //}
+
+                    [HttpGet("customer-profile")]
                     public IActionResult GetCustomerProfile(int userId)
                     {
                               var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
@@ -150,6 +161,28 @@ namespace Ecommerencesite.Controllers
 
                               return Ok(data);
                     }
+
+
+                    // [Authorize]
+                    //[HttpGet("customer-profile")]
+                    //public IActionResult GetCustomerProfile()
+                    //{
+                    //          var userIdClaim = User.FindFirst("UserId")?.Value;
+
+                    //          if (userIdClaim == null)
+                    //                    return Unauthorized();
+
+                    //          int userId = int.Parse(userIdClaim);
+
+                    //          var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
+
+                    //          if (data == null)
+                    //                    return NotFound("Customer profile not found");
+
+                    //          return Ok(data);
+                    //}
+
+
 
 
           }

@@ -28,27 +28,29 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return delete;
                     }
 
-                    public Patient_CustomerModel DeltePatient(int id)
+                    // Profile customer 
+                    public Patient_CustomerModel DetailsCustomerProfile(int userId)
                     {
-                              var delete= _dbcontext.patient_CustomerModels.Find(id);     
-                            
-                                        _dbcontext.patient_CustomerModels.Remove(delete);
-                                        _dbcontext.SaveChanges();
-                              return delete;
+                              return _dbcontext.patient_CustomerModels
+                                               .FirstOrDefault(x => x.UsersId == userId);
                     }
 
                     //public Patient_CustomerModel DetailsCustomerProfile(int id)
                     //{
-                    //        var a= _dbcontext.patient_CustomerModels.Where(s => s.Patient_CustomerId == id).FirstOrDefault();
-                    //          return a;
-                    //}
-                    public Patient_CustomerModel DetailsCustomerProfile(int loginUserId)
-                    {
-                              var customer = _dbcontext.patient_CustomerModels
-                                             .FirstOrDefault(x => x.UserId == loginUserId);
+                    //          var customer = _dbcontext.patient_CustomerModels
+                    //                         .FirstOrDefault(x => x.UserId == id);
 
-                              return customer;
-                    }
+                    //          return customer;
+                    //}
+
+
+                    //public Patient_CustomerModel DetailsCustomerProfile(int int userId)
+                    //{
+                    //          var customer = _dbcontext.patient_CustomerModels
+                    //                         .FirstOrDefault(x => x.UserId == loginUserId);
+
+                    //          return customer;
+                    //}
 
 
                     public List<Patient_CustomerModel> GetAllPatients_Customers()
@@ -56,6 +58,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                             var listpatient=  _dbcontext.patient_CustomerModels.ToList();
                               return listpatient;
                     }
+
+                    //public Patient_CustomerModel SearchCustomerProfile(int id)
+                    //{
+                    //          throw new NotImplementedException();
+                    //}
 
                     public Patient_CustomerModel SearchCustomerProfile(int id)
                     {

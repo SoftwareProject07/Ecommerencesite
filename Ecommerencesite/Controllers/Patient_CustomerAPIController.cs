@@ -50,28 +50,28 @@ namespace Ecommerencesite.Controllers
                     //          }
                     //}
 
-                    [HttpPost]
-                    [Route("AddPatient_Customer")]
-                    public IActionResult AddPatient_Customer(Patient_CustomerModel model)
-                    {
+                    //[HttpPost]
+                    //[Route("AddPatient_Customer")]
+                    //public IActionResult AddPatient_Customer(Patient_CustomerModel model)
+                    //{
 
-                              // Agar model null hai ya UserId 0 hai
-                              if (model == null || model.UsersId == 0)
-                              {
-                                        return Ok(new { status = false, message = "User ID is required" });
-                              }
+                    //          // Agar model null hai ya UserId 0 hai
+                    //          if (model == null || model.UsersId == 0)
+                    //          {
+                    //                    return Ok(new { status = false, message = "User ID is required" });
+                    //          }
 
-                              try
-                              {
-                                        // Void method ko call kar rahe hain
-                                        _patient_CustomerRepository.AddPatient_Customer(model);
-                                        return Ok(new { status = true, message = "Address Saved Successfully!" });
-                              }
-                              catch (Exception ex)
-                              {
-                                        return Ok(new { status = false, message = "Error: " + ex.Message });
-                              }
-                    }
+                    //          try
+                    //          {
+                    //                    // Void method ko call kar rahe hain
+                    //                    _patient_CustomerRepository.AddPatient_Customer(model);
+                    //                    return Ok(new { status = true, message = "Address Saved Successfully!" });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return Ok(new { status = false, message = "Error: " + ex.Message });
+                    //          }
+                    //}
                   
                     [HttpDelete]
                     [Route("DeletePatient/{id}")]
@@ -141,16 +141,16 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-                    [HttpGet("customer-profile")]
-                    public IActionResult GetCustomerProfile(int userId)
-                    {
-                              var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
+                    //[HttpGet("customer-profile")]
+                    //public IActionResult GetCustomerProfile(int userId)
+                    //{
+                    //          var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
 
-                              if (data == null)
-                                        return NotFound("Customer profile not found");
+                    //          if (data == null)
+                    //                    return NotFound("Customer profile not found");
 
-                              return Ok(data);
-                    }
+                    //          return Ok(data);
+                    //}
 
 
 

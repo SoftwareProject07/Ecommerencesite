@@ -9,7 +9,7 @@ namespace Ecommerencesite.Model
                     public int Patient_CustomerId { get; set; }
 
                     // ✅ IMPORTANT: Ye field link karegi Login User ki ID se
-                    public int UsersId { get; set; }
+                    //public int UsersId { get; set; }
                     public string? FullName { get; set; } = null;
                     public string? Gender { get; set; } = null;
                     [EmailAddress]      

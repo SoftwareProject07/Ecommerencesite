@@ -29,11 +29,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
                     // Profile customer 
-                    public Patient_CustomerModel DetailsCustomerProfile(int userId)
-                    {
-                              return _dbcontext.patient_CustomerModels
-                                               .FirstOrDefault(x => x.UsersId == userId);
-                    }
+                    //public Patient_CustomerModel DetailsCustomerProfile(int userId)
+                    //{
+                    //          return _dbcontext.patient_CustomerModels
+                    //                           .FirstOrDefault(x => x.UsersId == userId);
+                    //}
 
                     //public Patient_CustomerModel DetailsCustomerProfile(int id)
                     //{

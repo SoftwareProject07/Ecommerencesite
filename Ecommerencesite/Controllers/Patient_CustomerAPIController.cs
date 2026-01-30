@@ -140,16 +140,6 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    //[HttpGet("customer-profile")]
-                    //public IActionResult GetCustomerProfile(int userId)
-                    //{
-                    //          var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
-
-                    //          if (data == null)
-                    //                    return NotFound("Customer profile not found");
-
-                    //          return Ok(data);
-                    //}
 
                     [HttpGet("customer-profile")]
                     public IActionResult GetCustomerProfile(int userId)
@@ -163,24 +153,6 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-                    // [Authorize]
-                    //[HttpGet("customer-profile")]
-                    //public IActionResult GetCustomerProfile()
-                    //{
-                    //          var userIdClaim = User.FindFirst("UserId")?.Value;
-
-                    //          if (userIdClaim == null)
-                    //                    return Unauthorized();
-
-                    //          int userId = int.Parse(userIdClaim);
-
-                    //          var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
-
-                    //          if (data == null)
-                    //                    return NotFound("Customer profile not found");
-
-                    //          return Ok(data);
-                    //}
 
 
 

@@ -10,14 +10,14 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
                     public ResponseModel CREATERegisterUser(UserMedicine userregistMedicine);
                     
                     ResponseModel LOGINUserMedicine(UserLogindto userLogindto);
-                    public ResponseModel ViewUser(int id );// DETAILS 
+                    public UserMedicine Customerprofile(int userId);// DETAILS 
                     public ResponseModel UpdateUserMedicine(UserMedicine userUpdateMedicine);
                     public ResponseModel DELETEUserMedicine(UserMedicine userdeleteMedicine);
                     public ResponseModel PlaceOrder(UserMedicine userOrder);
                     // public ResponseModel OrderList(UserMedicine userMedicine
                     public ResponseModel OrderList();// Usermedicine --- order list dat--All List
                     public List<UserMedicine> CUSTOMERUserList();// usermedicine list dta 
-
+                 //   public UserMedicine CustomerProfile(int userid);
                     //forget password
                     Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto);
 

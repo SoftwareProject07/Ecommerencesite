@@ -258,29 +258,29 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return users;
                     }
 
-                    public ResponseModel ViewUser(int id)//UserMedicine userViewMedicine
-                    {
-                              var user = _context.userMediciness.Where(s => s.id == id).FirstOrDefault();
-                              if (user != null)
-                              {
-                                        return new ResponseModel
-                                        {
-                                                  status = true,
-                                                  responseMessage = "User Retrieved Successfully",
-                                                  userMedicine = user
-                                        };
-                              }
-                              else
-                              {
-                                        return new ResponseModel
-                                        {
-                                                  status = false,
-                                                  responseMessage = "User Not Found",
-                                                  userMedicine = null
-                                        };
-                              }
+                    //public ResponseModel ViewUser(int id)//UserMedicine userViewMedicine
+                    //{
+                    //          var user = _context.userMediciness.Where(s => s.id == id).FirstOrDefault();
+                    //          if (user != null)
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "User Retrieved Successfully",
+                    //                              userMedicine = user
+                    //                    };
+                    //          }
+                    //          else
+                    //          {
+                    //                    return new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = "User Not Found",
+                    //                              userMedicine = null
+                    //                    };
+                    //          }
 
-                    }
+                    //}
 
                   
                     public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
@@ -298,5 +298,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return true;
                     }
 
+                    public UserMedicine Customerprofile(int userId)
+                    {
+                            var customerprofiles= _context.userMediciness.Where(s => s.id == userId).FirstOrDefault();
+                                  return customerprofiles;
+                    }
           }
 }

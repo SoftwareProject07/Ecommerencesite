@@ -2,6 +2,7 @@
 using CRUDAPPLICATION.ModelDTO;
 using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Businee_Layer.BusinessLayer;
+using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Http;
@@ -35,25 +36,7 @@ namespace Ecommerencesite.Controllers
                     {
                               try
                               {
-                                        // ✅ PHOTO UPLOAD
-                                        //if (model.Photo != null && model.Photo.Length > 0)
-                                        //{
-                                        //          var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-
-                                        //          if (!Directory.Exists(uploadsFolder))
-                                        //                    Directory.CreateDirectory(uploadsFolder);
-
-                                        //          var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
-                                        //          var filePath = Path.Combine(uploadsFolder, fileName);
-
-                                        //          using (var stream = new FileStream(filePath, FileMode.Create))
-                                        //          {
-                                        //                    await model.Photo.CopyToAsync(stream); // ✅ CORRECT
-                                        //          }
-
-                                        //          // ✅ PHOTO URL SAVE
-                                        //          model.PhotoUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
-                                        //}
+                                      
 
                                         _usermedicinerepository.CREATERegisterUser(model);
 
@@ -122,12 +105,12 @@ namespace Ecommerencesite.Controllers
 
 
 
-                    [HttpGet("ViewUser)")]
-                    public ResponseModel ViewUser(int id)// DETAILS OF USER      
-                    {
-                              var view = _usermedicinerepository.ViewUser(id);
-                              return view;
-                    }
+                    //[HttpGet("ViewUser)")]
+                    //public ResponseModel ViewUser(int id)// DETAILS OF USER      
+                    //{
+                    //          var view = _usermedicinerepository.ViewUser(id);
+                    //          return view;
+                    //}
                     [HttpPut]
                     [Route("UpdateUserMedicine")]
                     public ResponseModel UpdateUserMedicine(UserMedicine userMedicine)
@@ -193,6 +176,17 @@ namespace Ecommerencesite.Controllers
                                         status = true,
                                         message = "Password reset successfully"
                               });
+                    }
+
+                    [HttpGet("customer-profile")]
+                    public IActionResult GetCustomerProfile(int userId)
+                    {
+                              var data = _usermedicinerepository.Customerprofile(userId);
+
+                              if (data == null)
+                                        return NotFound("Customer profile not found");
+
+                              return Ok(data);
                     }
 
 

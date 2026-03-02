@@ -12,7 +12,7 @@ namespace Ecommerencesite.Model
 
                     public string? FirstName { get; set; } = null;
 
-                    public string? MiddleName { get; set; } = null;
+                    public string? MiddleName { get; set; } = " ";
                     [Required(ErrorMessage = "LastName Will be required")]
                     [StringLength(100)]
 

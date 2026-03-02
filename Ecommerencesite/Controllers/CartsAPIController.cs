@@ -1,11 +1,10 @@
-﻿using Ecommerencesite.Businee_Layer.BusinessLayer;
-using Ecommerencesite.Businee_Layer.IBusineeLayer;
+﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+
+
+using System.Linq;
 
 namespace Ecommerencesite.Controllers
 {
@@ -18,49 +17,85 @@ namespace Ecommerencesite.Controllers
                     {
                               this._cartRepository = cartRepository;
                     }
-                    [HttpPost("addcart")]
-                    public async Task<IActionResult> AddToCart(int userId, int medicineId, int quantity)
+
+
+
+                    [HttpPost("AddToCart")]
+                    public IActionResult AddToCart([FromBody] Cart cart)
                     {
-                              await _cartRepository.AddToCart(userId, medicineId, quantity);
-                              return Ok("Item added to cart");
+                              var result = _cartRepository.AddToCart(cart);
+                              if (!result.status)
+                                        return BadRequest(result);
+
+                              return Ok(result);
                     }
 
 
-                    // ➕ ADD TO CART
-                    //[Authorize]
-                    //[HttpPost("addcart")]
-                    //public async Task<IActionResult> AddToCart(int medicineId, int quantity)
+
+                    [HttpGet("GetCartByUserId/{userId}")]
+                    public IActionResult GetCartByUserId(int userId)
+                    {
+                              try
+                              {
+                                        if (userId <= 0)
+                                                  return BadRequest("Invalid user id");
+
+                                        var result = _cartRepository.GetUserCartItems(userId);
+
+                                        if (result == null)
+                                                  return Ok(new List<Cart>());
+
+                                        return Ok(result);
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new
+                                        {
+                                                  Message = "Internal Server Error",
+                                                  Error = ex.Message
+                                        });
+                              }
+                    }
+
+                    [HttpGet("AllListCartProduct")]
+                    public IActionResult lstCartProduct()
+                    {
+                              try
+                              {
+                                        var listcart = _cartRepository.ListUserCartItem();
+                                        return Ok(listcart);
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new
+                                        {
+                                                  Message = "Internal Error",
+                                                  Error = ex.Message,
+                                                  Detail = ex.InnerException?.Message
+                                        });
+                              }
+                    }
+
+
+                    [HttpGet("badge-count/{userId}")]
+                    public IActionResult GetCount(int userId)
+                    {
+                              var count = _cartRepository.GetCartBadgeCount(userId);
+                              return Ok(count); // Response sirf ek number hoga, jaise '1'
+                    }
+
+
+
+                    //[HttpGet("GetMyCart/{email}")]
+                    //public async Task<IActionResult> GetMyCart(string email)
                     //{
-                    //          // 🔐 Get logged-in user id from token
-                    //          var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    //          var data = await _cartRepository.GetAddressesCartByEmailAsync(email);
+                    //          if (data == null) return NotFound();
 
-                    //          if (userIdClaim == null)
-                    //                    return Unauthorized("User not logged in");
-
-                    //          int userId = int.Parse(userIdClaim.Value);
-
-                    //          await _cartRepository.AddToCart(userId, medicineId, quantity);
-
-                    //          return Ok("Item added to cart");
+                    //          return Ok(data);
                     //}
-                    // 🛒 MY CART
-                    //Sample demo check 
-                    [Authorize]
-                    [HttpGet("my-cart")]
-                    public async Task<IActionResult> GetMyCart()
-                    {
-                              // 🔐 Get logged-in user id from JWT
-                              var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    //}
 
-                              if (userIdClaim == null)
-                                        return Unauthorized("User not logged in");
 
-                              int userId = int.Parse(userIdClaim.Value);
-
-                              // 🛒 Fetch only logged-in user's cart
-                              var cartItems = await _cartRepository.GetMyCart(userId);
-
-                              return Ok(cartItems);
-                    }
           }
 }

@@ -258,46 +258,44 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return users;
                     }
 
-                    //public ResponseModel ViewUser(int id)//UserMedicine userViewMedicine
-                    //{
-                    //          var user = _context.userMediciness.Where(s => s.id == id).FirstOrDefault();
-                    //          if (user != null)
-                    //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "User Retrieved Successfully",
-                    //                              userMedicine = user
-                    //                    };
-                    //          }
-                    //          else
-                    //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = "User Not Found",
-                    //                              userMedicine = null
-                    //                    };
-                    //          }
 
+
+                    //public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
+                    //{
+                    //          var user = await _context.userMediciness
+                    //              .FirstOrDefaultAsync(x => (x.Email.ToLower() == dto.Email.ToLower() ||x.MobileNumber==dto.PhoneNumber ||x.FirstName==dto.UserName));
+
+                    //          if (user == null)
+                    //                    return false;
+
+                    //          user.Password = dto.NewPassword;
+
+                    //          await _context.SaveChangesAsync();
+
+                    //          return true;
                     //}
 
-                  
                     public async Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto)
                     {
+                              // Check karein ki user exist karta hai ya nahi (Null checks ke saath)
                               var user = await _context.userMediciness
-                                  .FirstOrDefaultAsync(x => (x.Email.ToLower() == dto.Email.ToLower() ||x.MobileNumber==dto.PhoneNumber ||x.FirstName==dto.UserName));
+                                  .FirstOrDefaultAsync(x =>
+                                      (!string.IsNullOrEmpty(dto.Email) && x.Email.ToLower() == dto.Email.ToLower()) ||
+                                      (!string.IsNullOrEmpty(dto.PhoneNumber) && x.MobileNumber == dto.PhoneNumber) ||
+                                      (!string.IsNullOrEmpty(dto.UserName) && x.FirstName == dto.UserName));
 
                               if (user == null)
                                         return false;
 
+                              // Password update karein
                               user.Password = dto.NewPassword;
 
+                              // Database mein save karein
+                              _context.userMediciness.Update(user);
                               await _context.SaveChangesAsync();
 
                               return true;
                     }
-
                     public UserMedicine Customerprofile(int userId)
                     {
                             var customerprofiles= _context.userMediciness.Where(s => s.id == userId).FirstOrDefault();

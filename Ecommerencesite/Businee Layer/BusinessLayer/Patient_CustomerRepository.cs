@@ -2,6 +2,7 @@
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -28,29 +29,25 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return delete;
                     }
 
-                    // Profile customer 
-                    //public Patient_CustomerModel DetailsCustomerProfile(int userId)
+                    public async Task<List<Patient_CustomerModel>> GetAddressesByEmailAsync(string email)
+                    {
+                              return await _dbcontext.patient_CustomerModels
+                                 .Where(x => x.Email.ToLower() == email.ToLower())
+                                 .ToListAsync();
+                    }
+
+                    // Return type ko List banayein taaki saare addresses mil sakein
+                    //public List<Patient_CustomerModel> DeliveryAddress(int userid)
                     //{
-                    //          return _dbcontext.patient_CustomerModels
-                    //                           .FirstOrDefault(x => x.UsersId == userId);
+                    //          // .Where() filter karega ki sirf usi user ka data mile
+                    //          // .ToList() saare matching addresses ko ek saath nikaal lega
+                    //          var deliveryaddresses = _dbcontext.patient_CustomerModels
+                    //                                           .Where(s => s.Patient_CustomerId == userid)
+                    //                                           .ToList();
+
+                    //          return deliveryaddresses;
                     //}
 
-                    //public Patient_CustomerModel DetailsCustomerProfile(int id)
-                    //{
-                    //          var customer = _dbcontext.patient_CustomerModels
-                    //                         .FirstOrDefault(x => x.UserId == id);
-
-                    //          return customer;
-                    //}
-
-
-                    //public Patient_CustomerModel DetailsCustomerProfile(int int userId)
-                    //{
-                    //          var customer = _dbcontext.patient_CustomerModels
-                    //                         .FirstOrDefault(x => x.UserId == loginUserId);
-
-                    //          return customer;
-                    //}
 
 
                     public List<Patient_CustomerModel> GetAllPatients_Customers()
@@ -59,10 +56,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return listpatient;
                     }
 
-                    //public Patient_CustomerModel SearchCustomerProfile(int id)
-                    //{
-                    //          throw new NotImplementedException();
-                    //}
+                  
 
                     public Patient_CustomerModel SearchCustomerProfile(int id)
                     {

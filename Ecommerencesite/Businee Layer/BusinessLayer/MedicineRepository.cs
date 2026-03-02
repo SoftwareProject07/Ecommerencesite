@@ -14,110 +14,54 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class MedicineRepository : IMedicineRepositort
           {
                     private readonly Ecommerecewebstedatabase dbcontext;
-                    //private readonly IWebHostEnvironment _env;
-                    //private readonly IConfiguration _config;
-
-                    // IWebHostEnvironment env, IConfiguration config
+                   
                     public MedicineRepository(Ecommerecewebstedatabase _dbcontext)
                     {
                               this.dbcontext = _dbcontext;
-                              //_env = env;
-                              //_config = config;
+                           
                     }
 
-                   
-                    //public ResponseModel CreateMedicine(Medicine createMedicine)
-                    //{
-                    //          //if (createMedicine.ExpiryDate.HasValue)
-                    //          //{
-                    //          //          createMedicine.ExpiryDate =
-                    //          //              DateTime.SpecifyKind(createMedicine.ExpiryDate.Value, DateTimeKind.Utc);
-                    //          //}
-
-                    //          createMedicine.STATUS = 1;
-
-                    //          dbcontext.medicinesss.Add(createMedicine);
-                    //          dbcontext.SaveChanges();
-
-                    //          return new ResponseModel
-                    //          {
-                    //                    status = true,
-                    //                    responseMessage = "Medicine created successfully",
-                    //                    medicine = createMedicine
-                    //          };
-                    //}
 
 
 
+                
 
-                    //public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
-                    //{
-                    //          try
-                    //          {
-                    //                    // ✅ 1️⃣ Validation
-                    //                    if (medicine == null)
-                    //                              throw new Exception("Medicine data is null");
 
-                    //                    if (image == null || image.Length == 0)
-                    //                              throw new Exception("Image is null or empty");
-
-                    //                    // ✅ 2️⃣ WebRootPath safety
-                    //                    var webRoot = _env.WebRootPath;
-
-                    //                    if (string.IsNullOrEmpty(webRoot))
-                    //                              throw new Exception("WebRootPath is null. Check wwwroot & UseStaticFiles");
-
-                    //                    // ✅ 3️⃣ Folder path
-                    //                    string folderPath = Path.Combine(webRoot, "uploads", "medicines");
-
-                    //                    if (!Directory.Exists(folderPath))
-                    //                              Directory.CreateDirectory(folderPath);
-
-                    //                    // ✅ 4️⃣ Unique file name
-                    //                    string fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-                    //                    string filePath = Path.Combine(folderPath, fileName);
-
-                    //                    // ✅ 5️⃣ Save image
-                    //                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    //                    {
-                    //                              await image.CopyToAsync(stream);
-                    //                    }
-
-                    //                    // ✅ 6️⃣ Save image path in DB (PROPERTY NAME CHECK)
-                    //                    medicine.Image = "/uploads/medicines/" + fileName;
-                    //                    //  medicine.CreatedDate = DateTime.Now;
-
-                    //                    // ✅ 7️⃣ DbSet NAME CHECK
-                    //                    dbcontext.medicinesss.Add(medicine);
-                    //                    await dbcontext.SaveChangesAsync();
-
-                    //                    return true;
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    // 🔥 IMPORTANT: log this during debug
-                    //                    Console.WriteLine(ex.Message);
-                    //                    throw; // ❗ temporarily throw to SEE real error
-                    //          }
-                    //}
-
-                    public async Task<bool> CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    public async Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image)
                     {
+                              ResponseModel response = new ResponseModel();
+
+                              // 1. Check for Duplicate Name (Case-Insensitive)
+                              bool alreadyExists = await dbcontext.medicinesss
+                                  .AnyAsync(m => m.Name.Trim().ToLower() == medicine.Name.Trim().ToLower());
+
+                              if (alreadyExists)
+                              {
+                                        response.status = false;
+                                        response.responseMessage = "Duplicate medicine name! This medicine already exists.";
+                                        return response;
+                              }
+
+                              // 2. Image Upload Logic
                               string imageUrl = null;
                               if (image != null && image.Length > 0)
                               {
                                         imageUrl = await UploadImageToImgBB(image);
                               }
 
+                              // 3. Save Logic
                               medicine.Image = imageUrl ?? "https://via.placeholder.com/300x300.png?text=Medicine+Image";
                               medicine.STATUS = 1;
+                              medicine.Name = medicine.Name.Trim(); // Clean extra spaces
 
                               dbcontext.medicinesss.Add(medicine);
                               await dbcontext.SaveChangesAsync();
 
-                              return true;
+                              response.status = true;
+                              response.responseMessage = "Medicine added successfully!";
+                              return response;
                     }
-
+         
 
                     private Task<string> UploadImageToImgBB(IFormFile image)
                     {
@@ -173,23 +117,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     }
 
-                    public List<Medicine> lstmedicine()
-                    {
-                              try
-                              {
-                                        return dbcontext.medicinesss
-                                                       .Where(x => x.STATUS == 1).OrderBy(x => x.id)
-                                                       .ToList();
-                                       // return Ok(new { status = true, data });
-
-                              }
-                              catch
-                              {
-                                        return new List<Medicine>(); // ❗ NEVER throw 500
-                              }
-                    }
-
-
+              
                     public ResponseModel SearchMedicine(int id)
                     {
                               var SearchMedicine = new ResponseModel();
@@ -209,10 +137,29 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return SearchMedicine;
                     }
 
-                   
+
+
 
                     public ResponseModel UpdateMedicine(Medicine updatemedicine)
                     {
+                              // 1. Pehle check karein ki kya is naam ki koi aur medicine pehle se hai?
+                              // Hum current 'id' ko exclude ( != ) karenge taaki usi record se takrav na ho
+                              var isDuplicate = dbcontext.medicinesss
+                                  .Any(x => x.Name.Trim().ToLower() == updatemedicine.Name.ToLower()
+                                            && x.id != updatemedicine.id
+                                            && x.STATUS == 1);
+
+                         
+                              if (isDuplicate)
+                              {
+                                        return new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = "Duplicate Alert: Medicine   are already available."
+                                        };
+                              }
+
+                              // 2. Existing record find karein
                               var medicine = dbcontext.medicinesss
                                   .FirstOrDefault(x => x.id == updatemedicine.id && x.STATUS == 1);
 
@@ -225,6 +172,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         };
                               }
 
+                              // 3. Data update karein
                               medicine.Name = updatemedicine.Name;
                               medicine.Manufacturer = updatemedicine.Manufacturer;
                               medicine.UnitPrice = updatemedicine.UnitPrice;
@@ -241,6 +189,70 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         responseMessage = "Medicine Updated Successfully",
                                         medicine = medicine
                               };
+                    }
+
+
+                    public ResponseModel GetAllMedicine()
+                    {
+                              ResponseModel response = new ResponseModel();
+
+                              // Fix: .ToLower() use karke grouping karein taaki Case-Sensitivity ka issue solve ho jaye
+                              var medicineList = dbcontext.medicinesss
+                                                  .Where(m => m.STATUS == 1)
+                                                  .AsEnumerable() // Memory mein lakar filter karne ke liye (Case-insensitive support)
+                                                  .GroupBy(m => m.Name.Trim().ToLower())
+                                                  .Select(g => g.First())
+                                                  .ToList();
+
+                              if (medicineList != null && medicineList.Any())
+                              {
+                                        response.status = true;
+                                        response.responseMessage = "Success";
+                                        response.LSTmedicines = medicineList;
+                              }
+                              else
+                              {
+                                        response.status = false;
+                                        response.responseMessage = "No medicines found.";
+                              }
+
+                              return response;
+                    }
+                 
+
+                    public ResponseModel GetUserSpecificMedicines(int loggedInUserId)
+                    {
+                              ResponseModel response = new ResponseModel();
+                              try
+                              {
+                                        // 1. Pehle filter karein ki STATUS active ho aur UserId matching ho
+                                        // 2. Phir Name ke base par Group karein taaki us user ko duplicate na dikhe
+                                        var medicineList = dbcontext.medicinesss
+                                                                    .Where(m => m.STATUS == 1 && m.UserId == loggedInUserId)
+                                                                    .GroupBy(m => m.Name.Trim().ToLower()) // Name se grouping
+                                                                    .Select(g => g.FirstOrDefault()) // Har group ka pehla record
+                                                                    .ToList();
+
+                                        if (medicineList != null && medicineList.Any())
+                                        {
+                                                  response.status = true;
+                                                  response.responseMessage = "User specific unique medicines fetched.";
+                                                  response.LSTmedicines = medicineList;
+                                        }
+                                        else
+                                        {
+                                                  response.status = false;
+                                                  response.responseMessage = "Is user ke liye koi medicine nahi mili.";
+                                                  response.LSTmedicines = new List<Medicine>();
+                                        }
+                              }
+                              catch (Exception ex)
+                              {
+                                        response.status = false;
+                                        response.responseMessage = "Error: " + ex.Message;
+                              }
+
+                              return response;
                     }
 
           }

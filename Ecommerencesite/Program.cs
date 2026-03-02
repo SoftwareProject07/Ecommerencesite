@@ -39,7 +39,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +56,21 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader();
           });
 });
+
+
+//// 1. CORS Policy mein dono URLs add karein
+//builder.Services.AddCors(options => {
+//          //AllowAll
+//          options.AddPolicy("AllowMultiOrigins", policy => {
+//                    policy.WithOrigins(
+//                            "http://localhost:5173",
+//                            "https://medicineavaialblestore.vercel.app"
+//                          )
+//                          .AllowAnyMethod()
+//                          .AllowAnyHeader()
+//                          .AllowCredentials(); // Authentication cookies ke liye zaroori
+//          });
+//});
 
 builder.Services.AddControllers();
 

@@ -1,5 +1,6 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,63 +17,27 @@ namespace Ecommerencesite.Controllers
                     {
                               this._patient_CustomerRepository = patient_CustomerRepository;
                     }
-                    //[HttpPost]
-                    //[Route("AddPatient_Customer")]
-                    //public void AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
-                    //{
-                    //          _patient_CustomerRepository.AddPatient_Customer(patientcustoermmodel);
-                    //}
+                    [HttpPost]
+                    [Route("AddPatient_Customer")]
+                    public void AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
+                    {
+                              _patient_CustomerRepository.AddPatient_Customer(patientcustoermmodel);
+                    }
 
-                    //[HttpPost]
-                    //[Route("AddPatient_Customer")]
+                    //[HttpPost("AddPatient_Customer")]
                     //public IActionResult AddPatient_Customer(Patient_CustomerModel model)
                     //{
-                    //          try
-                    //          {
-                    //                    // 1. Check karein ki UserId model mein aa rahi hai ya nahi
-                    //                    // Frontend se user ki login id model.UserId mein bhejni hogi
-                    //                    if (model.UserId <= 0)
-                    //                    {
-                    //                              return Ok(new { status = false, message = "User ID is required" });
-                    //                    }
+                    //          //if (!ModelState.IsValid)
+                    //          //{
+                    //          //          // Isse aapko pata chalega ki kaunsi field fail ho rahi hai
+                    //          //          return BadRequest(ModelState);
+                    //          //}
 
-                    //                    // 2. Data context mein add karein
-                    //                    _patient_CustomerRepository.AddPatient_Customer(model);
-
-                    //                    // 3. Database mein save karein
-                    //                    //    _patient_CustomerRepository.();
-
-                    //                    return Ok(new { status = true, message = "Address saved successfully!" });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return BadRequest(new { status = false, message = ex.Message });
-                    //          }
+                    //          //// Aapka saving logic yahan...
+                    //          //return Ok(new { message = "Success" });
                     //}
 
-                    //[HttpPost]
-                    //[Route("AddPatient_Customer")]
-                    //public IActionResult AddPatient_Customer(Patient_CustomerModel model)
-                    //{
 
-                    //          // Agar model null hai ya UserId 0 hai
-                    //          if (model == null || model.UsersId == 0)
-                    //          {
-                    //                    return Ok(new { status = false, message = "User ID is required" });
-                    //          }
-
-                    //          try
-                    //          {
-                    //                    // Void method ko call kar rahe hain
-                    //                    _patient_CustomerRepository.AddPatient_Customer(model);
-                    //                    return Ok(new { status = true, message = "Address Saved Successfully!" });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return Ok(new { status = false, message = "Error: " + ex.Message });
-                    //          }
-                    //}
-                  
                     [HttpDelete]
                     [Route("DeletePatient/{id}")]
                     public IActionResult DeletePatient(int id)
@@ -93,67 +58,25 @@ namespace Ecommerencesite.Controllers
                               var serach = _patient_CustomerRepository.SearchCustomerProfile(id);
                               return Ok(serach);
                     }
-                    //[HttpGet("SearchCustomerProfile")]
-                    //public IActionResult SearchCustomerProfile(string email, string phone)
-                    //{
-                    //          if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone))
-                    //          {
-                    //                    return BadRequest(new
-                    //                    {
-                    //                              status = false,
-                    //                              message = "Email and Phone required"
-                    //                    });
-                    //          }
-
-                    //          var customer = _patient_CustomerRepository
-                    //              .FirstOrDefault(x => x.Email == email && x.Phone == phone);
-
-                    //          if (customer == null)
-                    //          {
-                    //                    return NotFound(new
-                    //                    {
-                    //                              status = false,
-                    //                              message = "Customer not found"
-                    //                    });
-                    //          }
-
-                    //          return Ok(new
-                    //          {
-                    //                    status = true,
-                    //                    data = customer
-                    //          });
-                    //}
+                  
 
                     [HttpGet("GetAllPatients_Customers")]
-                    public IActionResult GetAllPatients_Customers()
+                    public List<Patient_CustomerModel> GetAllPatients_Customers()
                     {
-                              try
-                              {
-                                        var result = _patient_CustomerRepository.GetAllPatients_Customers().ToList();
-
-                                        return Ok(result);
-                              }
-                              catch (Exception ex)
-                              {
-                                        // 🔴 Ye error Render logs me dikhega
-                                        return StatusCode(500, ex.Message);
-                              }
+                              var listpartient = _patient_CustomerRepository.GetAllPatients_Customers().ToList();
+                              return listpartient;
                     }
 
 
-                    //[HttpGet("customer-profile")]
-                    //public IActionResult GetCustomerProfile(int userId)
-                    //{
-                    //          var data = _patient_CustomerRepository.DetailsCustomerProfile(userId);
 
-                    //          if (data == null)
-                    //                    return NotFound("Customer profile not found");
+                    [HttpGet("GetAddressesByEmail/{email}")]
+                    public async Task<ActionResult> GetAddressesByEmail(string email)
+                    {
+                              if (string.IsNullOrEmpty(email)) return BadRequest("Email is missing");
 
-                    //          return Ok(data);
-                    //}
-
-
-
+                              var addresses = await _patient_CustomerRepository.GetAddressesByEmailAsync(email);
+                              return Ok(new { data = addresses });
+                    }
 
 
 

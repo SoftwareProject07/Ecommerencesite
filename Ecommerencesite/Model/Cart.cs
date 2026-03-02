@@ -26,8 +26,5 @@ namespace Ecommerencesite.Model
 
                     public int MedicineId { get; set; }
 
-                    // 🔗 Navigation Property
-                    //[ForeignKey("MedicineId")]
-                    //public Medicine Medicine { get; set; }
           }
 }

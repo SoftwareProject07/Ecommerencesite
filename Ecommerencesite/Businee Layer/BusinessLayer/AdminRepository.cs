@@ -25,7 +25,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         context.SaveChanges();
 
                                         res.status = true;
-                                        res.responseMessage = "User registered successfully";
+                                        res.responseMessage = "CompanyAdmin registered successfully";
                                         res.Data = adminREGMODEL;
                               }
                               catch (Exception ex)

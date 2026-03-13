@@ -12,6 +12,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     public Patient_CustomerRepository(Ecommerecewebstedatabase dbcontext)
                     {
                               this._dbcontext = dbcontext;
+
                     }
                     public void  AddPatient_Customer(Patient_CustomerModel patientcustoermmodel)
                     {

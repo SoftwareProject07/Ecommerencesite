@@ -10,7 +10,11 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public ResponseModel CREATERegistoryAdmin(AdminREGMODEL adminREGMODEL);
 
                     public ResponseModel LOGINAdmin(AdminLogindto _adminlogindto);
-                   // public ResponseModel Viewlogin(int id);// DETAILS 
+                    public ResponseModel UPDATERegistoryAdmin(AdminREGMODEL adminREGMODEL);
+                     public ResponseModel DeleteAdmin(int id);
+                    public ResponseModel GETRegistoryAdmin(int id);
+                     public ResponseModel GETALLRegistoryAdmin();
+                    // public ResponseModel Viewlogin(int id);// DETAILS 
 
           }
 }

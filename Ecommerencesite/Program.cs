@@ -120,6 +120,9 @@ builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
+builder.Services.AddScoped<IFeedbackCusotmerRepository, FeedbackCusotmerRepository>();
+builder.Services.AddScoped<ICustomerHelpIssueRepository, CustomerHelpIssueRepository>();
+builder.Services.AddScoped<ICustomerAddMedicineRepositorycs, CustomerAddMedicineRepository>();
 builder.Services.AddScoped<IPatient_CustomerRepository, Patient_CustomerRepository>();
 
 

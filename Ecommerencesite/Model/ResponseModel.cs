@@ -27,7 +27,13 @@ namespace Ecommerencesite.Model
                     public List<AdminREGMODEL>? LSTadminREGMODELS { get; set; } = null;
                     public AdminREGMODEL? adminREGMODEL { get; set; } = null;
                     public Patient_CustomerModel? Patient_CustomerProfiless { get; set; } = null;
-                    public List<Patient_CustomerModel> lstcustomeraddress {  get; set; } 
+                    public List<Patient_CustomerModel> lstcustomeraddress {  get; set; } = null;
+                    public List<FeedbackCusotmerModel>? LSTfeedbackCusotmerModels { get; set; } = null;
+                              public FeedbackCusotmerModel? feedbackCusotmerModel { get; set; } = null;
+                              public List<CustomerHelpIssueModel>? LSTcustomerHelpIssueModels { get; set; } = null;
+                              public CustomerHelpIssueModel? customerHelpIssueModel { get; set; } = null;
+                     public List<CustomerAddMedicineModel>? LSTcustomerAddMedicineModels { get; set; } = null;
+                              public CustomerAddMedicineModel? customerAddMedicineModel { get; set; } = null;
                     //[NotMapped]
 
                     public object? Data { get; set; } = null;

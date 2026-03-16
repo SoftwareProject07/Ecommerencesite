@@ -12,8 +12,9 @@ namespace Ecommerencesite.MODELDTO
                    
                    // [RegularExpression(@"^([0-9]{10})$")]
                     public string? MobileNumber { get; set; } = null;
+                    public string? StatusRemarks { get; set; } = null;
 
-                 
+
 
           }
 }

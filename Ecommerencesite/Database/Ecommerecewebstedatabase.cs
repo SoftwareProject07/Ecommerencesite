@@ -21,9 +21,12 @@ namespace Ecommerencesite.Database
                     public DbSet<HealthReport> HealthReports { get; set; }
                     public DbSet<AdminREGMODEL> adminREGMODELSs { get; set; }  
                     public DbSet<Patient_CustomerModel> patient_CustomerModels { get; set; }
+                    public DbSet<FeedbackCusotmerModel> feedbackCusotmerModels { get; set; }
+                    public DbSet<CustomerHelpIssueModel> customerHelpIssueModels { get; set; }
+                    public DbSet<CustomerAddMedicineModel> customerAddMedicineModels { get; set; }
 
 
-                
+
 
           }
 }

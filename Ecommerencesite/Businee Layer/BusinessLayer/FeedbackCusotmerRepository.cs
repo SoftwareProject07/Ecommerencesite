@@ -14,10 +14,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
                     public ResponseModel AddFeedback(FeedbackCusotmerModel feedback)
                     {
-                           var response = new ResponseModel();
+                              var response = new ResponseModel();
                               try
                               {
-                                        _dbContext.feedbackCusotmerModels.Add(feedback);  
+                                        _dbContext.feedbackCusotmerModels.Add(feedback);
                                         _dbContext.SaveChanges();
                                         response.status = true;
                                         response.responseMessage = "Feedback added successfully.";
@@ -29,6 +29,8 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               }
                               return response;
                     }
+
+
 
                     public ResponseModel GetAllFeedbacks()
                     {

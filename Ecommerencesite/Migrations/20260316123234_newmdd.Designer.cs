@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    [Migration("20260316113816_updateaddmodel")]
-    partial class updateaddmodel
+    [Migration("20260316123234_newmdd")]
+    partial class newmdd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -428,8 +428,8 @@ namespace Ecommerencesite.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("StatusRemarks")
-                        .HasColumnType("text");
+                    b.Property<bool?>("StatusRemark")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("type")
                         .HasColumnType("text");

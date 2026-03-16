@@ -32,7 +32,7 @@ namespace Ecommerencesite.Model
                     [EmailAddress]
                     public string? Email { get; set; } = null;
                     public Decimal? Fund { get; set; } = 0;
-                    public string? StatusRemarks { get; set; } = null;      
+                    public Boolean? StatusRemark { get; set; } = null;      
                     public string? type { get; set; } = null; //OrderType="User" or "Admin"
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
 

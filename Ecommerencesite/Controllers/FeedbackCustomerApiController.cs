@@ -32,7 +32,7 @@ namespace Ecommerencesite.Controllers
                     {
                               try
                               {
-                                        var feedbacks = _feedbackRepository.GetAllFeedbacks();
+                                        var feedbacks = _feedbackRepository.GetAllFeedbacks().LSTfeedbackCusotmerModels;
                                         return Ok(feedbacks);
                               }
                               catch (Exception ex)

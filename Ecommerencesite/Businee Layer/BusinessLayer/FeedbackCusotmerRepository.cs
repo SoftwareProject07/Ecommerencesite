@@ -38,7 +38,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         var feedbacks = _dbContext.feedbackCusotmerModels.ToList();
                                         response.status = true;
                                         response.responseMessage = "Feedbacks retrieved successfully.";
-                                        response.Data = feedbacks;
+                                        response.LSTfeedbackCusotmerModels = feedbacks;
                               }
                               catch (Exception ex)
                               {

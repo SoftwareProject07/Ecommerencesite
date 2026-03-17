@@ -425,9 +425,6 @@ namespace Ecommerencesite.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<bool?>("StatusRemark")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("type")
                         .HasColumnType("text");
 

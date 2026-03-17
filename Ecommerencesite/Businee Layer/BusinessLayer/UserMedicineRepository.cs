@@ -56,85 +56,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
-                    // 1. correct login logic
-
-                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
-                    //{
-                    //          var response = new ResponseModel();
-
-                    //          var user = _context.userMediciness
-                    //              .FirstOrDefault(u =>
-                    //                  (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
-                    //                  ||
-                    //                  (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
-                    //              );
-
-                    //          if (user != null)
-                    //          {
-                    //                    // ✅ user found
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Customer Login Successful",
-                    //                              userMedicine = user
-                    //                    };
-                    //          }
-                    //          else
-                    //          {
-                    //                    // ❌ user not found
-                    //                    string message = "Invalid Email/MobileNumber or Password";
-
-                    //                    if (!string.IsNullOrEmpty(_userlogindto.MobileNumber))
-                    //                              message = "Invalid Email/MobileNumber or Password";
-
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = message,
-                    //                              userMedicine = null
-                    //                    };
-                    //          }
-                    //}
-
-                    // 2. Login Logic trail based on fetching additional details from Patient_CustomerModel
-                    //public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
-                    //{
-                    //          var response = new ResponseModel();
-
-                    //          // 1. Pehle UserMedicine table mein check karein login credentials
-                    //          var user = _context.userMediciness
-                    //              .FirstOrDefault(u =>
-                    //                  (u.Email == _userlogindto.Email && u.Password == _userlogindto.Password)
-                    //                  ||
-                    //                  (u.MobileNumber == _userlogindto.MobileNumber && u.Password == _userlogindto.Password)
-                    //              );
-
-                    //          if (user != null)
-                    //          {
-                    //                    // 2. Agar login successful hai, toh Patient_CustomerModel se details layein
-                    //                    // Hum Email ya Phone match kar sakte hain kyunki ID dono tables mein alag ho sakti hai
-                    //                    //var customerDetails = _context.patient_CustomerModels
-                    //                    //    .FirstOrDefault(p => p.Email == user.Email || p.PhoneNumber == user.MobileNumber);
-                    //                    var customerDetails =  _context.patient_CustomerModels.Where(s=>s.Patient_CustomerId==user.id).FirstOrDefault();
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Customer Login Successful",
-                    //                              userMedicine = user, // Aapka login user data
-                    //                              Patient_CustomerProfiless = customerDetails // Ye naya field ResponseModel mein add karna hoga
-                    //                    };
-                    //          }
-                    //          else
-                    //          {
-                    //                    return new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = "Invalid Email/MobileNumber or Password",
-                    //                              userMedicine = null
-                    //                    };
-                    //          }
-                    //}
-                    //3.
                     public ResponseModel LOGINUserMedicine(UserLogindto _userlogindto)
                     {
                               // 1. User check karein Email/Mobile aur Password se
@@ -147,11 +68,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               if (user != null)
                               {
-                                        // 2. Sirf usi User ki ID se match hone wale addresses fetch karein
-                                        // Isse Shivam (ID: 5) ko Gautam (ID: 10) ka data kabhi nahi dikhega
-                                        //var userAddresses = _context.patient_CustomerModels
-                                        //                            .Where(p => p.UsersId == user.id)
-                                        //                            .ToList();
+                                     
 
                                         return new ResponseModel
                                         {
@@ -250,11 +167,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               //return null;
                     }
 
-                    // Admin side customer list show 
+                    // Admin side customer list show --correct 
                     public List<UserMedicine> CUSTOMERUserList()
                     {
                               var users = _context.userMediciness.ToList();
-                              
+
                               return users;
                     }
 
@@ -298,8 +215,29 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
                     public UserMedicine Customerprofile(int userId)
                     {
-                            var customerprofiles= _context.userMediciness.Where(s => s.id == userId).FirstOrDefault();
-                                  return customerprofiles;
+                              var customerprofiles = _context.userMediciness.Where(s => s.id == userId).FirstOrDefault();
+                              return customerprofiles;
                     }
+
+                   
+
+                    //public ResponseModel CUSTOMERUserList()
+                    //{
+                    //         var respon = new ResponseModel();
+                    //          try
+                    //          {
+                    //                    var users = _context.userMediciness.ToList();
+                    //                    respon.status = true;
+                    //                    respon.responseMessage = "Customer List Retrieved Successfully";
+                    //                    respon.LSTuserMedicines = users;
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    respon.status = false;
+                    //                    respon.responseMessage = ex.Message;
+                    //                    respon.LSTuserMedicines = null;
+                    //          }
+                    //          return respon;
+                    //}
           }
 }

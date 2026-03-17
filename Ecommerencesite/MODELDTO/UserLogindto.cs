@@ -9,12 +9,9 @@ namespace Ecommerencesite.MODELDTO
                     public string? Email { get; set; } = null;
                     public string? Password { get; set; } = null;
 
-                   
-                   // [RegularExpression(@"^([0-9]{10})$")]
+
+                    // [RegularExpression(@"^([0-9]{10})$")]
                     public string? MobileNumber { get; set; } = null;
-                    // Changed Boolean? to bool? for standard C# style
-                    public bool? StatusRemark { get; set; }
-
-
+                 //   public bool IsActive { get; set; } = true; // Default value set karein
           }
 }

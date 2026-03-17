@@ -5,7 +5,7 @@
 namespace Ecommerencesite.Migrations
 {
     /// <inheritdoc />
-    public partial class newupdd : Migration
+    public partial class newupdatesson : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

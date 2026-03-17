@@ -85,8 +85,8 @@ namespace Ecommerencesite.Controllers
                     }
                     [HttpGet("AllUserList")]
                     public IActionResult UserList() // usermedicine list dta 
-                      {
-                            var a= _usermedicinerepository.CUSTOMERUserList().ToList();
+                    {
+                              var a = _usermedicinerepository.CUSTOMERUserList().ToList();
                               return Ok(a);
                     }
                     [HttpGet("AllOrderList")]
@@ -146,6 +146,7 @@ namespace Ecommerencesite.Controllers
                     }
 
 
+                 
 
           }
 

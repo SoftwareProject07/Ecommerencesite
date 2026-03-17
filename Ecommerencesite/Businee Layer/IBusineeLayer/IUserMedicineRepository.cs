@@ -16,8 +16,10 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
                     public ResponseModel PlaceOrder(UserMedicine userOrder);
                     // public ResponseModel OrderList(UserMedicine userMedicine
                     public ResponseModel OrderList();// Usermedicine --- order list dat--All List
-                    public List<UserMedicine> CUSTOMERUserList();// usermedicine list dta 
-                 //   public UserMedicine CustomerProfile(int userid);
+                           public List<UserMedicine> CUSTOMERUserList();// usermedicine list dta 
+                    //public ResponseModel CUSTOMERUserList();// usermedicine list dta 
+
+                   //   public UserMedicine CustomerProfile(int userid);
                     //forget password
                     Task<bool> ResetPasswordAsync(ForgetPasswordUserDto dto);
 

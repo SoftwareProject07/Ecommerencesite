@@ -22,17 +22,14 @@ namespace Ecommerencesite.Model
                     [StringLength(100, MinimumLength = 6)]
                     [DataType(DataType.Password)]
                     public string? Password { get; set; } = null;
-                    //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-
-                    //[Display(Name = "The password and confirmation password do not match")]
-                    //public string ConfirmPassword { get; set; } = string.Empty; // ✅ Only for validation
-                    //  [RegularExpression(@"^([0-9]{10})$")]
+                   
                     public string? MobileNumber { get; set; } = null;
                    // [Required]
                     [EmailAddress]
                     public string? Email { get; set; } = null;
                     public Decimal? Fund { get; set; } = 0;
-                    public Boolean? StatusRemark { get; set; } = null;      
+                    //public Boolean? StatusRemark { get; set; } = null;
+                   // public bool IsActive { get; set; } = true; // Default value set karein
                     public string? type { get; set; } = null; //OrderType="User" or "Admin"
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
 

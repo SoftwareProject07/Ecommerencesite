@@ -4,6 +4,7 @@ using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Ecommerencesite.Controllers
@@ -127,6 +128,26 @@ namespace Ecommerencesite.Controllers
                                         });
                               }
                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     //[HttpGet("MyMedicineProducts/{userId}")]
                     //public IActionResult GetMyMedicines(int userId)

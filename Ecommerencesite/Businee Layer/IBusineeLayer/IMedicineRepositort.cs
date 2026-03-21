@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Model;
+using Ecommerencesite.MODELDTO;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
@@ -15,6 +16,8 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                                                 // public Medicine MEDINEVIEW(int medicineid);
 
                     public ResponseModel GetUserSpecificMedicines(int loggedInUserId);
+                    //public void  AddMedicineModel(AddModelMasterTypedto addmedicinemodel);
+                   // Task<bool> AddMedicineModel(AddModelMasterTypedto dto);
 
           }
 }

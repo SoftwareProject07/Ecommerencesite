@@ -1,9 +1,11 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
+using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 
 //DateTime expiryDateParsed;
@@ -218,7 +220,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               return response;
                     }
-                 
+
 
                     public ResponseModel GetUserSpecificMedicines(int loggedInUserId)
                     {
@@ -254,6 +256,45 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               return response;
                     }
+
+                    //public async Task<bool> AddMedicineModel(AddModelMasterTypedto dto)
+                    //{
+                    //          var newEntry = new Medicine
+                    //          {
+                    //                    Type = dto.Type
+                    //                    // Ab hum Name, ExpiryDate, UserId kuch bhi nahi bhej rahe!
+                    //          };
+
+                    //          dbcontext.medicinesss.Add(newEntry);
+                    //          return await dbcontext.SaveChangesAsync() > 0;
+                    //}
+
+
+
+
+
+                    //public void AddMedicineModel(AddModelMasterTypedto addmedicinemodel)
+                    //{
+                    //          var newMedicine = new Medicine
+                    //          {
+                    //                    Type = addmedicinemodel.Type,
+                    //          };
+                    //          dbcontext.medicinesss.Add(newMedicine);
+                    //          dbcontext.SaveChanges();
+                    //}
+
+                    //public void AddMedicineModelType(string type)
+                    //{
+                    //          var newMedicine = new Medicine
+                    //          {
+                    //                    Type = type,
+                    //                   // STATUS = 1
+                    //          };
+                    //          dbcontext.medicinesss.Add(newMedicine);
+                    //          dbcontext.SaveChanges();
+
+                    //}
+
 
           }
 

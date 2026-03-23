@@ -16,11 +16,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
           public class MedicineRepository : IMedicineRepositort
           {
                     private readonly Ecommerecewebstedatabase dbcontext;
-                   
-                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext)
+                    private readonly IWebHostEnvironment _environment;
+                    public MedicineRepository(Ecommerecewebstedatabase _dbcontext, IWebHostEnvironment environment)
                     {
                               this.dbcontext = _dbcontext;
-                           
+                              this._environment = environment;
+
                     }
 
 
@@ -181,6 +182,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               medicine.Discount = updatemedicine.Discount;
                               medicine.Quantity = updatemedicine.Quantity;
                               medicine.ExpiryDate = updatemedicine.ExpiryDate;
+                            medicine.Image = updatemedicine.Image;
+                              medicine.Type = updatemedicine.Type;
+                              medicine.ItemMedicine = updatemedicine.ItemMedicine;
                               medicine.STATUS = 1;
 
                               dbcontext.SaveChanges();
@@ -256,6 +260,46 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               return response;
                     }
+
+                    // Yeh method image ko server ke folder mein save karega
+                    //public async Task<string> SaveImageAsync(IFormFile image)
+                    //{
+                    //          if (image == null || image.Length == 0)
+                    //          {
+                    //                    return null;
+                    //          }
+
+                    //          try
+                    //          {
+                    //                    // 1. Path set karein: wwwroot/uploads
+                    //                    string contentPath = _environment.WebRootPath;
+                    //                    string uploadsFolder = Path.Combine(contentPath, "uploads");
+
+                    //                    // 2. Agar 'uploads' folder nahi bana hai, toh create karein
+                    //                    if (!Directory.Exists(uploadsFolder))
+                    //                    {
+                    //                              Directory.CreateDirectory(uploadsFolder);
+                    //                    }
+
+                    //                    // 3. Unique File Name generate karein taaki purani image replace na ho
+                    //                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                    //                    string filePath = Path.Combine(uploadsFolder, fileName);
+
+                    //                    // 4. File ko folder mein copy (save) karein
+                    //                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //                    {
+                    //                              await image.CopyToAsync(stream);
+                    //                    }
+
+                    //                    // 5. Database mein save karne ke liye relative path return karein
+                    //                    // Example: /uploads/abc-123.jpg
+                    //                    return "/uploads/" + fileName;
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    throw new Exception("Error while uploading file: " + ex.Message);
+                    //          }
+                    //}
 
                     //public async Task<bool> AddMedicineModel(AddModelMasterTypedto dto)
                     //{

@@ -14,7 +14,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public ResponseModel DetailsMedicine(int id);// searchMedicine 
                     public ResponseModel SearchMedicine(int id);// searchonlyMedicinename
                                                                 // public Medicine MEDINEVIEW(int medicineid);
-                    Task<string> SaveImageAsync(IFormFile image);
+                    //Task<string> SaveImageAsync(IFormFile image);
                     public ResponseModel GetUserSpecificMedicines(int loggedInUserId);
                     //public void  AddMedicineModel(AddModelMasterTypedto addmedicinemodel);
                    // Task<bool> AddMedicineModel(AddModelMasterTypedto dto);

@@ -261,6 +261,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return response;
                     }
 
+                    //public Task<string> SaveImageAsync(IFormFile image)
+                    //{
+                    //          throw new NotImplementedException();
+                    //}
+
                     // Yeh method image ko server ke folder mein save karega
                     //public async Task<string> SaveImageAsync(IFormFile image)
                     //{

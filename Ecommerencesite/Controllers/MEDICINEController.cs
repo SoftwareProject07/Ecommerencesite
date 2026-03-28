@@ -37,21 +37,28 @@ namespace Ecommerencesite.Controllers
                     //}
 
 
+                    //[HttpPost("CreateMedicine")]
+                    //public async Task<IActionResult> AddMedicine([FromForm] Medicine medicine, IFormFile image)
+                    //{
+                    //          var result = await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                    //          if (result.status == false)
+                    //          {
+                    //                    // 400 Bad Request bhejega duplicate hone par
+                    //                    return BadRequest(new { message = result.responseMessage });
+                    //          }
+
+                    //          // 200 OK bhejega success hone par
+                    //          return Ok(new { message = result.responseMessage });
+                    //}
                     [HttpPost("CreateMedicine")]
-                    public async Task<IActionResult> AddMedicine([FromForm] Medicine medicine, IFormFile image)
+                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
                     {
                               var result = await imedicineresp.CreateMedicineAsync(medicine, image);
 
-                              if (result.status == false)
-                              {
-                                        // 400 Bad Request bhejega duplicate hone par
-                                        return BadRequest(new { message = result.responseMessage });
-                              }
-
-                              // 200 OK bhejega success hone par
-                              return Ok(new { message = result.responseMessage });
+                              // Agar status false hai, to hum 400 Bad Request bhej sakte hain ya 200 ke andar status false
+                              return Ok(result);
                     }
-
 
                     [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)

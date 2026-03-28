@@ -27,7 +27,7 @@ namespace Ecommerencesite.Model
                     public string? Image { get; set; } = null;
 
                     public int STATUS { get; set; } = 1;
-                    public string? ItemMedicine { get; set; } = null;                     
+                    public string? ItemMedicine { get; set; }                      
                     public string? Type { get; set; }   = null;
 
           }

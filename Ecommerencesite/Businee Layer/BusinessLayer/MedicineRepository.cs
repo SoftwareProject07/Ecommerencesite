@@ -23,91 +23,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this._environment = environment;
 
                     }
-
-
-
-
-
-
-
-                    //public async Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-
-                    //          // 1. Check for Duplicate Name (Case-Insensitive)
-                    //          bool alreadyExists = await dbcontext.medicinesss
-                    //              .AnyAsync(m => m.Name.Trim().ToLower() == medicine.Name.Trim().ToLower());
-
-                    //          if (alreadyExists)
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "Duplicate medicine name! This medicine already exists.";
-                    //                    return response;
-                    //          }
-
-                    //          // 2. Image Upload Logic
-                    //          string imageUrl = null;
-                    //          if (image != null && image.Length > 0)
-                    //          {
-                    //                    imageUrl = await UploadImageToImgBB(image);
-                    //          }
-
-                    //          // 3. Save Logic
-                    //          medicine.Image = imageUrl ?? "https://via.placeholder.com/300x300.png?text=Medicine+Image";
-                    //          medicine.STATUS = 1;
-                    //          medicine.Name = medicine.Name.Trim(); // Clean extra spaces
-                    //         // medicine.ItemMedicine = medicine.ItemMedicine;
-                    //          dbcontext.medicinesss.Add(medicine);
-                    //          await dbcontext.SaveChangesAsync();
-
-                    //          response.status = true;
-                    //          response.responseMessage = "Medicine added successfully!";
-                    //          return response;
-                    //}
-                    //public async Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-
-                    //          // 1. Check for Duplicate Name (Case-Insensitive & Null Check)
-                    //          if (string.IsNullOrEmpty(medicine.Name))
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "Medicine name is required.";
-                    //                    return response;
-                    //          }
-
-                    //          bool alreadyExists = await dbcontext.medicinesss
-                    //              .AnyAsync(m => m.Name.ToLower() == medicine.Name.Trim().ToLower());
-
-                    //          if (alreadyExists)
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "Duplicate medicine name! This medicine already exists.";
-                    //                    return response;
-                    //          }
-
-                    //          // 2. Image Upload Logic
-                    //          string imageUrl = null;
-                    //          if (image != null && image.Length > 0)
-                    //          {
-                    //                    imageUrl = await UploadImageToImgBB(image);
-                    //          }
-
-                    //          // 3. Save Logic
-                    //          medicine.Image = imageUrl ?? "https://via.placeholder.com/300x300.png?text=Medicine+Image";
-                    //          medicine.STATUS = 1;
-                    //          medicine.Name = medicine.Name.Trim();
-
-                    //          // NOTE: 'ItemMedicine' automatically populate ho jayega agar 
-                    //          // Frontend se key name same bhejenge.
-
-                    //          dbcontext.medicinesss.Add(medicine);
-                    //          await dbcontext.SaveChangesAsync();
-
-                    //          response.status = true;
-                    //          response.responseMessage = "Medicine added successfully!";
-                    //          return response;
-                    //}
                     public async Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image)
                     {
                               ResponseModel response = new ResponseModel();
@@ -246,7 +161,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               var isDuplicate = dbcontext.medicinesss
                                   .Any(x => x.Name.Trim().ToLower() == updatemedicine.Name.ToLower()
                                             && x.id != updatemedicine.id
-                                            && x.STATUS == 1);
+                                            && x.STATUS == updatemedicine.STATUS);
 
                          
                               if (isDuplicate)
@@ -281,7 +196,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                             medicine.Image = updatemedicine.Image;
                               medicine.Type = updatemedicine.Type;
                               medicine.ItemMedicine = updatemedicine.ItemMedicine;
-                              medicine.STATUS = 1;
+                              medicine.STATUS = updatemedicine.STATUS;
 
                               dbcontext.SaveChanges();
 
@@ -357,88 +272,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return response;
                     }
 
-                    //public Task<string> SaveImageAsync(IFormFile image)
-                    //{
-                    //          throw new NotImplementedException();
-                    //}
-
-                    // Yeh method image ko server ke folder mein save karega
-                    //public async Task<string> SaveImageAsync(IFormFile image)
-                    //{
-                    //          if (image == null || image.Length == 0)
-                    //          {
-                    //                    return null;
-                    //          }
-
-                    //          try
-                    //          {
-                    //                    // 1. Path set karein: wwwroot/uploads
-                    //                    string contentPath = _environment.WebRootPath;
-                    //                    string uploadsFolder = Path.Combine(contentPath, "uploads");
-
-                    //                    // 2. Agar 'uploads' folder nahi bana hai, toh create karein
-                    //                    if (!Directory.Exists(uploadsFolder))
-                    //                    {
-                    //                              Directory.CreateDirectory(uploadsFolder);
-                    //                    }
-
-                    //                    // 3. Unique File Name generate karein taaki purani image replace na ho
-                    //                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
-                    //                    string filePath = Path.Combine(uploadsFolder, fileName);
-
-                    //                    // 4. File ko folder mein copy (save) karein
-                    //                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    //                    {
-                    //                              await image.CopyToAsync(stream);
-                    //                    }
-
-                    //                    // 5. Database mein save karne ke liye relative path return karein
-                    //                    // Example: /uploads/abc-123.jpg
-                    //                    return "/uploads/" + fileName;
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    throw new Exception("Error while uploading file: " + ex.Message);
-                    //          }
-                    //}
-
-                    //public async Task<bool> AddMedicineModel(AddModelMasterTypedto dto)
-                    //{
-                    //          var newEntry = new Medicine
-                    //          {
-                    //                    Type = dto.Type
-                    //                    // Ab hum Name, ExpiryDate, UserId kuch bhi nahi bhej rahe!
-                    //          };
-
-                    //          dbcontext.medicinesss.Add(newEntry);
-                    //          return await dbcontext.SaveChangesAsync() > 0;
-                    //}
-
-
-
-
-
-                    //public void AddMedicineModel(AddModelMasterTypedto addmedicinemodel)
-                    //{
-                    //          var newMedicine = new Medicine
-                    //          {
-                    //                    Type = addmedicinemodel.Type,
-                    //          };
-                    //          dbcontext.medicinesss.Add(newMedicine);
-                    //          dbcontext.SaveChanges();
-                    //}
-
-                    //public void AddMedicineModelType(string type)
-                    //{
-                    //          var newMedicine = new Medicine
-                    //          {
-                    //                    Type = type,
-                    //                   // STATUS = 1
-                    //          };
-                    //          dbcontext.medicinesss.Add(newMedicine);
-                    //          dbcontext.SaveChanges();
-
-                    //}
+                 
 
 
           }

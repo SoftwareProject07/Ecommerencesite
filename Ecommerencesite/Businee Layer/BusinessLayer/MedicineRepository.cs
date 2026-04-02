@@ -87,7 +87,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public ResponseModel DeleteMedicine(int id)
                     {
-                              var medicine = dbcontext.medicinesss.FirstOrDefault(x => x.id == id);
+                              var medicine = dbcontext.medicinesss.Where(x => x.id == id).FirstOrDefault();
 
                               if (medicine == null)
                               {
@@ -98,8 +98,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         };
                               }
 
-                              // ✅ SOFT DELETE
-                              medicine.STATUS = 0;
+                              // ✅ SOFT DELETEs
+                              medicine.STATUS = 1;
+                              dbcontext.medicinesss.Remove(medicine);
                               dbcontext.SaveChanges();
 
                               return new ResponseModel
@@ -107,9 +108,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         status = true,
                                         responseMessage = "Medicine deleted successfully"
                               };
+
+
+                              //          dbcontext.medicinesss.Remove(medicine);
+                              //          dbcontext.SaveChanges();
+                              //}
+
                     }
-
-
 
                     public ResponseModel DetailsMedicine(int id)
                     {

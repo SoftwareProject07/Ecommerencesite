@@ -199,6 +199,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               medicine.Quantity = updatemedicine.Quantity;
                               medicine.ExpiryDate = updatemedicine.ExpiryDate;
                             medicine.Image = updatemedicine.Image;
+                              medicine.MedicinesType = updatemedicine.MedicinesType;
                               medicine.Type = updatemedicine.Type;
                               medicine.ItemMedicine = updatemedicine.ItemMedicine;
                               medicine.STATUS = updatemedicine.STATUS;

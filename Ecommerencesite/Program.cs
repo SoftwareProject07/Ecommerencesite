@@ -124,7 +124,9 @@ builder.Services.AddScoped<IFeedbackCusotmerRepository, FeedbackCusotmerReposito
 builder.Services.AddScoped<ICustomerHelpIssueRepository, CustomerHelpIssueRepository>();
 builder.Services.AddScoped<ICustomerAddMedicineRepositorycs, CustomerAddMedicineRepository>();
 builder.Services.AddScoped<IPatient_CustomerRepository, Patient_CustomerRepository>();
-
+builder.Services.AddScoped<IBankdetailsRepository, BankdetailsRepository>();
+builder.Services.AddScoped<IbankselectmodelsRepository, bankselectmodelsRepository>();
+builder.Services.AddScoped<IQRCASHREPOSITORY, QRCASHREPOSITORY>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

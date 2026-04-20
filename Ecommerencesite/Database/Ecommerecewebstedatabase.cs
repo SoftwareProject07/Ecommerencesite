@@ -24,7 +24,9 @@ namespace Ecommerencesite.Database
                     public DbSet<FeedbackCusotmerModel> feedbackCusotmerModels { get; set; }
                     public DbSet<CustomerHelpIssueModel> customerHelpIssueModels { get; set; }
                     public DbSet<CustomerAddMedicineModel> customerAddMedicineModels { get; set; }
-
+                    public DbSet<bankdetailsModles> bankdetailsModless { get; set; }
+                    public DbSet<bankselectmodels> bankselectmodelss { get; set; }
+                    public DbSet<QRCashCodeModels> qRCashCodeModelss { get; set; }        
 
 
 

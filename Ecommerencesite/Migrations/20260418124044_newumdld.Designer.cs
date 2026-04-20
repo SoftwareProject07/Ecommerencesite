@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260418124044_newumdld")]
+    partial class newumdld
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -393,40 +396,6 @@ namespace Ecommerencesite.Migrations
                     b.ToTable("patient_CustomerModels");
                 });
 
-            modelBuilder.Entity("Ecommerencesite.Model.QRCashCodeModels", b =>
-                {
-                    b.Property<int>("QRcashcodeid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QRcashcodeid"));
-
-                    b.Property<string>("BankName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("text");
-
-                    b.Property<double>("QRcashcode")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TOTALAMOUNT")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("itemprice")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("totalitem")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("totalquantity")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("QRcashcodeid");
-
-                    b.ToTable("qRCashCodeModelss");
-                });
-
             modelBuilder.Entity("Ecommerencesite.Model.UserMedicine", b =>
                 {
                     b.Property<int>("id")
@@ -481,9 +450,6 @@ namespace Ecommerencesite.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BankId"));
 
-                    b.Property<string>("BankName")
-                        .HasColumnType("text");
-
                     b.Property<string>("CVV")
                         .HasColumnType("text");
 
@@ -499,22 +465,6 @@ namespace Ecommerencesite.Migrations
                     b.HasKey("BankId");
 
                     b.ToTable("bankdetailsModless");
-                });
-
-            modelBuilder.Entity("Ecommerencesite.Model.bankselectmodels", b =>
-                {
-                    b.Property<int>("bankselectid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("bankselectid"));
-
-                    b.Property<string>("BankName")
-                        .HasColumnType("text");
-
-                    b.HasKey("bankselectid");
-
-                    b.ToTable("bankselectmodelss");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.Order", b =>

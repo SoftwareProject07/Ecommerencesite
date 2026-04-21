@@ -20,11 +20,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     public bankselectmodels DeleteBankSelectModel(int id)
                     {
                               var model = dbContext.bankselectmodelss.Where(s => s.bankselectid == id).FirstOrDefault();
-                              //if(model != null)
-                              //{
-                              //          dbContext.bankselectmodelss.Remove(model);
-                              //          dbContext.SaveChanges();
-                              //}
+                              if (model != null)
+                              {
+                                        dbContext.bankselectmodelss.Remove(model);
+                                        dbContext.SaveChanges();
+                              }
                               return   model;
                     }
 

@@ -13,7 +13,7 @@ namespace Ecommerencesite.Controllers
                     public readonly IbankselectmodelsRepository _ibankselecttrespository;
                     public bankselectmodelsAPIController(IbankselectmodelsRepository ibankselecttrespository)
                     {
-                         this.     _ibankselecttrespository = ibankselecttrespository;
+                         this.  _ibankselecttrespository = ibankselecttrespository;
                     }
                     [HttpGet("GetAllBankSelect")]
                     public IActionResult GetAllBankSelectModels()

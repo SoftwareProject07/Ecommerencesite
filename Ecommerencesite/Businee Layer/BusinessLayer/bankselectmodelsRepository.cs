@@ -10,13 +10,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     {
                                this.dbContext= _dbcontext; 
                     }
-                    public void AddBankSelectModel(bankselectmodels model)
-                    {
-                              dbContext.bankselectmodelss.Add(model);
-                              dbContext.SaveChanges();
-
-                    }
-
                     public bankselectmodels DeleteBankSelectModel(int id)
                     {
                            var a=dbContext.bankselectmodelss.Where(s => s.bankselectid == id).FirstOrDefault();
@@ -29,6 +22,23 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
 
 
+                    }
+
+                    public void AddBankSelectModel(bankselectmodels model)
+                    {
+                              // 1. Check duplicate
+                              var exists = dbContext.bankselectmodelss
+                                  .Any(x => x.BankName.ToLower() == model.BankName.ToLower());
+
+                              if (exists)
+                              {
+                                        // Void return nahi kar sakta, isliye Exception throw karein
+                                        throw new Exception("Duplicate Bank Name");
+                              }
+
+                              // 2. Save if not duplicate
+                              dbContext.bankselectmodelss.Add(model);
+                              dbContext.SaveChanges();
                     }
 
                     public List<bankselectmodels> GetAllBankSelectModels()

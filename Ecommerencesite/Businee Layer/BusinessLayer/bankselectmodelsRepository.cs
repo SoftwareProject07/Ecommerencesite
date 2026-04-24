@@ -46,6 +46,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         throw new Exception("Duplicate Bank Name Found!");
                               }
 
+
                               // 3. Save as Clean Data
                               model.BankName = model.BankName.Trim().ToUpper(); // Database mein hamesha Capital save karein (Best Practice)
                               dbContext.bankselectmodelss.Add(model);

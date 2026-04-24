@@ -50,6 +50,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               model.BankName = model.BankName.Trim().ToUpper(); // Database mein hamesha Capital save karein (Best Practice)
                               dbContext.bankselectmodelss.Add(model);
                               dbContext.SaveChanges();
+
                     }
                     public List<bankselectmodels> GetAllBankSelectModels()
                     {

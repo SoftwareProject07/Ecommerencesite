@@ -40,12 +40,16 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               dbContext.bankselectmodelss.Add(model);
                               dbContext.SaveChanges();
                     }
-
                     public List<bankselectmodels> GetAllBankSelectModels()
                     {
-                             var listbankselectmodels = dbContext.bankselectmodelss.ToList();
-                              return listbankselectmodels;  
+                              // GroupBy use karke hum har BankName ka pehla record uthayenge
+                              var listbankselectmodels = dbContext.bankselectmodelss
+                                  .AsEnumerable() // Memory mein laane ke liye (Case-insensitive handle karne ke liye)
+                                  .GroupBy(x => x.BankName.Trim().ToLower()) // Name ke hisaab se group banayein
+                                  .Select(g => g.First()) // Har group ka pehla element lein
+                                  .ToList();
 
+                              return listbankselectmodels;
                     }
 
                     public bankselectmodels GetBankSelectModelById(int id)

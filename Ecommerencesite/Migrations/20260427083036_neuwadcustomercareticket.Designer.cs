@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260427083036_neuwadcustomercareticket")]
+    partial class neuwadcustomercareticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,27 +126,16 @@ namespace Ecommerencesite.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AiResponse")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("text");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsResolved")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

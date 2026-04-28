@@ -1,4 +1,5 @@
-﻿//using Ecommerencesite.Database;
+﻿
+ //using Ecommerencesite.Database;
 //using Microsoft.EntityFrameworkCore;
 
 //var builder = WebApplication.CreateBuilder(args);
@@ -127,7 +128,7 @@ builder.Services.AddScoped<IPatient_CustomerRepository, Patient_CustomerReposito
 builder.Services.AddScoped<IBankdetailsRepository, BankdetailsRepository>();
 builder.Services.AddScoped<IbankselectmodelsRepository, bankselectmodelsRepository>();
 builder.Services.AddScoped<IQRCASHREPOSITORY, QRCASHREPOSITORY>();
-
+builder.Services.AddScoped<ICustomerCareticketrepository ,CustomerCareticketrepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //          c =>

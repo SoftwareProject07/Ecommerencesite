@@ -129,7 +129,9 @@ builder.Services.AddScoped<IBankdetailsRepository, BankdetailsRepository>();
 builder.Services.AddScoped<IbankselectmodelsRepository, bankselectmodelsRepository>();
 builder.Services.AddScoped<IQRCASHREPOSITORY, QRCASHREPOSITORY>();
 builder.Services.AddScoped<ICustomerCareticketrepository ,CustomerCareticketrepository>();
+builder.Services.AddScoped<ILivenessRepository, LivenessRepository>();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 //          c =>
 //{

@@ -67,7 +67,7 @@ namespace Ecommerencesite.Controllers
 
                     public IActionResult GetLiveness()
                     {
-                              var data = _livenrespos. GetLivenessAsync();
+                              var data = _livenrespos.GetLivenessAsync().ToList();
 
                               return Ok(data);
                     }

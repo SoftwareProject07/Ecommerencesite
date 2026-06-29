@@ -32,7 +32,7 @@ namespace Ecommerencesite.Database
 
                     // Liveness trials
                     public DbSet<LivenessCheckRequestModel> livenessrequestcheckmodel { get; set; }
-                   // public DbSet<LivenessResponse> liveresponsemodel { get; set; }
+                //   public DbSet<LivenessResponse> liveresponsemodel { get; set; }
 
           }
 }

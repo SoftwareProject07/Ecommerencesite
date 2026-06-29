@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
+using Ecommerencesite.Migrations;
 using Ecommerencesite.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +17,59 @@ namespace Ecommerencesite.Controllers
                               this._livenrespos = livenrespos;
 
                     }
+                    //[HttpPost("verify-blink")]
+                    //public async Task<IActionResult> VerifyBlink([FromBody] LivenessCheckRequestModel request)
+                    //{
+                    //          var result = await _livenrespos.VerifyBlinkAsync(request);
+                    //          return Ok(result);
+                    //}
+                    //[HttpPost("verify-blink")]
+                    //public IActionResult VerifyBlink([FromBody] LivenessCheckRequestModel request)
+                    //{
+                    //          if (request == null)
+                    //          {
+                    //                    return BadRequest("Request is null");
+                    //          }
+
+                    //          return Ok(new
+                    //          {
+                    //                    isLive = true,
+                    //                    message = "API Hit Successfully",
+                    //                    data = request
+                    //          });
+                    //[HttpPost("verify-blink")]
+                    //public IActionResult VerifyBlink([FromBody] LivenessCheckRequestModel request)
+                    //{
+                    //          if (!ModelState.IsValid)
+                    //          {
+                    //                    return BadRequest(ModelState);
+                    //          }
+
+                    //          return Ok(new
+                    //          {
+                    //                    isLive = true
+                    //          });
+                    //}
+
+
                     [HttpPost("verify-blink")]
-                    public async Task<IActionResult> VerifyBlink([FromBody] LivenessCheckRequestModel request)
+                    public async Task<IActionResult> VerifyBlink([FromBody] LivenessCheckRequestModel model)
                     {
-                              var result = await _livenrespos.VerifyBlinkAsync(request);
+                              if (!ModelState.IsValid)
+                                        return BadRequest(ModelState);
+
+                              var result = await _livenrespos.VerifyBlinkAsync(model);
+
+
                               return Ok(result);
+                    }
+                    [HttpGet("AllLivenessblink")]
+
+                    public IActionResult GetLiveness()
+                    {
+                              var data = _livenrespos. GetLivenessAsync();
+
+                              return Ok(data);
                     }
           }
 }

@@ -246,7 +246,14 @@ namespace Ecommerencesite.Migrations
                     b.Property<int>("BlinkCount")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FrameData")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
 

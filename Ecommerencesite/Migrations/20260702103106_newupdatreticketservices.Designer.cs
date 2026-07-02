@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260702103106_newupdatreticketservices")]
+    partial class newupdatreticketservices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -594,11 +597,7 @@ namespace Ecommerencesite.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CustomerName")
+                    b.Property<string>("Department")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -610,19 +609,19 @@ namespace Ecommerencesite.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IssueCategory")
+                    b.Property<string>("EmployeeId")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("MedicineName")
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IssueType")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MobileNo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("OrderId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -641,13 +640,6 @@ namespace Ecommerencesite.Migrations
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("TicketNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("TicketId");
 

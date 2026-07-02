@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Model;
+using HelpDeskAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerencesite.Database
@@ -16,7 +17,6 @@ namespace Ecommerencesite.Database
                     public DbSet<OrderItem> orderItemss{ get; set; }
                     public DbSet<Medicine> medicinesss { get; set; }
                     public DbSet<UserMedicine> userMediciness { get; set; }//User 
-                    // medicine getmodel helath check data
                     public DbSet<Medicationgetmodel> Medications { get; set; }
                     public DbSet<HealthReport> HealthReports { get; set; }
                     public DbSet<AdminREGMODEL> adminREGMODELSs { get; set; }  
@@ -26,13 +26,12 @@ namespace Ecommerencesite.Database
                     public DbSet<CustomerAddMedicineModel> customerAddMedicineModels { get; set; }
                     public DbSet<bankdetailsModles> bankdetailsModless { get; set; }
                     public DbSet<bankselectmodels> bankselectmodelss { get; set; }
-                    public DbSet<QRCashCodeModels> qRCashCodeModelss { get; set; }     
-                    public DbSet<CustomerCareTicket> CustomerCareTickets { get; set; }    
-                  //  public DbSet<ChatRequest> ChatRequests { get; set; }        
-
+                    public DbSet<QRCashCodeModels> qRCashCodeModelss { get; set; }
+                  
+                    public DbSet<MedicineChat> MedicineChats { get; set; }
                     // Liveness trials
                     public DbSet<LivenessCheckRequestModel> livenessrequestcheckmodel { get; set; }
-                //   public DbSet<LivenessResponse> liveresponsemodel { get; set; }
+                    public DbSet<CustomerTicketRaiseModel> CustomerTicketRaise { get; set; }
 
           }
 }

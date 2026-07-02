@@ -13,13 +13,13 @@ namespace Ecommerencesite.Model
                     public int UserId { get; set; }    // 🔑 OWNER OF MEDICINE
 
 
-                    public string? Name { get; set; } = null;
+                    public string? Name { get; set; } = null; // medicine name 
                     public string? Manufacturer { get; set; } = null;
                     [Column(TypeName = "decimal(18,2)")]
 
                     public Decimal? UnitPrice { get; set; }          = null;
                     public Decimal? Discount { get; set; } = null;
-                    public int Quantity { get; set; }
+                    public int Quantity { get; set; }   //stock
                     [Required]
                     [RegularExpression(@"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$", ErrorMessage = "ExpiryDate must be DD/MM/YYYY")]
                     public string? ExpiryDate { get; set; }= null;
@@ -28,7 +28,7 @@ namespace Ecommerencesite.Model
 
                     public int STATUS { get; set; } = 1;
                     public string? MedicinesType { get; set; }
-                    public string? ItemMedicine { get; set; }                      
+                    public string? ItemMedicine { get; set; }         //  medicine item               
                     public string? Type { get; set; }   = null;
 
           }

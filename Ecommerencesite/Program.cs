@@ -1,38 +1,8 @@
 ﻿
- //using Ecommerencesite.Database;
-//using Microsoft.EntityFrameworkCore;
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Add services to the container.
-
-//builder.Services.AddControllers();
-//builder.Services.AddDbContext<Ecommerecewebstedatabase>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnections")));
-
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//          app.UseSwagger();
-//          app.UseSwaggerUI();
-//}
-
-
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();
 
 
 
 
-using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
@@ -72,6 +42,10 @@ builder.Services.AddCors(options =>
 //                          .AllowCredentials(); // Authentication cookies ke liye zaroori
 //          });
 //});
+
+
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 
@@ -115,7 +89,7 @@ builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
 //app.UseAuthorization();
 
 
-builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
+builder.Services.AddScoped<Ecommerencesite.Businee_Layer.BusineeLayer.IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
@@ -128,9 +102,17 @@ builder.Services.AddScoped<IPatient_CustomerRepository, Patient_CustomerReposito
 builder.Services.AddScoped<IBankdetailsRepository, BankdetailsRepository>();
 builder.Services.AddScoped<IbankselectmodelsRepository, bankselectmodelsRepository>();
 builder.Services.AddScoped<IQRCASHREPOSITORY, QRCASHREPOSITORY>();
-builder.Services.AddScoped<ICustomerCareticketrepository ,CustomerCareticketrepository>();
+//builder.Services.AddScoped<ICustomerCareticketrepository ,CustomerCareticketrepository>();
 builder.Services.AddScoped<ILivenessRepository, LivenessRepository>();
+//builder.Services.AddScoped<IMedicineRepository>();
+builder.Services.AddScoped<IMedicineRepository,MedicineRepositoryAI>();
+builder.Services.AddScoped<ITicketServiceRepository, TicketServiceRepository>();
+builder.Services.AddScoped<IMedicineChatServiceRepository,MedicineChatServiceRepository>();
+
+builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddEndpointsApiExplorer();
+
+
 
 builder.Services.AddSwaggerGen();
 //          c =>

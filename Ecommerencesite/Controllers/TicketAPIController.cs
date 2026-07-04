@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
                     // Raise Ticket
                     // Raise Ticket
                     [HttpPost("RaiseTicket")]
-                    public async Task<IActionResult> RaiseTicket([FromBody] CustomerTicketRaiseModel model)
+                    public async Task<IActionResult> RaiseTicket(CustomerTicketRaiseModel model)
                     {
                               if (!ModelState.IsValid)
                                         return BadRequest(ModelState);
@@ -30,7 +30,7 @@ using Microsoft.AspNetCore.Mvc;
 
                               return Ok(result);
                     }
-
+                 
                     // Get All Tickets
                     [HttpGet("GetAllTickets")]
                     public async Task<IActionResult> GetAllTickets()
@@ -80,17 +80,22 @@ using Microsoft.AspNetCore.Mvc;
                     }
 
                     // Update Ticket
-                    [HttpPut("UpdateTicket")]
-                    public async Task<IActionResult> UpdateTicket([FromBody] CustomerTicketRaiseModel model)
+                    //[HttpPut("UpdateTicket")]
+                    //public async Task<IActionResult> UpdateTicket(CustomerTicketRaiseModel model)
+                    //{
+                    //          if (!ModelState.IsValid)
+                    //                    return BadRequest(ModelState);
+
+                    //          var result = await _ticketService.UpdateTicket(model);
+
+                    //          return Ok(result);
+                    //}
+                    [HttpPut("Update")]
+                    public void Updateticket(CustomerTicketRaiseModel model)
                     {
-                              if (!ModelState.IsValid)
-                                        return BadRequest(ModelState);
-
-                              var result = await _ticketService.UpdateTicket(model);
-
-                              return Ok(result);
+                              _ticketService.Updateticket(model);
+                              
                     }
-
                     // Delete Ticket
                     [HttpDelete("DeleteTicket/{id}")]
                     public async Task<IActionResult> DeleteTicket(int id)

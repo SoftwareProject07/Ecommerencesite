@@ -9,74 +9,48 @@ namespace HelpDeskAPI.Models
                     public int TicketId { get; set; }
 
                     // Auto Generated Ticket Number
-                    public string TicketNumber { get; set; }
+                    public string? TicketNumber { get; set; }
 
                     // Customer Details
-                    [Required]
-                    public string CustomerName { get; set; }
+                    [Required(ErrorMessage = "Customer Name is required")]
+                    public string CustomerName { get; set; } = string.Empty;
 
-                    [Required]
-                    public string MobileNo { get; set; }
+                    [Required(ErrorMessage = "Mobile Number is required")]
+                    public string MobileNo { get; set; } = string.Empty;
 
-                    [Required]
-                    [EmailAddress]
-                    public string Email { get; set; }
+                    [Required(ErrorMessage = "Email is required")]
+                    [EmailAddress(ErrorMessage = "Invalid Email Address")]
+                    public string Email { get; set; } = string.Empty;
 
-                    // Optional Details
-                    public string CustomerId { get; set; }
-
-                    public string OrderId { get; set; }
-
-                    public string MedicineName { get; set; }
+                    // Optional Details - explicitly initialized safely
+                    public string? CustomerId { get; set; } = null;
+                    public string? OrderId { get; set; } = null;
+                    public string? MedicineName { get; set; } = null;
 
                     // Issue Details
-                    [Required]
-                    public string IssueCategory { get; set; }
-                    // Technical Issue
-                    // Login Issue
-                    // Payment Issue
-                    // Order Issue
-                    // Medicine Search Issue
-                    // Prescription Upload Issue
-                    // Delivery Issue
-                    // Refund Issue
-                    // Other
+                    [Required(ErrorMessage = "Issue Category is required")]
+                    public string IssueCategory { get; set; } = string.Empty;
 
-                    [Required]
-                    public string Subject { get; set; }
+                    [Required(ErrorMessage = "Subject is required")]
+                    public string Subject { get; set; } = string.Empty;
 
-                    [Required]
-                    public string Description { get; set; }
+                    [Required(ErrorMessage = "Description is required")]
+                    public string Description { get; set; } = string.Empty;
 
-                    // Priority
-                    public string Priority { get; set; } = "Medium";
-                    // Low
-                    // Medium
-                    // High
-                    // Critical
-
-                    // Ticket Status
-                    public string Status { get; set; } = "Open";
-                    // Open
-                    // Assigned
-                    // In Progress
-                    // Pending
-                    // Resolved
-                    // Closed
+                    // Priority & Status defaults
+                    public string? Priority { get; set; } = "Medium";
+                    public string? Status { get; set; } = "Open";
 
                     // Attachment (Screenshot / Prescription)
-                    public string Attachment { get; set; }
+                    public string? Attachment { get; set; } = null;
 
                     // Admin Information
-                    public string AssignedTo { get; set; }
-
-                    public string ResolutionRemark { get; set; }
+                    public string? AssignedTo { get; set; } = null;
+                    public string? ResolutionRemark { get; set; } = null;
 
                     // Audit Fields
                     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-
-                    public DateTime? UpdatedDate { get; set; }
-
-                    public DateTime? ClosedDate { get; set; }
+                    public DateTime? UpdatedDate { get; set; } = null;
+                    public DateTime? ClosedDate { get; set; } = null;
           }
 }

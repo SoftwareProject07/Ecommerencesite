@@ -16,8 +16,8 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     Task<List<CustomerTicketRaiseModel>> GetTicketByIssueType(string issueType);
 
-                    Task<string> UpdateTicket(CustomerTicketRaiseModel model);
-
+                    //  Task<string> UpdateTicket(CustomerTicketRaiseModel model);
+                    void Updateticket(CustomerTicketRaiseModel model);
                     Task<string> DeleteTicket(int id);
 
                     Task<string> CloseTicket(int ticketId, string remark);

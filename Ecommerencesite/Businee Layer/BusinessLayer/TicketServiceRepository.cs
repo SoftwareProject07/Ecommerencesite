@@ -67,34 +67,34 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
                     // Update Ticket
-                    public async Task<string> UpdateTicket(CustomerTicketRaiseModel model)
-                    {
-                              var ticket = await _context.CustomerTicketRaise
-                                  .FirstOrDefaultAsync(x => x.TicketId == model.TicketId);
+                    //public async Task<string> UpdateTicket(CustomerTicketRaiseModel model)
+                    //{
+                    //          var ticket = await _context.CustomerTicketRaise
+                    //              .FirstOrDefaultAsync(x => x.TicketId == model.TicketId);
 
-                              if (ticket == null)
-                                        return "Ticket Not Found";
+                    //          if (ticket == null)
+                    //                    return "Ticket Not Found";
 
-                              ticket.CustomerName = model.CustomerName;
-                              ticket.CustomerId = model.CustomerId;
-                              ticket.MobileNo = model.MobileNo;
-                              ticket.Email = model.Email;
-                              ticket.OrderId = model.OrderId;
-                              ticket.MedicineName = model.MedicineName;
-                              ticket.IssueCategory = model.IssueCategory;
-                              ticket.Subject = model.Subject;
-                              ticket.Description = model.Description;
-                              ticket.Priority = model.Priority;
-                              ticket.Status = model.Status;
-                              ticket.Attachment = model.Attachment;
-                              ticket.AssignedTo = model.AssignedTo;
-                              ticket.ResolutionRemark = model.ResolutionRemark;
-                              ticket.UpdatedDate = DateTime.Now;
+                    //          ticket.CustomerName = model.CustomerName;
+                    //          ticket.CustomerId = model.CustomerId;
+                    //          ticket.MobileNo = model.MobileNo;
+                    //          ticket.Email = model.Email;
+                    //          ticket.OrderId = model.OrderId;
+                    //          ticket.MedicineName = model.MedicineName;
+                    //          ticket.IssueCategory = model.IssueCategory;
+                    //          ticket.Subject = model.Subject;
+                    //          ticket.Description = model.Description;
+                    //          ticket.Priority = model.Priority;
+                    //          ticket.Status = model.Status;
+                    //          ticket.Attachment = model.Attachment;
+                    //          ticket.AssignedTo = model.AssignedTo;
+                    //          ticket.ResolutionRemark = model.ResolutionRemark;
+                    //          ticket.UpdatedDate = DateTime.Now;
 
-                              await _context.SaveChangesAsync();
+                    //          await _context.SaveChangesAsync();
 
-                              return "Ticket Updated Successfully";
-                    }
+                    //          return "Ticket Updated Successfully";
+                    //}
 
                     // Delete Ticket
                     public async Task<string> DeleteTicket(int id)
@@ -127,6 +127,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               await _context.SaveChangesAsync();
 
                               return "Ticket Closed Successfully";
+                    }
+
+                    public void Updateticket(CustomerTicketRaiseModel model)
+                    {
+                              _context.CustomerTicketRaise.Update(model);
+                            _context.SaveChanges();
+                        
                     }
           }
 }

@@ -18,9 +18,12 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     //  Task<string> UpdateTicket(CustomerTicketRaiseModel model);
                 //    void Updateticket(CustomerTicketRaiseModel model);
-                    void Updateticket(int id ,CustomerTicketRaiseModel model);
+                    void Updateticket(int id ,CustomerTicketRaiseModel model);//                    //// ASSIGN TASK TEAM 
+
                     Task<string> DeleteTicket(int id);
 
                     Task<string> CloseTicket(int ticketId, string remark);
+
+                //    Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo);
           }
 }

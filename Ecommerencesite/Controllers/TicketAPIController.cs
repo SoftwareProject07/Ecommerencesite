@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
+using Ecommerencesite.MODELDTO;
 using HelpDeskAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +80,8 @@ using Microsoft.AspNetCore.Mvc;
                               return Ok(result);
                     }
 
+
+
                     // Update Ticket
                     //[HttpPut("UpdateTicket")]
                     //public async Task<IActionResult> UpdateTicket(CustomerTicketRaiseModel model)
@@ -123,6 +126,10 @@ using Microsoft.AspNetCore.Mvc;
 
                     //          return Ok(new { success = true, message = "Ticket successfully assigned." });
                     //}
+
+
+
+                    //// ASSIGN TASK TEAM 
                     [HttpPut("Update/{id}")]
                     public IActionResult Assignedticket(int id, CustomerTicketRaiseModel payload)
                     {
@@ -166,7 +173,12 @@ using Microsoft.AspNetCore.Mvc;
                     {
                               var result = await _ticketService.CloseTicket(ticketId, remark);
 
+                            
                               return Ok(result);
                     }
-          }
+
+
+                  
 }
+          }
+

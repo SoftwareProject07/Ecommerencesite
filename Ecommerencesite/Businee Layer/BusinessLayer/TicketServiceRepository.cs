@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Ecommerencesite.Businee_Layer.IBusineeLayer;
+﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using HelpDeskAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Text.Json;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
@@ -15,17 +17,34 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
                     // Raise Ticket
+                    //public async Task<string> RaiseTicket(CustomerTicketRaiseModel model)
+                    //{
+                    //          model.CreatedDate = DateTime.UtcNow;
+                    //          model.Status = "Open";
+
+                    //          model.TicketNumber = "TKT" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                    //          await _context.CustomerTicketRaise.AddAsync(model);
+                    //          await _context.SaveChangesAsync();
+
+                    //          return $"Ticket Raised Successfully.. +  "  
+                    //                    $" Ticket No : {model.TicketNumber}" ;
+                    //}
+
                     public async Task<string> RaiseTicket(CustomerTicketRaiseModel model)
                     {
                               model.CreatedDate = DateTime.UtcNow;
                               model.Status = "Open";
-                              
+
                               model.TicketNumber = "TKT" + DateTime.Now.ToString("yyyyMMddHHmmss");
 
                               await _context.CustomerTicketRaise.AddAsync(model);
                               await _context.SaveChangesAsync();
 
-                              return $"Ticket Raised Successfully. Ticket No : {model.TicketNumber}";
+                              // <br> टैग के बाद "Please wait..." को अगली लाइन में जोड़ दिया गया है
+                              return $"Ticket Raised Successfully... " +
+                                     $"Ticket No : {model.TicketNumber}  " +
+                                     $"Please wait  Coming Soon...";
                     }
 
                     // Get All Tickets
@@ -136,7 +155,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          _context.SaveChanges();
 
                     //}
-
+                    // ASSIGN TASK TEAM 
                     public void Updateticket(int id, CustomerTicketRaiseModel model)
                     {
                               // 1. Fetch the original untampered record from the database
@@ -158,5 +177,48 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               // 3. Commit changes safely
                               _context.SaveChanges();
                     }
+
+                //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
+                //    {
+                //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)
+                //              string url = "[https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages](https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages)";
+                //              string accessToken = "YOUR_META_PERMANENT_ACCESS_TOKEN";
+
+                //              using (var client = new HttpClient())
+                //              {
+                //                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+                //                        // WhatsApp Template Payload
+                //                        var payload = new
+                //                        {
+                //                                  messaging_product = "whatsapp",
+                //                                  to = mobileNumber.StartsWith("91") ? mobileNumber : "91" + mobileNumber, // India country code handling
+                //                                  type = "template",
+                //                                  template = new
+                //                                  {
+                //                                            name = "ticket_assignment_update", // Aapke Meta dashboard me approved template ka naam
+                //                                            language = new { code = "en_US" },
+                //                                            components = new[]
+                //                                {
+                //    new
+                //    {
+                //        type = "body",
+                //        parameters = new[]
+                //        {
+                //            new { type = "text", text = ticketId },     // Template Variable {{1}}
+                //            new { type = "text", text = AssignedTo }   // Template Variable {{2}}
+                //        }
+                //    }
+                //}
+                //                                  }
+                //                        };
+
+                //                        string jsonPayload = JsonSerializer.Serialize(payload);
+                //                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                //                        var response = await client.PostAsync(url, content);
+                //                        return response.IsSuccessStatusCode;
+                //              }
+                //    }
           }
 }

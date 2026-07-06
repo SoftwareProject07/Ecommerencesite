@@ -52,5 +52,9 @@ namespace HelpDeskAPI.Models
                     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
                     public DateTime? UpdatedDate { get; set; } = null;
                     public DateTime? ClosedDate { get; set; } = null;
+
+
+
+                    public string? DepartmentOption { get; set; } = null;
           }
 }

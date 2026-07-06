@@ -19,6 +19,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     {
                               model.CreatedDate = DateTime.UtcNow;
                               model.Status = "Open";
+                              
                               model.TicketNumber = "TKT" + DateTime.Now.ToString("yyyyMMddHHmmss");
 
                               await _context.CustomerTicketRaise.AddAsync(model);
@@ -129,11 +130,33 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return "Ticket Closed Successfully";
                     }
 
-                    public void Updateticket(CustomerTicketRaiseModel model)
+                    //public void Updateticket( CustomerTicketRaiseModel model)
+                    //{
+                    //          _context.CustomerTicketRaise.Update(model);
+                    //          _context.SaveChanges();
+
+                    //}
+
+                    public void Updateticket(int id, CustomerTicketRaiseModel model)
                     {
-                              _context.CustomerTicketRaise.Update(model);
-                            _context.SaveChanges();
-                        
+                              // 1. Fetch the original untampered record from the database
+                              var existingTicket = _context.CustomerTicketRaise.Find(id);
+
+                              if (existingTicket == null)
+                              {
+                                        throw new Exception($"Validation Error: Ticket with ID {id} does not exist in the database state pipeline.");
+                              }
+
+                              // 2. Map ONLY the properties that are allowed to change during an assignment update
+                              existingTicket.AssignedTo = model.AssignedTo;
+                              existingTicket.Status = model.Status ?? existingTicket.Status; // Fallback to current state if null
+                              existingTicket.UpdatedDate = DateTime.UtcNow; // Record audit time
+
+                              // Note: Because EF Core tracks 'existingTicket', we DO NOT need to call _context.Update()!
+                              // It automatically computes what fields changed.
+
+                              // 3. Commit changes safely
+                              _context.SaveChanges();
                     }
           }
 }

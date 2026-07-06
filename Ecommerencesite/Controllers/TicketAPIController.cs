@@ -90,12 +90,67 @@ using Microsoft.AspNetCore.Mvc;
 
                     //          return Ok(result);
                     //}
-                    [HttpPut("Update")]
-                    public void Updateticket(CustomerTicketRaiseModel model)
+                    //[HttpPut("UpdateTicket")]
+                    //public void Updateticket(CustomerTicketRaiseModel model)
+                    //{
+                    //          _ticketService.Updateticket(model);
+
+                    //}
+
+
+                    //[HttpPut("Update/{id}")]
+                    //public IActionResult Updateticket(int id,  CustomerTicketRaiseModel payload)
+                    //{
+                    //          if (payload == null || string.IsNullOrWhiteSpace(payload.DepartmentOption))
+                    //          {
+                    //                    return BadRequest("Invalid assignment request data.");
+                    //          }
+
+                    //          // 1. Fetch the full original ticket row tracking model from the database using the route ID
+                    //          var existingTicket = _ticketService.GetTicketById(id).Result; // Assuming GetTicketByStatus returns a Task<CustomerTicketRaiseModel>
+
+                    //          if (existingTicket == null)
+                    //          {
+                    //                    return NotFound($"Ticket entity with ID {id} not found.");
+                    //          }
+
+                    //          // 2. Modify only the required structural fields matching your CustomerTicketRaiseModel
+                    //          existingTicket.AssignedTo = payload.DepartmentOption;
+                    //          existingTicket.UpdatedDate = DateTime.UtcNow;
+
+                    //          // 3. Hand over the entire validated model structure to your original service logic 
+                    //          _ticketService.Updateticket(existingTicket);
+
+                    //          return Ok(new { success = true, message = "Ticket successfully assigned." });
+                    //}
+                    [HttpPut("Update/{id}")]
+                    public IActionResult Assignedticket(int id, CustomerTicketRaiseModel payload)
                     {
-                              _ticketService.Updateticket(model);
-                              
+                              if (payload == null) return BadRequest("Invalid request payload.");
+
+                              try
+                              {
+                                        // Construct a light model containing just the update field parameters
+                                        var updatedModel = new CustomerTicketRaiseModel
+                                        {
+                                                  AssignedTo = payload.AssignedTo,
+                                                  Status = "Assigned"
+                                                  
+                                        };
+
+                                        // Call your corrected business service method
+                                        _ticketService.Updateticket(id, updatedModel);
+
+                                        return Ok(new { success = true, message = "Database entity state pipeline updated successfully!" });
+                              }
+                              catch (Exception ex)
+                              {
+                                        return BadRequest(new { success = false, message = ex.Message });
+                              }
                     }
+
+           
+
                     // Delete Ticket
                     [HttpDelete("DeleteTicket/{id}")]
                     public async Task<IActionResult> DeleteTicket(int id)

@@ -1,4 +1,5 @@
-﻿using HelpDeskAPI.Models;
+﻿using Ecommerencesite.MODELDTO;
+using HelpDeskAPI.Models;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
@@ -30,7 +31,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void  MasterUPDATEIssuecategory( CustomerTicketRaiseModel UPdatecategory);
                     public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id);
                     public CustomerTicketRaiseModel MasterDeleteissuecategory(int id);
-                    public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory();
+                    public List<itemcategorymasterlstdto> MasterGetAllIssuecategory();
 
                     //    Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo);
           }

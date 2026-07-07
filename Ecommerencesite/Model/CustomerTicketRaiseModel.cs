@@ -29,7 +29,7 @@ namespace HelpDeskAPI.Models
 
                     // Issue Details
                    // [Required(ErrorMessage = "Issue Category is required")]
-                    public string IssueCategory { get; set; } = string.Empty;// Issue Nme== issue category
+                    public string IssueCategory { get; set; } // Issue Nme== issue category
 
                   //  [Required(ErrorMessage = "Subject is required")]
                     public string Subject { get; set; } = string.Empty;

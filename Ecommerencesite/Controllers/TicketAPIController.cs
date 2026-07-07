@@ -213,17 +213,11 @@ namespace Ecommerencesite.Controllers
                               try
                               {
                                         var data = _ticketService.MasterGetAllIssuecategory();
-
-                                        if (data == null || !data.Any())
-                                        {
-                                                  return NotFound("No Issue Category Found.");
-                                        }
-
                                         return Ok(data);
                               }
                               catch (Exception ex)
                               {
-                                        return StatusCode(500, ex.Message);
+                                        return StatusCode(500, $"Internal server error: {ex.Message}");
                               }
                     }
           }

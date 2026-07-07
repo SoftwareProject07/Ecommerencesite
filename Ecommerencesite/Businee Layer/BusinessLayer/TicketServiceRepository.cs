@@ -1,6 +1,8 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
+using Ecommerencesite.MODELDTO;
 using HelpDeskAPI.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Json;
@@ -201,16 +203,17 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return a;
                     }
 
-                    public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory()
+                    public List<itemcategorymasterlstdto> MasterGetAllIssuecategory()
                     {
                               return _context.CustomerTicketRaise
-                                             .Select(x => new CustomerTicketRaiseModel
+                                             .Select(x => new itemcategorymasterlstdto
                                              {
-                                                       TicketId=x.TicketId,
+                                                       //  issuecategorymasterid=x.TicketId,
                                                        IssueCategory = x.IssueCategory
                                              })
                                              .Distinct()
                                              .ToList();
+
                     }
                     //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
                     //    {

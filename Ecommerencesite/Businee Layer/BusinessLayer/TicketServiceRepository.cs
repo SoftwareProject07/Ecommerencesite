@@ -208,7 +208,8 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return _context.CustomerTicketRaise
                                              .Select(x => new itemcategorymasterlstdto
                                              {
-                                                       //  issuecategorymasterid=x.TicketId,
+                                                        issuecategorymasterid=x.TicketId,
+                                                      
                                                        IssueCategory = x.IssueCategory
                                              })
                                              .Distinct()

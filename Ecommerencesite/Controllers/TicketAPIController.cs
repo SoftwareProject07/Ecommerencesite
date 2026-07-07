@@ -200,10 +200,31 @@ namespace Ecommerencesite.Controllers
                               return _ticketService.MasterDeleteissuecategory(id);
 
                     }
+                    //[HttpGet("MasterGetAllIssuecategory")]
+                    //public List<string> MasterGetAllIssuecategory()
+                    //{
+                    //
+                    //      return _ticketService.MasterGetAllIssuecategory().ToList() ;
+                    //}
+
                     [HttpGet("MasterGetAllIssuecategory")]
-                    public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory()
+                    public IActionResult MasterGetAllIssuecategory()
                     {
-                              return _ticketService.MasterGetAllIssuecategory().ToList() ;
+                              try
+                              {
+                                        var data = _ticketService.MasterGetAllIssuecategory();
+
+                                        if (data == null || !data.Any())
+                                        {
+                                                  return NotFound("No Issue Category Found.");
+                                        }
+
+                                        return Ok(data);
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, ex.Message);
+                              }
                     }
           }
 }

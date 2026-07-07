@@ -203,10 +203,14 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory()
                     {
-                            var listcustomerticketmaster= _context.CustomerTicketRaise.ToList();
-                              return listcustomerticketmaster;
+                              return _context.CustomerTicketRaise
+                                             .Select(x => new CustomerTicketRaiseModel
+                                             {
+                                                       IssueCategory = x.IssueCategory
+                                             })
+                                             .Distinct()
+                                             .ToList();
                     }
-
                     //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
                     //    {
                     //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)

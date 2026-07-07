@@ -176,9 +176,14 @@ using Microsoft.AspNetCore.Mvc;
                             
                               return Ok(result);
                     }
+                    [HttpPost("MasterAddIssuecategory")]    
+                    public void MasterAddIssuecategory(CustomerTicketRaiseModel issuecategory)
+                    {
+                              _ticketService.MasterAddIssuecategory(issuecategory);
+                    }
 
 
-                  
+
 }
           }
 

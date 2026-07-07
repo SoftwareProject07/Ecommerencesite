@@ -12,14 +12,14 @@ namespace HelpDeskAPI.Models
                     public string? TicketNumber { get; set; }
 
                     // Customer Details
-                    [Required(ErrorMessage = "Customer Name is required")]
+                  //  [Required(ErrorMessage = "Customer Name is required")]
                     public string CustomerName { get; set; } = string.Empty;
 
-                    [Required(ErrorMessage = "Mobile Number is required")]
+                  //  [Required(ErrorMessage = "Mobile Number is required")]
                     public string MobileNo { get; set; } = string.Empty;
 
-                    [Required(ErrorMessage = "Email is required")]
-                    [EmailAddress(ErrorMessage = "Invalid Email Address")]
+                    //[Required(ErrorMessage = "Email is required")]
+                    //[EmailAddress(ErrorMessage = "Invalid Email Address")]
                     public string Email { get; set; } = string.Empty;
 
                     // Optional Details - explicitly initialized safely
@@ -28,13 +28,13 @@ namespace HelpDeskAPI.Models
                     public string? MedicineName { get; set; } = null;
 
                     // Issue Details
-                    [Required(ErrorMessage = "Issue Category is required")]
-                    public string IssueCategory { get; set; } = string.Empty;
+                   // [Required(ErrorMessage = "Issue Category is required")]
+                    public string IssueCategory { get; set; } = string.Empty;// Issue Nme== issue category
 
-                    [Required(ErrorMessage = "Subject is required")]
+                  //  [Required(ErrorMessage = "Subject is required")]
                     public string Subject { get; set; } = string.Empty;
 
-                    [Required(ErrorMessage = "Description is required")]
+                   // [Required(ErrorMessage = "Description is required")]
                     public string Description { get; set; } = string.Empty;
 
                     // Priority & Status defaults

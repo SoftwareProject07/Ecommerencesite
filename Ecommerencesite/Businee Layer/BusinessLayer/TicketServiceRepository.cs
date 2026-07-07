@@ -149,12 +149,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return "Ticket Closed Successfully";
                     }
 
-                    //public void Updateticket( CustomerTicketRaiseModel model)
-                    //{
-                    //          _context.CustomerTicketRaise.Update(model);
-                    //          _context.SaveChanges();
-
-                    //}
                     // ASSIGN TASK TEAM 
                     public void Updateticket(int id, CustomerTicketRaiseModel model)
                     {
@@ -178,47 +172,53 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _context.SaveChanges();
                     }
 
-                //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
-                //    {
-                //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)
-                //              string url = "[https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages](https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages)";
-                //              string accessToken = "YOUR_META_PERMANENT_ACCESS_TOKEN";
+                    public void MasterAddIssuecategory(CustomerTicketRaiseModel issuecategory)
+                    {
+                              _context.CustomerTicketRaise.Add(issuecategory);
+                              _context.SaveChanges();
+                    }
 
-                //              using (var client = new HttpClient())
-                //              {
-                //                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+                    //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
+                    //    {
+                    //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)
+                    //              string url = "[https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages](https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages)";
+                    //              string accessToken = "YOUR_META_PERMANENT_ACCESS_TOKEN";
 
-                //                        // WhatsApp Template Payload
-                //                        var payload = new
-                //                        {
-                //                                  messaging_product = "whatsapp",
-                //                                  to = mobileNumber.StartsWith("91") ? mobileNumber : "91" + mobileNumber, // India country code handling
-                //                                  type = "template",
-                //                                  template = new
-                //                                  {
-                //                                            name = "ticket_assignment_update", // Aapke Meta dashboard me approved template ka naam
-                //                                            language = new { code = "en_US" },
-                //                                            components = new[]
-                //                                {
-                //    new
-                //    {
-                //        type = "body",
-                //        parameters = new[]
-                //        {
-                //            new { type = "text", text = ticketId },     // Template Variable {{1}}
-                //            new { type = "text", text = AssignedTo }   // Template Variable {{2}}
-                //        }
-                //    }
-                //}
-                //                                  }
-                //                        };
+                    //              using (var client = new HttpClient())
+                    //              {
+                    //                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
 
-                //                        string jsonPayload = JsonSerializer.Serialize(payload);
-                //                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                    //                        // WhatsApp Template Payload
+                    //                        var payload = new
+                    //                        {
+                    //                                  messaging_product = "whatsapp",
+                    //                                  to = mobileNumber.StartsWith("91") ? mobileNumber : "91" + mobileNumber, // India country code handling
+                    //                                  type = "template",
+                    //                                  template = new
+                    //                                  {
+                    //                                            name = "ticket_assignment_update", // Aapke Meta dashboard me approved template ka naam
+                    //                                            language = new { code = "en_US" },
+                    //                                            components = new[]
+                    //                                {
+                    //    new
+                    //    {
+                    //        type = "body",
+                    //        parameters = new[]
+                    //        {
+                    //            new { type = "text", text = ticketId },     // Template Variable {{1}}
+                    //            new { type = "text", text = AssignedTo }   // Template Variable {{2}}
+                    //        }
+                    //    }
+                    //}
+                    //                                  }
+                    //                        };
 
-                //                        var response = await client.PostAsync(url, content);
-                //                        return response.IsSuccessStatusCode;
-                //              }
-                //    }
+                    //                        string jsonPayload = JsonSerializer.Serialize(payload);
+                    //                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                    //                        var response = await client.PostAsync(url, content);
+                    //                        return response.IsSuccessStatusCode;
+                    //              }
+                    //    }
           }
 }

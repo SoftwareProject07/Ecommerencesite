@@ -200,5 +200,10 @@ namespace Ecommerencesite.Controllers
                               return _ticketService.MasterDeleteissuecategory(id);
 
                     }
+                    [HttpGet("MasterGetAllIssuecategory")]
+                    public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory()
+                    {
+                              return _ticketService.MasterGetAllIssuecategory().ToList() ;
+                    }
           }
 }

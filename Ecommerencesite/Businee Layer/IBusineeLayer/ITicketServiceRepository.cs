@@ -30,6 +30,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void  MasterUPDATEIssuecategory( CustomerTicketRaiseModel UPdatecategory);
                     public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id);
                     public CustomerTicketRaiseModel MasterDeleteissuecategory(int id);
+                    public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory();
 
                     //    Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo);
           }

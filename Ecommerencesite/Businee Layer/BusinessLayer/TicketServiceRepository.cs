@@ -201,6 +201,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return a;
                     }
 
+                    public List<CustomerTicketRaiseModel> MasterGetAllIssuecategory()
+                    {
+                            var listcustomerticketmaster= _context.CustomerTicketRaise.ToList();
+                              return listcustomerticketmaster;
+                    }
+
                     //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
                     //    {
                     //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)

@@ -206,7 +206,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return _context.CustomerTicketRaise
                                              .Select(x => new CustomerTicketRaiseModel
                                              {
-                                                       tickid=x.TicketId,
+                                                       TicketId=x.TicketId,
                                                        IssueCategory = x.IssueCategory
                                              })
                                              .Distinct()

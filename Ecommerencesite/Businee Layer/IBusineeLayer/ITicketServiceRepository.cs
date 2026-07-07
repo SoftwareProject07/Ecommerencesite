@@ -24,7 +24,13 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     Task<string> CloseTicket(int ticketId, string remark);
 
+
+                    //MasterAddIssuecategory
                     public void  MasterAddIssuecategory(CustomerTicketRaiseModel issuecategory);  
+                    public void  MasterUPDATEIssuecategory( CustomerTicketRaiseModel UPdatecategory);
+                    public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id);
+                    public CustomerTicketRaiseModel MasterDeleteissuecategory(int id);
+
                     //    Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo);
           }
 }

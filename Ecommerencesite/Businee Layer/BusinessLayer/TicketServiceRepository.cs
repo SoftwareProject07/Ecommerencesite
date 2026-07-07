@@ -178,6 +178,29 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _context.SaveChanges();
                     }
 
+                    public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    {
+                              _context.CustomerTicketRaise.Update(UPdatecategory);
+                              _context.SaveChanges();
+                    }
+
+                    public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id)
+                    {
+                              var issuecategory = _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == id);
+                              return issuecategory;
+                    }
+
+                    public CustomerTicketRaiseModel MasterDeleteissuecategory(int id)
+                    {
+                             var a= _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == id);
+                              if (a != null)
+                              {
+                                        _context.CustomerTicketRaise.Remove(a);
+                                        _context.SaveChanges();
+                              }
+                              return a;
+                    }
+
                     //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
                     //    {
                     //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)

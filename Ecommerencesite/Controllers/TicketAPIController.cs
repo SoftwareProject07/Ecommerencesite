@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 
 
-          namespace Ecommerencesite.Controllers
+namespace Ecommerencesite.Controllers
 {
           [Route("api/[controller]")]
           [ApiController]
           public class TicketAPIController : ControllerBase
           {
-                    public  readonly ITicketServiceRepository _ticketService;
+                    public readonly ITicketServiceRepository _ticketService;
 
                     public TicketAPIController(ITicketServiceRepository ticketService)
                     {
-                           this.   _ticketService = ticketService;
+                              this._ticketService = ticketService;
                     }
 
                     // Raise Ticket
@@ -31,7 +31,7 @@ using Microsoft.AspNetCore.Mvc;
 
                               return Ok(result);
                     }
-                 
+
                     // Get All Tickets
                     [HttpGet("GetAllTickets")]
                     public async Task<IActionResult> GetAllTickets()
@@ -142,7 +142,7 @@ using Microsoft.AspNetCore.Mvc;
                                         {
                                                   AssignedTo = payload.AssignedTo,
                                                   Status = "Assigned"
-                                                  
+
                                         };
 
                                         // Call your corrected business service method
@@ -156,7 +156,7 @@ using Microsoft.AspNetCore.Mvc;
                               }
                     }
 
-           
+
 
                     // Delete Ticket
                     [HttpDelete("DeleteTicket/{id}")]
@@ -173,17 +173,32 @@ using Microsoft.AspNetCore.Mvc;
                     {
                               var result = await _ticketService.CloseTicket(ticketId, remark);
 
-                            
+
                               return Ok(result);
                     }
-                    [HttpPost("MasterAddIssuecategory")]    
+                    [HttpPost("MasterAddIssuecategory")]
                     public void MasterAddIssuecategory(CustomerTicketRaiseModel issuecategory)
                     {
                               _ticketService.MasterAddIssuecategory(issuecategory);
                     }
 
+                    [HttpPut("MasterUPDATEIssuecategory")]
+                    public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    {
+                              _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
+                    }
 
+                    [HttpGet("MasterGetIssuecategoryById/{id}")]
+                    public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id)
+                    {
+                              return _ticketService.MasterGetIssuecategoryById(id);
+                    }
 
-}
+                    [HttpDelete("MasterDeleteissuecategory/{id}")]
+                    public CustomerTicketRaiseModel MasterDeleteissuecategory(int id)
+                    {
+                              return _ticketService.MasterDeleteissuecategory(id);
+
+                    }
           }
-
+}

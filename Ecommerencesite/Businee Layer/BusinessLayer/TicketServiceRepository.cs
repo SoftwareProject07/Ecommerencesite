@@ -180,10 +180,27 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _context.SaveChanges();
                     }
 
+                    //public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    //{
+                    //          _context.CustomerTicketRaise.Update(UPdatecategory);
+                    //          _context.SaveChanges();
+                    //}
+
+
                     public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
                     {
-                              _context.CustomerTicketRaise.Update(UPdatecategory);
-                              _context.SaveChanges();
+                              // 1. Database se existing record nikalein uski Id se
+                              var existingTicket = _context.CustomerTicketRaise
+                                                           .FirstOrDefault(x => x.TicketId == UPdatecategory.TicketId);
+
+                              if (existingTicket != null)
+                              {
+                                        // 2. Kewal ItemCategory ko naye value se replace karein
+                                        existingTicket.IssueCategory = UPdatecategory.IssueCategory;
+
+                                        // 3. Save karein
+                                        _context.SaveChanges();
+                              }
                     }
 
                     public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id)

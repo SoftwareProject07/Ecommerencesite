@@ -182,10 +182,34 @@ namespace Ecommerencesite.Controllers
                               _ticketService.MasterAddIssuecategory(issuecategory);
                     }
 
+                    //[HttpPut("MasterUPDATEIssuecategory")]
+                    //public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    //{
+                    //          _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
+                    //}
+
                     [HttpPut("MasterUPDATEIssuecategory")]
-                    public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    public IActionResult MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
                     {
-                              _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
+                              // 1. Validation check
+                              if (UPdatecategory == null)
+                              {
+                                        return BadRequest("Data cannot be null");
+                              }
+
+                              try
+                              {
+                                        // 2. Service call
+                                        _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
+
+                                        // 3. Success Response return karna
+                                        return Ok(new { message = "Item category updated successfully!" });
+                              }
+                              catch (Exception ex)
+                              {
+                                        // 4. Koi error aaye toh handle karna
+                                        return StatusCode(500, $"Internal server error: {ex.Message}");
+                              }
                     }
 
                     [HttpGet("MasterGetIssuecategoryById/{id}")]
@@ -200,12 +224,7 @@ namespace Ecommerencesite.Controllers
                               return _ticketService.MasterDeleteissuecategory(id);
 
                     }
-                    //[HttpGet("MasterGetAllIssuecategory")]
-                    //public List<string> MasterGetAllIssuecategory()
-                    //{
-                    //
-                    //      return _ticketService.MasterGetAllIssuecategory().ToList() ;
-                    //}
+                
 
                     [HttpGet("MasterGetAllIssuecategory")]
                     public IActionResult MasterGetAllIssuecategory()

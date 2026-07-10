@@ -32,6 +32,12 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id);
                     public CustomerTicketRaiseModel MasterDeleteissuecategory(int id);
                     public List<itemcategorymasterlstdto> MasterGetAllIssuecategory();
+                    //Assign ticket master 
+                    public  void MasterAddAssignticket(CustomerTicketRaiseModel assignticket);
+                    public void MasterUpdateAssignticket(CustomerTicketRaiseModel customerTicketRaiseModel);
+                    public CustomerTicketRaiseModel MasterGetAssignticketById(int assgingetid);
+                    public CustomerTicketRaiseModel MasterDeleteAssignticket(int deleteassignid);
+                    public List<AssignRaiseTicketDto> MasterAllAssignticket();         
 
                     //    Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo);
           }

@@ -233,6 +233,71 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                              .ToList();
 
                     }
+
+                    public void MasterAddAssignticket(CustomerTicketRaiseModel assignticket)
+                    {
+                              _context.CustomerTicketRaise.Add(assignticket);
+                              _context.SaveChanges();
+                              //var ADDASSING = _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == assignticket.TicketId);
+                              //if (ADDASSING != null)
+                              //{
+                              //          ADDASSING.AssignedTo = assignticket.AssignedTo;
+
+
+                              //}
+                              //_context.CustomerTicketRaise.Add(ADDASSING);
+                              //_context.SaveChanges();
+                    }
+
+                    public void MasterUpdateAssignticket(CustomerTicketRaiseModel customerTicketRaiseModel)
+                    {
+                              //_context.CustomerTicketRaise.Update(customerTicketRaiseModel);
+                              //_context.SaveChanges();
+
+                              // 1. Database se existing record nikalein uski Id se
+                              var existingTicket = _context.CustomerTicketRaise
+                                                           .FirstOrDefault(x => x.TicketId == customerTicketRaiseModel.TicketId);
+
+                              if (existingTicket != null)
+                              {
+                                        // 2. Kewal ItemCategory ko naye value se replace karein
+                                        existingTicket.AssignedTo = customerTicketRaiseModel.AssignedTo;
+
+                                        // 3. Save karein
+                                        _context.SaveChanges();
+                              }
+                    }
+
+                    public CustomerTicketRaiseModel MasterGetAssignticketById(int assgingetid)
+                    {
+                              var a= _context.CustomerTicketRaise.FirstOrDefault(x=>x.TicketId==assgingetid);
+                              return a;
+                    }
+
+                    public CustomerTicketRaiseModel MasterDeleteAssignticket(int deleteassignid)
+                    {
+                             var deleteassign= _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == deleteassignid);
+                              if (deleteassign != null)
+                              {
+                                        _context.CustomerTicketRaise.Remove(deleteassign);
+                                        _context.SaveChanges();
+                              }
+                              return deleteassign;
+                    }
+
+                    public List<AssignRaiseTicketDto> MasterAllAssignticket()
+                    {
+                              return _context.CustomerTicketRaise
+                                         .Select(x => new AssignRaiseTicketDto
+                                         {
+                                                   TicketId = x.TicketId,
+
+                                                   AssignedTo = x.AssignedTo
+                                         })
+                                         .Distinct()
+                                         .ToList();
+
+                    }
                     //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
                     //    {
                     //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)

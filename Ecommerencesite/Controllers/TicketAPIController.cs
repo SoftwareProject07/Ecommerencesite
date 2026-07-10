@@ -182,35 +182,8 @@ namespace Ecommerencesite.Controllers
                               _ticketService.MasterAddIssuecategory(issuecategory);
                     }
 
-                    //[HttpPut("MasterUPDATEIssuecategory")]
-                    //public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
-                    //{
-                    //          _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
-                    //}
-
-                    //[HttpPut("MasterUPDATEIssuecategory")]
-                    //public IActionResult MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
-                    //{
-                    //          // 1. Validation check
-                    //          if (UPdatecategory == null)
-                    //          {
-                    //                    return BadRequest("Data cannot be null");
-                    //          }
-
-                    //          try
-                    //          {
-                    //                    // 2. Service call
-                    //                    _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
-
-                    //                    // 3. Success Response return karna
-                    //                    return Ok(new { message = "Item category updated successfully!" });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    // 4. Koi error aaye toh handle karna
-                    //                    return StatusCode(500, $"Internal server error: {ex.Message}");
-                    //          }
-                    //}
+             
+                   
 
                     [HttpPut("MasterUPDATEIssuecategory")]
                     // 💡 यहाँ पैरामीटर से पहले [FromBody] जोड़ दिया गया है
@@ -263,5 +236,67 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, $"Internal server error: {ex.Message}");
                               }
                     }
+
+                    [HttpPost("MasterAddAssignticket")]
+                    public void MasterAddAssignticket(CustomerTicketRaiseModel assignticket)
+                    {
+                              _ticketService.MasterAddAssignticket(assignticket);
+                    }
+                    [HttpGet("MasterAllAssignticket")]
+                    public IActionResult MasterAllAssignticket()
+                    {
+                              try
+                              {
+                                        var data = _ticketService.MasterAllAssignticket();
+                                        return Ok(data);
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, $"Internal server error: {ex.Message}");
+                              }
+                    }
+                    [HttpPut("MasterUpdateAssignticket")]
+
+                    public IActionResult MasterUpdateAssignticket(CustomerTicketRaiseModel customerTicketRaiseModel)
+                    {
+
+                              //   _ticketService.MasterUpdateAssignticket(customerTicketRaiseModel);
+
+
+                              // 1. Validation check
+                              if (customerTicketRaiseModel == null)
+                              {
+                                        return BadRequest("Data cannot be null");
+                              }
+
+                              try
+                              {
+                                        // 2. Service call
+                                        _ticketService.MasterUpdateAssignticket(customerTicketRaiseModel);
+
+                                        // 3. Success Response return karna
+                                        return Ok(new { message = "Assigned to  category updated successfully!" });
+                              }
+                              catch (Exception ex)
+                              {
+                                        // 4. Koi error aaye toh handle karna
+                                        return StatusCode(500, $"Internal server error: {ex.Message}");
+                              }
+                    }
+
+
+
+                    [HttpGet("MasterGetAssignticketById")]
+                    public CustomerTicketRaiseModel MasterGetAssignticketById(int assgingetid)
+                    {
+                              return _ticketService.MasterGetAssignticketById(assgingetid);
+
+                    }
+                    [HttpDelete("MasterDeleteAssignticket")]
+                    public CustomerTicketRaiseModel MasterDeleteAssignticket(int deleteassignid)
+                    {
+                              return _ticketService.MasterDeleteAssignticket(deleteassignid);
+                    }
+
           }
 }

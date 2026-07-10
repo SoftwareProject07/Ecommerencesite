@@ -188,7 +188,32 @@ namespace Ecommerencesite.Controllers
                     //          _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
                     //}
 
+                    //[HttpPut("MasterUPDATEIssuecategory")]
+                    //public IActionResult MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    //{
+                    //          // 1. Validation check
+                    //          if (UPdatecategory == null)
+                    //          {
+                    //                    return BadRequest("Data cannot be null");
+                    //          }
+
+                    //          try
+                    //          {
+                    //                    // 2. Service call
+                    //                    _ticketService.MasterUPDATEIssuecategory(UPdatecategory);
+
+                    //                    // 3. Success Response return karna
+                    //                    return Ok(new { message = "Item category updated successfully!" });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    // 4. Koi error aaye toh handle karna
+                    //                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                    //          }
+                    //}
+
                     [HttpPut("MasterUPDATEIssuecategory")]
+                    // 💡 यहाँ पैरामीटर से पहले [FromBody] जोड़ दिया गया है
                     public IActionResult MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
                     {
                               // 1. Validation check
@@ -211,7 +236,6 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, $"Internal server error: {ex.Message}");
                               }
                     }
-
                     [HttpGet("MasterGetIssuecategoryById/{id}")]
                     public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id)
                     {

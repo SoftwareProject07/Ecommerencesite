@@ -276,7 +276,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public CustomerTicketRaiseModel MasterDeleteAssignticket(int deleteassignid)
                     {
-                             var deleteassign= _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == deleteassignid);
+                              var deleteassign = _context.CustomerTicketRaise.Where(x => x.TicketId == deleteassignid).FirstOrDefault() ;
                               if (deleteassign != null)
                               {
                                         _context.CustomerTicketRaise.Remove(deleteassign);

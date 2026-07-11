@@ -241,6 +241,7 @@ namespace Ecommerencesite.Controllers
                     public void MasterAddAssignticket(CustomerTicketRaiseModel assignticket)
                     {
                               _ticketService.MasterAddAssignticket(assignticket);
+
                     }
                     [HttpGet("MasterAllAssignticket")]
                     public IActionResult MasterAllAssignticket()

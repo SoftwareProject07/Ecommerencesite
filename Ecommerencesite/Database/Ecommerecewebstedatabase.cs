@@ -32,6 +32,8 @@ namespace Ecommerencesite.Database
                     // Liveness trials
                     public DbSet<LivenessCheckRequestModel> livenessrequestcheckmodel { get; set; }
                     public DbSet<CustomerTicketRaiseModel> CustomerTicketRaise { get; set; }
+                    public DbSet<AssignRaiseTicketModel> AssignRaiseTicket { get; set; }  
+                    public DbSet<IssueCategorymasterModel> issuecategorymasterModels { get; set; }
 
           }
 }

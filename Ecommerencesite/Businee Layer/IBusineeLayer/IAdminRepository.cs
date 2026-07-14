@@ -1,4 +1,5 @@
-﻿using Ecommerencesite.Model;
+﻿using Azure;
+using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
@@ -7,7 +8,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
           {
 
 
-                    public ResponseModel CREATERegistoryAdmin(AdminREGMODEL adminREGMODEL);
+                    public ResponseModel  CREATERegistoryAdmin(AdminREGMODEL adminREGMODEL);
 
                     public ResponseModel LOGINAdmin(AdminLogindto _adminlogindto);
                     public ResponseModel UPDATERegistoryAdmin(AdminREGMODEL adminREGMODEL);

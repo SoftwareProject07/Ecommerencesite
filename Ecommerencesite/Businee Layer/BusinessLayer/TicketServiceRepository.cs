@@ -1,5 +1,6 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
+using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using HelpDeskAPI.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -151,7 +152,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return "Ticket Closed Successfully";
                     }
 
-                    // ASSIGN TASK TEAM 
+
+
+                    // ASSIGN TASK TEAM work
                     public void Updateticket(int id, CustomerTicketRaiseModel model)
                     {
                               // 1. Fetch the original untampered record from the database
@@ -174,9 +177,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _context.SaveChanges();
                     }
 
-                    public void MasterAddIssuecategory(CustomerTicketRaiseModel issuecategory)
+
+
+
+
+                    public void MasterAddIssuecategory(IssueCategorymasterModel issuecategory)
                     {
-                              _context.CustomerTicketRaise.Add(issuecategory);
+                              _context.issuecategorymasterModels.Add(issuecategory);
                               _context.SaveChanges();
                     }
 
@@ -187,11 +194,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //}
 
 
-                    public void MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    public void MasterUPDATEIssuecategory(IssueCategorymasterModel UPdatecategory)
                     {
                               // 1. Database se existing record nikalein uski Id se
-                              var existingTicket = _context.CustomerTicketRaise
-                                                           .FirstOrDefault(x => x.TicketId == UPdatecategory.TicketId);
+                              var existingTicket = _context.issuecategorymasterModels
+                                                           .FirstOrDefault(x => x.issuecategorymasterid == UPdatecategory.issuecategorymasterid);
 
                               if (existingTicket != null)
                               {
@@ -203,40 +210,49 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               }
                     }
 
-                    public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id)
+                    public IssueCategorymasterModel MasterGetIssuecategoryById(int id)
                     {
-                              var issuecategory = _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == id);
+                              var issuecategory = _context.issuecategorymasterModels.FirstOrDefault(x => x.issuecategorymasterid == id);
                               return issuecategory;
                     }
 
-                    public CustomerTicketRaiseModel MasterDeleteissuecategory(int id)
+                    public IssueCategorymasterModel MasterDeleteissuecategory(int id)
                     {
-                             var a= _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == id);
+                             var a= _context.issuecategorymasterModels.FirstOrDefault(x => x.issuecategorymasterid == id);
                               if (a != null)
                               {
-                                        _context.CustomerTicketRaise.Remove(a);
+                                        _context.issuecategorymasterModels.Remove(a);
                                         _context.SaveChanges();
                               }
                               return a;
                     }
 
-                    public List<itemcategorymasterlstdto> MasterGetAllIssuecategory()
+                    public List<IssueCategorymasterModel> MasterGetAllIssuecategory()
                     {
-                              return _context.CustomerTicketRaise
-                                             .Select(x => new itemcategorymasterlstdto
-                                             {
-                                                        issuecategorymasterid=x.TicketId,
+                              //return _context.CustomerTicketRaise
+                              //               .Select(x => new itemcategorymasterlstdto
+                              //               {
+                              //                          issuecategorymasterid=x.TicketId,
                                                       
-                                                       IssueCategory = x.IssueCategory
-                                             })
-                                             .Distinct()
-                                             .ToList();
+                              //                         IssueCategory = x.IssueCategory
+                              //               })
+                              //               .Distinct()
+                              //               .ToList();
+                           
+                              return _context.issuecategorymasterModels
+                                                            .Select(x => new IssueCategorymasterModel
+                                                            {
+                                                                      issuecategorymasterid = x.issuecategorymasterid,
+                                                                      IssueCategory = x.IssueCategory
+                                                            })
+                                                            .Distinct()
+                                                            .ToList();
 
                     }
 
-                    public void MasterAddAssignticket(CustomerTicketRaiseModel assignticket)
+                    public void MasterAddAssignticket(AssignRaiseTicketModel assignticket)
                     {
-                              _context.CustomerTicketRaise.Add(assignticket);
+                              _context.AssignRaiseTicket.Add(assignticket);
                               _context.SaveChanges();
                               //var ADDASSING = _context.CustomerTicketRaise.FirstOrDefault(x => x.TicketId == assignticket.TicketId);
                               //if (ADDASSING != null)
@@ -249,14 +265,14 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               //_context.SaveChanges();
                     }
 
-                    public void MasterUpdateAssignticket(CustomerTicketRaiseModel customerTicketRaiseModel)
+                    public void MasterUpdateAssignticket(AssignRaiseTicketModel customerTicketRaiseModel)
                     {
                               //_context.CustomerTicketRaise.Update(customerTicketRaiseModel);
                               //_context.SaveChanges();
 
                               // 1. Database se existing record nikalein uski Id se
-                              var existingTicket = _context.CustomerTicketRaise
-                                                           .FirstOrDefault(x => x.TicketId == customerTicketRaiseModel.TicketId);
+                              var existingTicket = _context.AssignRaiseTicket
+                                                           .FirstOrDefault(x => x.AssignId == customerTicketRaiseModel.AssignId);
 
                               if (existingTicket != null)
                               {
@@ -268,77 +284,44 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               }
                     }
 
-                    public CustomerTicketRaiseModel MasterGetAssignticketById(int assgingetid)
+                    public AssignRaiseTicketModel MasterGetAssignticketById(int assgingetid)
                     {
-                              var a= _context.CustomerTicketRaise.FirstOrDefault(x=>x.TicketId==assgingetid);
+                              var a= _context.AssignRaiseTicket.FirstOrDefault(x=>x.AssignId==assgingetid);
                               return a;
                     }
 
-                    public CustomerTicketRaiseModel MasterDeleteAssignticket(int deleteassignid)
+                    public AssignRaiseTicketModel MasterDeleteAssignticket(int deleteassignid)
                     {
-                              var deleteassign = _context.CustomerTicketRaise.Where(x => x.TicketId == deleteassignid).FirstOrDefault() ;
+                              var deleteassign = _context.AssignRaiseTicket.Where(x => x.AssignId == deleteassignid).FirstOrDefault() ;
                               if (deleteassign != null)
                               {
-                                        _context.CustomerTicketRaise.Remove(deleteassign);
+                                        _context.AssignRaiseTicket.Remove(deleteassign);
                                         _context.SaveChanges();
                               }
                               return deleteassign;
                     }
 
-                    public List<AssignRaiseTicketDto> MasterAllAssignticket()
+                    public List<AssignRaiseTicketModel> MasterAllAssignticket()
                     {
-                              return _context.CustomerTicketRaise
-                                         .Select(x => new AssignRaiseTicketDto
-                                         {
-                                                   TicketId = x.TicketId,
+                              //return _context.CustomerTicketRaise
+                              //           .Select(x => new AssignRaiseTicketDto
+                              //           {
+                              //                     TicketId = x.TicketId,
 
-                                                   AssignedTo = x.AssignedTo
-                                         })
-                                         .Distinct()
-                                         .ToList();
+                              //                     AssignedTo = x.AssignedTo
+                              //           })
+                              //           .Distinct()
+                              //           .ToList();
+                              return  _context.AssignRaiseTicket
+                                                            .Select(x => new AssignRaiseTicketModel
+                                                            {
+                                                                      AssignId = x.AssignId,
+                                                                      AssignedTo = x.AssignedTo
+                                                            })
+                                                            .Distinct()
+                                                            .ToList();
 
                     }
-                    //    public async Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo)
-                    //    {
-                    //              // WhatsApp API URL (Apne Phone Number ID ke sath replace karein)
-                    //              string url = "[https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages](https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages)";
-                    //              string accessToken = "YOUR_META_PERMANENT_ACCESS_TOKEN";
-
-                    //              using (var client = new HttpClient())
-                    //              {
-                    //                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-
-                    //                        // WhatsApp Template Payload
-                    //                        var payload = new
-                    //                        {
-                    //                                  messaging_product = "whatsapp",
-                    //                                  to = mobileNumber.StartsWith("91") ? mobileNumber : "91" + mobileNumber, // India country code handling
-                    //                                  type = "template",
-                    //                                  template = new
-                    //                                  {
-                    //                                            name = "ticket_assignment_update", // Aapke Meta dashboard me approved template ka naam
-                    //                                            language = new { code = "en_US" },
-                    //                                            components = new[]
-                    //                                {
-                    //    new
-                    //    {
-                    //        type = "body",
-                    //        parameters = new[]
-                    //        {
-                    //            new { type = "text", text = ticketId },     // Template Variable {{1}}
-                    //            new { type = "text", text = AssignedTo }   // Template Variable {{2}}
-                    //        }
-                    //    }
-                    //}
-                    //                                  }
-                    //                        };
-
-                    //                        string jsonPayload = JsonSerializer.Serialize(payload);
-                    //                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                    //                        var response = await client.PostAsync(url, content);
-                    //                        return response.IsSuccessStatusCode;
-                    //              }
-                    //    }
+                 
           }
 }

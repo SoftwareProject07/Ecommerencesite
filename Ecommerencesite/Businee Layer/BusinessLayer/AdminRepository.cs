@@ -36,6 +36,9 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                               return res;
                     }
+                    //          context.adminREGMODELSs.Add(adminREGMODEL);
+                    //          context.SaveChanges();
+                    //}
 
                     public ResponseModel DeleteAdmin(int id)
                     {

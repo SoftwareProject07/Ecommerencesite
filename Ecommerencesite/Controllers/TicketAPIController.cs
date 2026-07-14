@@ -1,8 +1,10 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
+using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using HelpDeskAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 
 
@@ -177,7 +179,7 @@ namespace Ecommerencesite.Controllers
                               return Ok(result);
                     }
                     [HttpPost("MasterAddIssuecategory")]
-                    public void MasterAddIssuecategory(CustomerTicketRaiseModel issuecategory)
+                    public void MasterAddIssuecategory(IssueCategorymasterModel issuecategory)
                     {
                               _ticketService.MasterAddIssuecategory(issuecategory);
                     }
@@ -187,7 +189,7 @@ namespace Ecommerencesite.Controllers
 
                     [HttpPut("MasterUPDATEIssuecategory")]
                     // 💡 यहाँ पैरामीटर से पहले [FromBody] जोड़ दिया गया है
-                    public IActionResult MasterUPDATEIssuecategory(CustomerTicketRaiseModel UPdatecategory)
+                    public IActionResult MasterUPDATEIssuecategory(IssueCategorymasterModel UPdatecategory)
                     {
                               // 1. Validation check
                               if (UPdatecategory == null)
@@ -210,13 +212,13 @@ namespace Ecommerencesite.Controllers
                               }
                     }
                     [HttpGet("MasterGetIssuecategoryById/{id}")]
-                    public CustomerTicketRaiseModel MasterGetIssuecategoryById(int id)
+                    public IssueCategorymasterModel MasterGetIssuecategoryById(int id)
                     {
                               return _ticketService.MasterGetIssuecategoryById(id);
                     }
 
                     [HttpDelete("MasterDeleteissuecategory/{id}")]
-                    public CustomerTicketRaiseModel MasterDeleteissuecategory(int id)
+                    public IssueCategorymasterModel MasterDeleteissuecategory(int id)
                     {
                               return _ticketService.MasterDeleteissuecategory(id);
 
@@ -224,41 +226,47 @@ namespace Ecommerencesite.Controllers
                 
 
                     [HttpGet("MasterGetAllIssuecategory")]
-                    public IActionResult MasterGetAllIssuecategory()
+                    public List<IssueCategorymasterModel> MasterGetAllIssuecategory()
                     {
-                              try
-                              {
-                                        var data = _ticketService.MasterGetAllIssuecategory();
-                                        return Ok(data);
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, $"Internal server error: {ex.Message}");
-                              }
+                              //try
+                              //{
+                              //          var data = _ticketService.MasterGetAllIssuecategory();
+                              //          return Ok(data);
+                              //}
+                              //catch (Exception ex)
+                              //{
+                              //          return StatusCode(500, $"Internal server error: {ex.Message}");
+                              //}
+                              var listallissuecategory = _ticketService.MasterGetAllIssuecategory().ToList();
+                              return listallissuecategory;
                     }
 
                     [HttpPost("MasterAddAssignticket")]
-                    public void MasterAddAssignticket(CustomerTicketRaiseModel assignticket)
+                    public void MasterAddAssignticket(AssignRaiseTicketModel assignticket)
                     {
                               _ticketService.MasterAddAssignticket(assignticket);
 
                     }
                     [HttpGet("MasterAllAssignticket")]
-                    public IActionResult MasterAllAssignticket()
+                    public List<AssignRaiseTicketModel> MasterAllAssignticket()
+                    //{
+                    //          try
+                    //          {
+                    //                    var data = _ticketService.MasterAllAssignticket();
+                    //                    return Ok(data);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                    //          }
                     {
-                              try
-                              {
-                                        var data = _ticketService.MasterAllAssignticket();
-                                        return Ok(data);
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, $"Internal server error: {ex.Message}");
-                              }
+
+                              var listassign= _ticketService.MasterAllAssignticket().ToList();
+                              return listassign;
                     }
                     [HttpPut("MasterUpdateAssignticket")]
 
-                    public IActionResult MasterUpdateAssignticket(CustomerTicketRaiseModel customerTicketRaiseModel)
+                    public IActionResult MasterUpdateAssignticket(AssignRaiseTicketModel customerTicketRaiseModel)
                     {
 
                               //   _ticketService.MasterUpdateAssignticket(customerTicketRaiseModel);
@@ -288,13 +296,13 @@ namespace Ecommerencesite.Controllers
 
 
                     [HttpGet("MasterGetAssignticketById")]
-                    public CustomerTicketRaiseModel MasterGetAssignticketById(int assgingetid)
+                    public AssignRaiseTicketModel MasterGetAssignticketById(int assgingetid)
                     {
                               return _ticketService.MasterGetAssignticketById(assgingetid);
 
                     }
                     [HttpDelete("MasterDeleteAssignticket")]
-                    public CustomerTicketRaiseModel MasterDeleteAssignticket(int deleteassignid)
+                    public AssignRaiseTicketModel MasterDeleteAssignticket(int deleteassignid)
                     {
                               return _ticketService.MasterDeleteAssignticket(deleteassignid);
                     }

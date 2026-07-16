@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
@@ -20,37 +21,6 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-
-
-                    //[HttpPost("CreateMedicine")]
-                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
-                    //{
-                    //          if (!ModelState.IsValid)
-                    //                    return BadRequest(ModelState);
-
-                    //          if (image == null || image.Length == 0)
-                    //                    return BadRequest("Image missing");
-
-                    //          await imedicineresp.CreateMedicineAsync(medicine, image);
-
-                    //          return Ok("Medicine created successfully");
-                    //}
-
-
-                    //[HttpPost("CreateMedicine")]
-                    //public async Task<IActionResult> AddMedicine([FromForm] Medicine medicine, IFormFile image)
-                    //{
-                    //          var result = await imedicineresp.CreateMedicineAsync(medicine, image);
-
-                    //          if (result.status == false)
-                    //          {
-                    //                    // 400 Bad Request bhejega duplicate hone par
-                    //                    return BadRequest(new { message = result.responseMessage });
-                    //          }
-
-                    //          // 200 OK bhejega success hone par
-                    //          return Ok(new { message = result.responseMessage });
-                    //}
                     [HttpPost("CreateMedicine")]
                     public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
                     {
@@ -108,15 +78,56 @@ namespace Ecommerencesite.Controllers
 
 
                     }
-                   
+
+
+                    //[HttpPut("UpdateMedicine")]
+                    //public void  UpdateMedicine(Medicine medicine)
+                    //{
+                    //       imedicineresp.UpdateMedicine(medicine);
+                    //        //  return Ok(result);
+                    //}
+
 
                     [HttpPut("UpdateMedicine")]
-                    public IActionResult UpdateMedicine([FromBody] Medicine medicine)
+                    public IActionResult Update(Medicine medicine)
                     {
-                              var result = imedicineresp.UpdateMedicine(medicine);
-                              return Ok(result);
-                    }
+                              try
+                              {
+                                        // Call the void business logic method
+                                        imedicineresp.UpdateMedicine(medicine);
 
+                                        // If it succeeds with no exceptions, return success
+                                        return Ok(new ResponseModel
+                                        {
+                                                   status = true,
+                                                  responseMessage = "Medicine updated successfully."
+                                        });
+                              }
+                              catch (ArgumentNullException ex)
+                              {
+                                        return BadRequest(new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = ex.Message
+                                        });
+                              }
+                              catch (KeyNotFoundException ex)
+                              {
+                                        return NotFound(new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = ex.Message
+                                        });
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new ResponseModel
+                                        {
+                                                  status = false,
+                                                  responseMessage = $"An unexpected error occurred: {ex.Message}"
+                                        });
+                              }
+                    }
                     [HttpGet("AllListMedicineProduct")]
                     public IActionResult lstmedicine()
                     {
@@ -134,12 +145,14 @@ namespace Ecommerencesite.Controllers
                                                   Detail = ex.InnerException?.Message
                                         });
                               }
+
                     }
 
 
 
 
 
+                    
 
 
 
@@ -155,56 +168,64 @@ namespace Ecommerencesite.Controllers
 
 
 
+                              [HttpPost("UploadExcel")]
+                    public async Task<IActionResult> UploadExcel( IFormFile file)
+                    {
+                              // 1. वैलीडेशन: क्या फ़ाइल भेजी गई है?
+                              if (file == null || file.Length == 0)
+                              {
+                                        return BadRequest(new { success = false, message = "Please upload a valid Excel file!" });
+                              }
 
-                    //[HttpGet("MyMedicineProducts/{userId}")]
-                    //public IActionResult GetMyMedicines(int userId)
-                    //{
-                    //          try
-                    //          {
-                    //                    var result = imedicineresp.GetUserSpecificMedicines(userId);
-                    //                    if (result == null) return NotFound();
-                    //                    return Ok(result);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, ex.Message);
-                    //          }
-                    //}
+                              var extension = Path.GetExtension(file.FileName).ToLower();
+                              if (extension != ".xlsx" && extension != ".xls")
+                              {
+                                        return BadRequest(new { success = false, message = "Only .xlsx or .xls formats are allowed." });
+                              }
 
+                              try
+                              {
+                                        using (var stream = new MemoryStream())
+                                        {
+                                                  await file.CopyToAsync(stream);
+                                                  stream.Position = 0;
 
+                                                  // 2. Business Layer Call: एक्सेल पार्स करें (बिना userId के)
+                                                  var parsedMedicines = await imedicineresp.ParseMedicineExcelAsync(stream);
 
-                    // AddToCART: Add other API methods here
-                    //[HttpPost]
-                    //[Route("AddToCART")]
-                    //public ResponseModel AddToCART(Cart cart)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-                    //          DALMODEL DL = new DALMODEL();
-                    //          SqlConnection conn = new SqlConnection(configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
-                    //          response = DL.AddToCART(cart, conn);
-                    //          return response;
+                                                  if (parsedMedicines == null || !parsedMedicines.Any())
+                                                  {
+                                                            return BadRequest(new { success = false, message = "The Excel file is empty or incorrectly formatted!" });
+                                                  }
 
-                    //}
-                    //[HttpPost]
-                    //[Route("PlaceOrder")]
-                    //public ResponseModel PlaceOrder(UserMedicine userm)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-                    //          DALMODEL DL = new DALMODEL();
-                    //          SqlConnection conn = new SqlConnection(configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
-                    //          response = DL.PlaceOrder(userm, conn);
-                    //          return response;
-                    //}
-                    //[HttpPost]
-                    //[Route("OrderList")]
-                    //public ResponseModel OrderList(UserMedicine _usermedicine)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-                    //          DALMODEL DL = new DALMODEL();
-                    //          SqlConnection conn = new SqlConnection(configuration.GetConnectionString("Ecommerecewebstedatabase").ToString());
-                    //          response = DL.OrderList(_usermedicine, conn);
-                    //          return response;
-                    //}
+                                                  // 3. Business Layer Call: डेटाबेस में सेव करें
+                                                  int savedCount = await imedicineresp.BulkInsertMedicinesAsync(parsedMedicines);
+
+                                                  // 4. Business Layer Call: पूरी लिस्ट बिना किसी फिल्टर के प्राप्त करें
+                                                  ResponseModel response = imedicineresp.GetAllMedicine();
+                                                 // imedicineresp.GetAllMedicine();
+
+                                                  return Ok(new
+                                                  {
+                                                            success = true,
+                                                            //  message = $"सफलतापूर्वक {savedCount} दवाइयां अपलोड हो गई हैं!",
+                                                            message = $"{savedCount} medications successfully uploaded!!",
+                                                            count = savedCount,
+                                                              data = response.Data // 👈 यह बिना फ़िल्टर का पूरा साझा डेटा रिएक्ट को देगा
+                                                           // data = GetAllMedicine()
+                                                  });
+                                        }
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(StatusCodes.Status500InternalServerError, new
+                                        {
+                                                  success = false,
+                                                  message = "A server error has occurred.!",
+                                                  error = ex.Message
+                                        });
+                              }
+                    }
+          }
 
           }
-}

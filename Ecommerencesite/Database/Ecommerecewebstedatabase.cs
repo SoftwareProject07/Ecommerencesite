@@ -6,6 +6,8 @@ namespace Ecommerencesite.Database
 {
           public class Ecommerecewebstedatabase : DbContext
           {
+                    internal readonly object BankRefundableAmounts;
+
                     public Ecommerecewebstedatabase(
                         DbContextOptions<Ecommerecewebstedatabase> options
                     ) : base(options)
@@ -34,6 +36,7 @@ namespace Ecommerencesite.Database
                     public DbSet<CustomerTicketRaiseModel> CustomerTicketRaise { get; set; }
                     public DbSet<AssignRaiseTicketModel> AssignRaiseTicket { get; set; }  
                     public DbSet<IssueCategorymasterModel> issuecategorymasterModels { get; set; }
+                    public DbSet<BankRefundableAmountModel> BankRefundableAmountModels { get; set; }          
 
           }
 }

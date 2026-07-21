@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Ecommerencesite.Businee_Layer.BusinessLayer
 {
           public class TicketServiceRepository : ITicketServiceRepository
           {
                     private readonly Ecommerecewebstedatabase _context;
-
-                    public TicketServiceRepository(Ecommerecewebstedatabase context)
+                    private readonly IHttpClientFactory _httpClientFactory;
+                    public TicketServiceRepository(Ecommerecewebstedatabase context, IHttpClientFactory httpClientFactory)
                     {
-                              _context = context;
+                              this._context = context;
+                              this._httpClientFactory = httpClientFactory;
                     }
 
                     // Raise Ticket
@@ -218,7 +221,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public IssueCategorymasterModel MasterDeleteissuecategory(int id)
                     {
-                             var a= _context.issuecategorymasterModels.FirstOrDefault(x => x.issuecategorymasterid == id);
+                              var a = _context.issuecategorymasterModels.FirstOrDefault(x => x.issuecategorymasterid == id);
                               if (a != null)
                               {
                                         _context.issuecategorymasterModels.Remove(a);
@@ -233,12 +236,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               //               .Select(x => new itemcategorymasterlstdto
                               //               {
                               //                          issuecategorymasterid=x.TicketId,
-                                                      
+
                               //                         IssueCategory = x.IssueCategory
                               //               })
                               //               .Distinct()
                               //               .ToList();
-                           
+
                               return _context.issuecategorymasterModels
                                                             .Select(x => new IssueCategorymasterModel
                                                             {
@@ -286,13 +289,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public AssignRaiseTicketModel MasterGetAssignticketById(int assgingetid)
                     {
-                              var a= _context.AssignRaiseTicket.FirstOrDefault(x=>x.AssignId==assgingetid);
+                              var a = _context.AssignRaiseTicket.FirstOrDefault(x => x.AssignId == assgingetid);
                               return a;
                     }
 
                     public AssignRaiseTicketModel MasterDeleteAssignticket(int deleteassignid)
                     {
-                              var deleteassign = _context.AssignRaiseTicket.Where(x => x.AssignId == deleteassignid).FirstOrDefault() ;
+                              var deleteassign = _context.AssignRaiseTicket.Where(x => x.AssignId == deleteassignid).FirstOrDefault();
                               if (deleteassign != null)
                               {
                                         _context.AssignRaiseTicket.Remove(deleteassign);
@@ -312,7 +315,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               //           })
                               //           .Distinct()
                               //           .ToList();
-                              return  _context.AssignRaiseTicket
+                              return _context.AssignRaiseTicket
                                                             .Select(x => new AssignRaiseTicketModel
                                                             {
                                                                       AssignId = x.AssignId,
@@ -322,6 +325,83 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                             .ToList();
 
                     }
-                 
+                  
+
+                    //public async Task<bool> AssignTicketAsync(int id, TicketUpdateDto model)
+                    //{
+                    //          // 1. Fetch Target Entity
+                    //          var ticket = await _context.CustomerTicketRaise.FindAsync(id);
+                    //          if (ticket == null) return false;
+
+                    //          // 2. Data Modification Updates
+                    //          ticket.AssignedTo = model.AssignedTo;
+                    //          ticket.Status = "Assigned";
+
+                    //          if (!string.IsNullOrEmpty(model.IssueCategory))
+                    //          {
+                    //                    ticket.IssueCategory = model.IssueCategory;
+                    //          }
+
+                    //          // Commit DB Changes
+                    //          await _context.SaveChangesAsync();
+
+                    //          // 3. Robust Data Fallback (Frontend empty values protection)
+                    //          string targetMobile = !string.IsNullOrEmpty(model.MobileNo) ? model.MobileNo : ticket.MobileNo;
+                    //          string issueCategory = !string.IsNullOrEmpty(model.IssueCategory) ? model.IssueCategory : ticket.IssueCategory;
+                    //          string ticketNum = !string.IsNullOrEmpty(model.TicketNumber) ? model.TicketNumber : ticket.TicketNumber;
+
+                    //          // Clean Mobile Number Pattern (Handles empty/null strings safely)
+                    //          targetMobile = Regex.Replace(targetMobile ?? "", @"\D", "").Trim();
+
+                    //          // Formatting: 12-digit number (with 91 prefix) ko 10-digit clean number me convert karne ke liye
+                    //          if (targetMobile.StartsWith("91") && targetMobile.Length == 12)
+                    //          {
+                    //                    targetMobile = targetMobile.Substring(2);
+                    //          }
+
+                    //          // 4. Async Non-Blocking SMS Dispatch Channel
+                    //          if (!string.IsNullOrEmpty(targetMobile) && targetMobile.Length == 10 && targetMobile != "0000000000")
+                    //          {
+                    //                    // ==================== CONFIGURATION ZONE ====================
+                    //                    string gatewayApiKey = "85749302adfebc849201948573";
+                    //                    string dltTemplateId = "1207167894561230495";
+                    //                    string senderId = "AKMEDZ";
+                    //                    // ============================================================
+
+                    //                    // Clean template string format optimized for DLT validation engines
+                    //                    string smsMessage = $"Dear Customer, your ticket {ticketNum} regarding {issueCategory} has been successfully assigned to {model.AssignedTo}. Update as soon. Team AKMedizo";
+
+                    //                    // Use Uri.EscapeDataString instead of HttpUtility.UrlEncode to enforce standard %20 spacing rules
+                    //                    string encodedMessage = Uri.EscapeDataString(smsMessage);
+
+                    //                    string directSmsUrl = $"https://api.bulksmsgateway.in/send?apikey={gatewayApiKey}&to={targetMobile}&sender={senderId}&message={encodedMessage}&template_id={dltTemplateId}";
+
+                    //                    var httpClient = _httpClientFactory.CreateClient();
+                    //                    try
+                    //                    {
+                    //                              // Dispatch request to external network provider infrastructure
+                    //                              var response = await httpClient.GetAsync(directSmsUrl);
+
+                    //                              // Read raw response body content returned from bulksmsgateway API loop
+                    //                              string gatewayReplyLog = await response.Content.ReadAsStringAsync();
+
+                    //                              if (!response.IsSuccessStatusCode)
+                    //                              {
+                    //                                        Console.WriteLine($"[SMS Gateway Network Error]: HTTP Status -> {response.StatusCode} | Reply -> {gatewayReplyLog}");
+                    //                              }
+                    //                              else
+                    //                              {
+                    //                                        // Trace validation status codes sent by the bulk SMS network provider engine itself
+                    //                                        Console.WriteLine($"[SMS Gateway Engine Dispatch Log]: {gatewayReplyLog}");
+                    //                              }
+                    //                    }
+                    //                    catch (Exception smsEx)
+                    //                    {
+                    //                              Console.WriteLine($"[SMS Exception]: Non-blocking thread failure context: {smsEx.Message}");
+                    //                    }
+                    //          }
+
+                    //          return true;
+                    //}
           }
 }

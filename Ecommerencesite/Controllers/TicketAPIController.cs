@@ -307,5 +307,33 @@ namespace Ecommerencesite.Controllers
                               return _ticketService.MasterDeleteAssignticket(deleteassignid);
                     }
 
+
+                    //trail base code 
+                    //[HttpGet("AssignTicket/{id}")]
+                    //public async Task<IActionResult> AssignTicket(int id,  TicketUpdateDto model)
+                    //{
+                    //          if (model == null || id != model.TicketId)
+                    //          {
+                    //                    return BadRequest(new { message = "Invalid ticket validation parameters or ID mismatch." });
+                    //          }
+
+                    //          try
+                    //          {
+                    //                    // Business logic execution delegation
+                    //                    bool isUpdated = await _ticketService.AssignTicketAsync(id, model);
+
+                    //                    if (!isUpdated)
+                    //                    {
+                    //                              return NotFound(new { message = $"Ticket with assignment ID {id} does not exist." });
+                    //                    }
+
+                    //                    return Ok(new { success = true, message = "Ticket assigned successfully and notification processing completed." });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new { error = $"Internal runtime processing layer error: {ex.Message}" });
+                    //          }
+                    //}
+
           }
 }

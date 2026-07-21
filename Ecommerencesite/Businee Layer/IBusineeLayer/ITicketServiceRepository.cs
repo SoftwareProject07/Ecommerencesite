@@ -43,7 +43,9 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void MasterUpdateAssignticket(AssignRaiseTicketModel customerTicketRaiseModel);
                     public AssignRaiseTicketModel MasterGetAssignticketById(int assgingetid);
                     public AssignRaiseTicketModel MasterDeleteAssignticket(int deleteassignid);
-                    public List<AssignRaiseTicketModel> MasterAllAssignticket();         
+                    public List<AssignRaiseTicketModel> MasterAllAssignticket();
+                    //trail base code 
+                //    Task<bool> AssignTicketAsync(int id, TicketUpdateDto model);
 
                     //    Task<bool> SendAssignmentUpdateAsync(string mobileNumber, string ticketId, string AssignedTo);
           }

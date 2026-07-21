@@ -108,6 +108,7 @@ builder.Services.AddScoped<ILivenessRepository, LivenessRepository>();
 builder.Services.AddScoped<IMedicineRepository,MedicineRepositoryAI>();
 builder.Services.AddScoped<ITicketServiceRepository, TicketServiceRepository>();
 builder.Services.AddScoped<IMedicineChatServiceRepository,MedicineChatServiceRepository>();
+builder.Services.AddScoped<IBankRefundableAmountRepository, BankRefundableAmountRepository>();//bankrefundableamountreposotiory add
 
 builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddEndpointsApiExplorer();

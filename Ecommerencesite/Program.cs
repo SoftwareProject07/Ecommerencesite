@@ -109,11 +109,11 @@ builder.Services.AddScoped<IMedicineRepository,MedicineRepositoryAI>();
 builder.Services.AddScoped<ITicketServiceRepository, TicketServiceRepository>();
 builder.Services.AddScoped<IMedicineChatServiceRepository,MedicineChatServiceRepository>();
 builder.Services.AddScoped<IBankRefundableAmountRepository, BankRefundableAmountRepository>();//bankrefundableamountreposotiory add
-
+builder.Services.AddScoped<IITrackingServiceRepository, TrackingServiceRepository>();
 builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddEndpointsApiExplorer();
 
-
+builder.Services.AddSignalR();
 
 builder.Services.AddSwaggerGen();
 //          c =>
@@ -143,5 +143,7 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
+app.MapHub<TrackingHub>("/trackingHub");
+
 
 app.Run();

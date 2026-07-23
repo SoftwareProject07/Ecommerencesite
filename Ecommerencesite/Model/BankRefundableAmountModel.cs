@@ -14,7 +14,7 @@ namespace Ecommerencesite.Model
                     public string? Bank_CustomerName { get; set; }//customer name 
 
 
-                    [Column(TypeName = "decimal(18,2)]")]
+                 //   [Column(TypeName = "decimal(18,2)]")]
                     public decimal? BankRefundableAmount { get; set; }
 
                     public bool? BankRefundableAmountStatus { get; set; }

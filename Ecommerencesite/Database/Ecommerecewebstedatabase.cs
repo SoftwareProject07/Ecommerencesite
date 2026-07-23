@@ -36,7 +36,8 @@ namespace Ecommerencesite.Database
                     public DbSet<CustomerTicketRaiseModel> CustomerTicketRaise { get; set; }
                     public DbSet<AssignRaiseTicketModel> AssignRaiseTicket { get; set; }  
                     public DbSet<IssueCategorymasterModel> issuecategorymasterModels { get; set; }
-                    public DbSet<BankRefundableAmountModel> BankRefundableAmountModels { get; set; }          
+                    public DbSet<BankRefundableAmountModel> BankRefundableAmountModels { get; set; }   
+                    public DbSet<deliverypartnermodel> deliverypartnermodels { get; set; }
 
           }
 }

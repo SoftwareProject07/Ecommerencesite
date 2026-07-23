@@ -4,6 +4,7 @@ using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Owin.BuilderProperties;
 using System;
 
@@ -20,13 +21,32 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _hubContext = hubContext;
                     }
 
+                    public List<Order> GetAllOrdersAsync()
+                    {
+                              var listorder = _context.orderss.ToList();
+                              return listorder;
+                                  //.Include(o => o.Address)
+                                  //.Include(o => o.OrderItems)
+                                  //.OrderByDescending(o => o.CreatedAt)
+                                  //.ToList();
+                    }
+
+                    // public async Task<List<Order>> GetAllOrdersAsync() { 
+                    //{
+                    //          return await _context.orderss
+                    //              .Include(o => o.Address)
+                    //              .Include(o => o.OrderItems)
+                    //              .OrderByDescending(o => o.CreatedAt)
+                    //              .ToListAsync();
+                    //  }
+
                     //public void AddAddress(deliverypartnermodel adddeliverpartner)
                     //{
                     //          _context.deliverypartnermodels.Add(adddeliverpartner);
                     //          _context.SaveChanges();
                     //}
 
-                   
+
                     public async Task<bool> UpdateDeliveryLocationAsync(int orderId, decimal latitude, decimal longitude)
                     {
                               var order = await _context.orderss.FindAsync(orderId);

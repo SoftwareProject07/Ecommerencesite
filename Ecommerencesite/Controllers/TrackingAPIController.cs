@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
+using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,12 @@ namespace Ecommerencesite.Controllers
 
                               return Ok(new { success = true, message = "Location broadcasted successfully" });
                     }
+                    [HttpGet("get-all-orders")]
+                  public List<Order> GetAllOrdersAsync()
+                    {
+                              var listorders = _itrackingService.GetAllOrdersAsync().ToList();
+                              return listorders;
 
+                    }
           }
 }

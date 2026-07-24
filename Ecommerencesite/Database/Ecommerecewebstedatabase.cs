@@ -38,6 +38,8 @@ namespace Ecommerencesite.Database
                     public DbSet<IssueCategorymasterModel> issuecategorymasterModels { get; set; }
                     public DbSet<BankRefundableAmountModel> BankRefundableAmountModels { get; set; }   
                     public DbSet<deliverypartnermodel> deliverypartnermodels { get; set; }
+                    public DbSet<DoctorAssigntoPatientMOdel> doctorAssigntoPatientMOdels { get; set; }
+                    public DbSet<PatientDetailsModel> patientDetailsModels { get; set; }  
 
           }
 }

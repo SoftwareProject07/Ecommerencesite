@@ -28,12 +28,33 @@ namespace Ecommerencesite.Controllers
 
                               return Ok(new { success = true, message = "Location broadcasted successfully" });
                     }
-                    [HttpGet("get-all-orders")]
-                  public List<Order> GetAllOrdersAsync()
-                    {
-                              var listorders = _itrackingService.GetAllOrdersAsync().ToList();
-                              return listorders;
+                    //  [HttpGet("get-all-orders")]
+                    //public List<Order> GetAllOrdersAsync()
+                    //  {
+                    //            var listorders = _itrackingService.GetAllOrdersAsync().ToList();
+                    //            return listorders;
 
+                    //  }
+
+                    [HttpGet("get-all-orders")]
+                    public async Task<ActionResult<List<Order>>> GetAllOrders()
+                    {
+                              try
+                              {
+                                        // Direct service method ko call karein jisme Include pehle se likha ho
+                                        var orders =  _itrackingService.GetAllOrdersAsync();
+
+                                        if (orders == null || orders.Count == 0)
+                                        {
+                                                  return NotFound(new { message = "No orders found." });
+                                        }
+
+                                        return Ok(orders);
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+                              }
                     }
                     [HttpGet("Allorderitem")]
 

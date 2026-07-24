@@ -21,6 +21,47 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _hubContext = hubContext;
                     }
 
+                    public List<OrderItem> AllOrderItem()
+                    {
+                           var listorderitem = _context.orderItemss.ToList();
+                              return listorderitem;
+                    }
+
+                    //public List<OrderItem> AllOrderItems(int OrderId)
+                    //{
+                    //          //try
+                    //          //{
+                    //          //          // Fetch all records for the specified orderId
+                    //          //          var a = _context.orderItemss.Where(OrderId);
+                    //          //          return a;
+                    //          //}
+                    //          //catch (Exception ex)
+                    //          //{
+                    //          //          // Log exception here if necessary
+                    //          //          throw new Exception("Error retrieving order items: " + ex.Message);
+                    //          //}
+                    //          var orderItems = _context.orderItemss.Where(oi => oi.OrderId == OrderId).ToList();
+                    //                    return orderItems;
+                    //}
+
+                    public List<OrderItem> AllOrderItems(int OrderId)
+                    {
+                              try
+                              {
+                                        // Using the exact context name provided and a correct LINQ lambda expression with .ToList()
+                                        var orderItems = _context.orderItemss
+                                                                 .Where(oi => oi.OrderId == OrderId)
+                                                                 .ToList();
+
+                                        return orderItems;
+                              }
+                              catch (Exception ex)
+                              {
+                                        // Log exception here if necessary
+                                        throw new Exception("Error retrieving order items: " + ex.Message);
+                              }
+                    }
+
                     public List<Order> GetAllOrdersAsync()
                     {
                               var listorder = _context.orderss.ToList();

@@ -35,5 +35,32 @@ namespace Ecommerencesite.Controllers
                               return listorders;
 
                     }
+                    [HttpGet("Allorderitem")]
+
+                    public List<OrderItem> AllOrderItem()
+                    {
+                              var listorderitem = _itrackingService.AllOrderItem().ToList();
+                              return listorderitem;         
+                    }
+                    [HttpGet("Allorderitem/{OrderId}")]
+                    public ActionResult<List<OrderItem>> AllOrderItems(int OrderId)
+                    {
+                              try
+                              {
+                                        var listorderitem = _itrackingService.AllOrderItems(OrderId);
+
+                                        if (listorderitem == null || listorderitem.Count == 0)
+                                        {
+                                                  return NotFound(new { message = $"No order items found for Order ID: {OrderId}" });
+                                        }
+
+                                        return Ok(listorderitem);
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+                              }
+                    }
+
           }
 }

@@ -41,7 +41,7 @@ namespace Ecommerencesite.Controllers
                               var patientDetailsModels = _ipatientDetailsRepository.AllPatientDetails();
                             return patientDetailsModels;    
                     }
-                    [HttpDelete("DeleteDoctorAssigntoPatient/{id}")]
+                    [HttpDelete("DeleteDoctorAssigntoPatient")]
 
                     public DoctorAssigntoPatientMOdel DeleteDoctorAssigntoPatient(int id)
                     {

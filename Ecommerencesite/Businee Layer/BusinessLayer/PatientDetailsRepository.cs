@@ -40,7 +40,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public DoctorAssigntoPatientMOdel DeleteDoctorAssigntoPatient(int id)
                     {
-                             var doctorAssigntoPatient = _context.doctorAssigntoPatientMOdels.Find(id);
+                              var doctorAssigntoPatient = _context.doctorAssigntoPatientMOdels.Where(s=>s.DoctorAssigntoPatientod==id).FirstOrDefault();
                               if (doctorAssigntoPatient != null)
                               {
                                         _context.doctorAssigntoPatientMOdels.Remove(doctorAssigntoPatient);
@@ -51,7 +51,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public PatientDetailsModel DeletePatientDetails(int id)
                     {
-                              var patientDetails = _context.patientDetailsModels.Find(id);
+                              var patientDetails = _context.patientDetailsModels.Where(s=>s.patientDetailsId==id).FirstOrDefault();
                               if (patientDetails != null)
                               {
                                         _context.patientDetailsModels.Remove(patientDetails);

@@ -111,6 +111,7 @@ builder.Services.AddScoped<IMedicineChatServiceRepository,MedicineChatServiceRep
 builder.Services.AddScoped<IBankRefundableAmountRepository, BankRefundableAmountRepository>();//bankrefundableamountreposotiory add
 builder.Services.AddScoped<IITrackingServiceRepository, TrackingServiceRepository>();
 builder.Services.AddScoped<IAIService, AIService>();
+builder.Services.AddScoped<IPatientDetailsRepository, PatientDetailsRepository>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSignalR();

@@ -42,6 +42,7 @@ namespace Ecommerencesite.Controllers
                               var listorderitem = _itrackingService.AllOrderItem().ToList();
                               return listorderitem;         
                     }
+
                     [HttpGet("Allorderitem/{OrderId}")]
                     public ActionResult<List<OrderItem>> AllOrderItems(int OrderId)
                     {

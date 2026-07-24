@@ -11,6 +11,8 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                    public List<Order> GetAllOrdersAsync();
                     public List<OrderItem> AllOrderItem();
                     public List<OrderItem> AllOrderItems(int OrderId);
+                    public void AddOrder(Order addorder);
+                    public void AddOrderItem(OrderItem ordersitem);         
                     //   public void AddAddress(deliverypartnermodel adddeliverpartner);//delivery partner address add
 
 

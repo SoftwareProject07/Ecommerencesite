@@ -21,6 +21,19 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _hubContext = hubContext;
                     }
 
+                    public void AddOrder(Order addorder)
+                    {
+                           _context.orderss.Add(addorder);
+                              _context.SaveChanges();
+
+                    }
+
+                    public void AddOrderItem(OrderItem ordersitem)
+                    {
+                            _context.orderItemss.Add(ordersitem);
+                              _context.SaveChanges();
+                    }
+
                     public List<OrderItem> AllOrderItem()
                     {
                            var listorderitem = _context.orderItemss.ToList();

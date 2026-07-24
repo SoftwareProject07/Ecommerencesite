@@ -61,6 +61,16 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, new { message = "Internal server error", error = ex.Message });
                               }
                     }
+                    [HttpPost("AddOrder")]        
+                    public void AddOrder(Order addorder)
+                    {
+                              _itrackingService.AddOrder(addorder);   
+                    }
+                    [HttpPost("AddOrderItem")]    
+                    public void AddOrderItem(OrderItem ordersitem)
+                    {
+                              _itrackingService.AddOrderItem(ordersitem);
+                    }
 
           }
 }

@@ -149,6 +149,12 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                               }
                     }
 
+                    public List<AdminREGMODEL> typelist(string type)
+                    {
+                             var listtype= context.adminREGMODELSs.Where(a => a.type == type).ToList();
+                              return listtype;
+                    }
+
                     public ResponseModel UPDATERegistoryAdmin(AdminREGMODEL adminREGMODEL)
                     {
 

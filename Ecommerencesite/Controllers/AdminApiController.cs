@@ -129,10 +129,18 @@ namespace Ecommerencesite.Controllers
 
                               }
 
+                    // Master Admin type add option
                     [HttpPost("AddAdminType")]
                     public void AddAdminType(string type)
                     {
                               _adminrepostiory.AddAdminType(type);
                     }
+                    [HttpGet("AllTypeList")]
+
+                    public List<AdminREGMODEL> typelist(string type)
+                    {
+                              return _adminrepostiory.typelist(type).ToList();
+                    }
+
           }
 }

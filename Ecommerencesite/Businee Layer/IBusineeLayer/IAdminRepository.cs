@@ -20,7 +20,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     //Master Admin type add option 
                     public void AddAdminType(string type);
-                    public List<AdminREGMODEL> typelist(string type);
+                    public List<AdminTypelistDto> typelist();
 
           }
 }

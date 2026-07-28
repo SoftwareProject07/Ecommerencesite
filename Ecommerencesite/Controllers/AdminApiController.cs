@@ -137,9 +137,9 @@ namespace Ecommerencesite.Controllers
                     }
                     [HttpGet("AllTypeList")]
 
-                    public List<AdminREGMODEL> typelist(string type)
+                    public List<AdminTypelistDto> typelist()
                     {
-                              return _adminrepostiory.typelist(type).ToList();
+                              return _adminrepostiory.typelist();
                     }
 
           }

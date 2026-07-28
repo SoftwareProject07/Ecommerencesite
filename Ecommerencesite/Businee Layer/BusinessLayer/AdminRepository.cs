@@ -149,10 +149,17 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                               }
                     }
 
-                    public List<AdminREGMODEL> typelist(string type)
+                    public List<AdminTypelistDto> typelist()
                     {
-                             var listtype= context.adminREGMODELSs.Where(a => a.type == type).ToList();
-                              return listtype;
+
+                              var a= context.adminREGMODELSs
+                                  .Select(a => new AdminTypelistDto
+                                  {
+                                            typelistid = a.ADMINid,
+                                            type = a.type
+                                  })
+                                  .ToList();
+                              return a;
                     }
 
                     public ResponseModel UPDATERegistoryAdmin(AdminREGMODEL adminREGMODEL)

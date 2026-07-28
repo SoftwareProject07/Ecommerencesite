@@ -128,5 +128,11 @@ namespace Ecommerencesite.Controllers
 
 
                               }
+
+                    [HttpPost("AddAdminType")]
+                    public void AddAdminType(string type)
+                    {
+                              _adminrepostiory.AddAdminType(type);
+                    }
           }
 }

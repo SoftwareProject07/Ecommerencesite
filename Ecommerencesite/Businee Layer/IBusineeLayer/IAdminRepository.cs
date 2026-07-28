@@ -17,5 +17,9 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                      public ResponseModel GETALLRegistoryAdmin();
                     // public ResponseModel Viewlogin(int id);// DETAILS 
 
+
+                    //Master Admin type add option 
+                    public void AddAdminType(string type);
+
           }
 }

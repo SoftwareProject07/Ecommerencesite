@@ -12,6 +12,22 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                               this.context = _context;
                     }
 
+                    public void AddAdminType(string type)
+                    {
+                              var newAdmin = new AdminREGMODEL
+                              {
+                                       
+                                        type = type, // or "User"
+                                   
+                              };
+
+                              // 2. Add the object to the correct DbSet collection in your DbContext
+                              context.adminREGMODELSs.Add(newAdmin); // Replace 'AdminREGMODELs' with your actual DbSet name
+
+                              // 3. Save changes to commit the transaction to the database
+                              context.SaveChanges();
+                    }
+
                     public ResponseModel CREATERegistoryAdmin(AdminREGMODEL adminREGMODEL)
                     {
                               var res = new ResponseModel();

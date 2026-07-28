@@ -11,6 +11,7 @@ namespace Ecommerencesite.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 
+
         }
 
         /// <inheritdoc />

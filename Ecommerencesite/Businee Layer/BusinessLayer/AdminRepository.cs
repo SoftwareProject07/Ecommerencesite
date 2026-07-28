@@ -12,17 +12,11 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                               this.context = _context;
                     }
 
-                    public void AddAdminType(string type)
+                    public void AddAdminType(AdminTypeModel adminTypeModel)
                     {
-                              var newAdmin = new AdminREGMODEL
-                              {
-                                       
-                                        type = type, // or "User"
-                                   
-                              };
-
+                           
                               // 2. Add the object to the correct DbSet collection in your DbContext
-                              context.adminREGMODELSs.Add(newAdmin); // Replace 'AdminREGMODELs' with your actual DbSet name
+                              context.admintypess.Add(adminTypeModel); // Replace 'AdminREGMODELs' with your actual DbSet name
 
                               // 3. Save changes to commit the transaction to the database
                               context.SaveChanges();
@@ -80,6 +74,20 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                               }
                               return res;
 
+                    }
+
+                    public AdminTypeModel DeleteAdmintype(int id)
+                    {
+                              var deleteadmintype = context.admintypess.Where(s => s.Admintypeid == id).FirstOrDefault();
+                                                  context.admintypess.Remove(deleteadmintype);
+                              context.SaveChanges();
+                              return deleteadmintype;       
+                    }
+
+                    public AdminTypeModel GetAdminTypeByName(int id)
+                    {
+                            var getadmin= context.admintypess.Where(s=>s.Admintypeid==id).FirstOrDefault();
+                              return  getadmin;
                     }
 
                     public ResponseModel GETALLRegistoryAdmin()
@@ -148,18 +156,18 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         };
                               }
                     }
+                    
+                    public List<AdminTypeModel> typelist()                    {
 
-                    public List<AdminTypelistDto> typelist()
+                              var lsttype= context.admintypess.ToList();
+
+                              return lsttype;
+                    }
+
+                    public void UpdateAdminType(AdminTypeModel adminTypeModel)
                     {
-
-                              var a= context.adminREGMODELSs
-                                  .Select(a => new AdminTypelistDto
-                                  {
-                                            typelistid = a.ADMINid,
-                                            type = a.type
-                                  })
-                                  .ToList();
-                              return a;
+                              context.admintypess.Update(adminTypeModel);
+                              context.SaveChanges();
                     }
 
                     public ResponseModel UPDATERegistoryAdmin(AdminREGMODEL adminREGMODEL)

@@ -19,8 +19,12 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
 
                     //Master Admin type add option 
-                    public void AddAdminType(string type);
-                    public List<AdminTypelistDto> typelist();
+                    public void AddAdminType(AdminTypeModel adminTypeModel);
+                    public List<AdminTypeModel> typelist();
+                    public void UpdateAdminType(AdminTypeModel adminTypeModel);
+                    public AdminTypeModel DeleteAdmintype(int id);
+                    public AdminTypeModel GetAdminTypeByName(int id);
+
 
           }
 }

@@ -1,9 +1,7 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace Ecommerencesite.Controllers
 {
@@ -131,16 +129,30 @@ namespace Ecommerencesite.Controllers
 
                     // Master Admin type add option
                     [HttpPost("AddAdminType")]
-                    public void AddAdminType(string type)
+                    public void AddAdminType(AdminTypeModel adminTypeModel)
                     {
-                              _adminrepostiory.AddAdminType(type);
+                              _adminrepostiory.AddAdminType(adminTypeModel);
                     }
                     [HttpGet("AllTypeList")]
 
-                    public List<AdminTypelistDto> typelist()
-                    {
+                    public List<AdminTypeModel> typelist()                    {
                               return _adminrepostiory.typelist();
                     }
+                    [HttpPut("updatetype")]
+                    public void UpdateAdminType(AdminTypeModel adminTypeModel)
+                    {
+                              _adminrepostiory.UpdateAdminType(adminTypeModel);
+                    }
+
+
+                    [HttpDelete("DeleteType")]
+
+                    public AdminTypeModel DeleteAdmintype(int id)
+                    {
+                       var deleteadmintype=       _adminrepostiory.DeleteAdmintype(id);
+                              return deleteadmintype;
+                    }
+
 
           }
 }

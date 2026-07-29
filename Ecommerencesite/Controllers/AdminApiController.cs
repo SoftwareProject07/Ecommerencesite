@@ -152,6 +152,12 @@ namespace Ecommerencesite.Controllers
                        var deleteadmintype=       _adminrepostiory.DeleteAdmintype(id);
                               return deleteadmintype;
                     }
+                    [HttpGet("DetailsType")]
+                    public AdminTypeModel GetAdminTypeByName(int id)
+                    {
+                              var details= _adminrepostiory.GetAdminTypeByName(id);       
+                              return details;     
+                    }
 
 
           }

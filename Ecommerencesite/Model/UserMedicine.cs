@@ -33,8 +33,11 @@ namespace Ecommerencesite.Model
                     public string? type { get; set; } = null; //OrderType="User" or "Admin"
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
 
+                    [NotMapped] // Use [NotMapped] if this should NOT be saved in the database table
+                    public string? Captcha { get; set; } = null;
 
-                  
+
+
 
 
           }

@@ -43,5 +43,11 @@ namespace Ecommerencesite.Database
 
                     public DbSet<AdminTypeModel> admintypess { get; set; }
 
+
+
+                    //hiring/applied module 
+                    public DbSet<Team_HiringModules> team_hiringmodules { get; set; }
+                    public DbSet<CandidateApplicationModule> candidateapplicationmodules { get; set; }
+
           }
 }

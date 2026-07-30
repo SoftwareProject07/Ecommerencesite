@@ -112,6 +112,7 @@ builder.Services.AddScoped<IBankRefundableAmountRepository, BankRefundableAmount
 builder.Services.AddScoped<IITrackingServiceRepository, TrackingServiceRepository>();
 builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddScoped<IPatientDetailsRepository, PatientDetailsRepository>();
+builder.Services.AddScoped<IHiringServiceRepository, HiringServiceRepository>();          
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSignalR();

@@ -127,20 +127,58 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                               return res;
                     }
 
+                    //                public ResponseModel LOGINAdmin(AdminLogindto _adminlogindto)
+                    //                {
+
+                    //                          //var adminlogindto = context.adminREGMODELSs
+                    //                          //    .FirstOrDefault(u => u.Email == _adminlogindto.Email
+                    //                          //                      && u.Password == _adminlogindto.Password && u.type==_adminlogindto.ROLE);
+                    //                          //var user = _context.userMedicines
+                    //                          //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
+                    //                          var adminlogindto = context.adminREGMODELSs
+                    //.FirstOrDefault(u => (u.Email == _adminlogindto.Email || u.MobileNumber == _adminlogindto.Email)
+                    //                  && u.Password == _adminlogindto.Password
+                    //                  && (_adminlogindto.ROLE == "Admin" || string.IsNullOrEmpty(_adminlogindto.ROLE)
+                    //                        ? (u.type == null || u.type == "" || u.type == "Admin")
+                    //                        : u.type == _adminlogindto.ROLE));
+
+                    //                          if (adminlogindto != null)
+                    //                          {
+                    //                                    return new ResponseModel
+                    //                                    {
+                    //                                              status = true,
+                    //                                              responseMessage = "Admin Login Successful",
+                    //                                              adminREGMODEL = adminlogindto     // return actual adminlogin data
+                    //                                    };
+                    //                          }
+                    //                          else
+                    //                          {
+                    //                                    return new ResponseModel
+                    //                                    {
+                    //                                              status = false,
+                    //                                              responseMessage = "Invalid Email or Password",
+                    //                                              adminREGMODEL = null
+                    //                                    };
+                    //                          }
+                    //                }
+
+
+
                     public ResponseModel LOGINAdmin(AdminLogindto _adminlogindto)
                     {
+                              // Handle null or trimmed role safely
+                              var requestedRole = _adminlogindto.ROLE?.Trim() ?? string.Empty;
 
-                              //var adminlogindto = context.adminREGMODELSs
-                              //    .FirstOrDefault(u => u.Email == _adminlogindto.Email
-                              //                      && u.Password == _adminlogindto.Password && u.type==_adminlogindto.ROLE);
-                              //var user = _context.userMedicines
-                              //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
                               var adminlogindto = context.adminREGMODELSs
-    .FirstOrDefault(u => (u.Email == _adminlogindto.Email || u.MobileNumber == _adminlogindto.Email)
-                      && u.Password == _adminlogindto.Password
-                      && (_adminlogindto.ROLE == "Admin" || string.IsNullOrEmpty(_adminlogindto.ROLE)
-                            ? (u.type == null || u.type == "" || u.type == "Admin")
-                            : u.type == _adminlogindto.ROLE));
+                                  .FirstOrDefault(u =>
+                                      (u.Email == _adminlogindto.Email || u.MobileNumber == _adminlogindto.Email)
+                                      && u.Password == _adminlogindto.Password
+                                      && (
+                                          requestedRole == "Admin" || string.IsNullOrEmpty(requestedRole)
+                                              ? (u.type == null || u.type == "" || u.type == "Admin")
+                                              : (u.type != null && u.type.Replace("  ", " ").Trim().ToLower() == requestedRole.Replace("  ", " ").Trim().ToLower())
+                                      )
+                                  );
 
                               if (adminlogindto != null)
                               {
@@ -148,7 +186,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         {
                                                   status = true,
                                                   responseMessage = "Admin Login Successful",
-                                                  adminREGMODEL = adminlogindto     // return actual adminlogin data
+                                                  adminREGMODEL = adminlogindto
                                         };
                               }
                               else
@@ -156,12 +194,13 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         return new ResponseModel
                                         {
                                                   status = false,
-                                                  responseMessage = "Invalid Email or Password",
+                                                  responseMessage = "Invalid Email/Mobile, Password, or Role Type",
                                                   adminREGMODEL = null
                                         };
                               }
                     }
-                    
+
+
                     public List<AdminTypeModel> typelist()                    {
 
                               var lsttype= context.admintypess.ToList();

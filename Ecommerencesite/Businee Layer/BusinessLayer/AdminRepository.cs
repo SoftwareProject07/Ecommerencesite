@@ -130,12 +130,17 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public ResponseModel LOGINAdmin(AdminLogindto _adminlogindto)
                     {
 
-                              var adminlogindto = context.adminREGMODELSs
-                                  .FirstOrDefault(u => u.Email == _adminlogindto.Email
-                                                    && u.Password == _adminlogindto.Password);
+                              //var adminlogindto = context.adminREGMODELSs
+                              //    .FirstOrDefault(u => u.Email == _adminlogindto.Email
+                              //                      && u.Password == _adminlogindto.Password && u.type==_adminlogindto.ROLE);
                               //var user = _context.userMedicines
                               //    .FirstOrDefault(_userlogindto.Email == _userlogindto.Password);
-
+                              var adminlogindto = context.adminREGMODELSs
+    .FirstOrDefault(u => (u.Email == _adminlogindto.Email || u.MobileNumber == _adminlogindto.Email)
+                      && u.Password == _adminlogindto.Password
+                      && (_adminlogindto.ROLE == "Admin" || string.IsNullOrEmpty(_adminlogindto.ROLE)
+                            ? (u.type == null || u.type == "" || u.type == "Admin")
+                            : u.type == _adminlogindto.ROLE));
 
                               if (adminlogindto != null)
                               {

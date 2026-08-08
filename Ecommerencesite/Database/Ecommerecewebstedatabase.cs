@@ -42,7 +42,7 @@ namespace Ecommerencesite.Database
                     public DbSet<PatientDetailsModel> patientDetailsModels { get; set; }
 
                     public DbSet<AdminTypeModel> admintypess { get; set; }
-
+                    public DbSet<choice_MultipleLanguageModel> choicemultiplelanguagemodel { get; set; }      
 
 
                     //hiring/applied module 

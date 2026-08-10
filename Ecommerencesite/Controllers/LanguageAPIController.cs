@@ -90,7 +90,7 @@ namespace Ecommerencesite.Controllers
                                         throw new Exception("An error occurred while updating the language.", ex);
                               }         
                     }
-                    [HttpPut("CreateLanguage")]
+                    [HttpPost("CreateLanguage")]
 
                     public void CreateLanguage(choice_MultipleLanguageModel createmodel)
                     {
@@ -98,7 +98,7 @@ namespace Ecommerencesite.Controllers
                               
                     }
 
-                    [HttpDelete("DetailsLanguage")]
+                    [HttpGet("DetailsLanguage")]
 
                     public choice_MultipleLanguageModel DetailsLanguage(int id)
                     {

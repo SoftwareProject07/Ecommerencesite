@@ -26,12 +26,12 @@ namespace Ecommerencesite.Controllers
                     {
                               _state_CityNameRepository.AddStateName(StateName);
                     }
-                    [HttpGet("AllCityNamedto")]
+                    [HttpGet("AllCityName")]
                     public List<CityMasterModel> AllCityName()
                     {
                               return _state_CityNameRepository.AllCityName().ToList();
                     }
-                    [HttpGet("AllStateNameDto")]
+                    [HttpGet("AllStateName")]
                     public List<StateNameModel> AllStateyName()
                     {
                               return _state_CityNameRepository.AllStateyName().ToList();

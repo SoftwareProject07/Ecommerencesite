@@ -114,6 +114,7 @@ builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddScoped<IPatientDetailsRepository, PatientDetailsRepository>();
 builder.Services.AddScoped<IHiringServiceRepository, HiringServiceRepository>();   
 builder.Services.AddScoped<ILanguageService, LanguageService>();
+builder.Services.AddScoped<IState_CityNameRepository, State_CityNameRepository>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSignalR();

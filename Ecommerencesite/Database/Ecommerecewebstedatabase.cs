@@ -42,12 +42,15 @@ namespace Ecommerencesite.Database
                     public DbSet<PatientDetailsModel> patientDetailsModels { get; set; }
 
                     public DbSet<AdminTypeModel> admintypess { get; set; }
-                    public DbSet<choice_MultipleLanguageModel> choicemultiplelanguagemodel { get; set; }      
+                    public DbSet<choice_MultipleLanguageModel> choicemultiplelanguagemodel { get; set; }
+                    public DbSet<State_CityNameModel> state_CityNameModels { get; set; }  
+
 
 
                     //hiring/applied module 
                     public DbSet<Team_HiringModules> team_hiringmodules { get; set; }
                     public DbSet<CandidateApplicationModule> candidateapplicationmodules { get; set; }
+
 
           }
 }

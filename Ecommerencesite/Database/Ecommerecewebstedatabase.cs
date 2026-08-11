@@ -43,7 +43,12 @@ namespace Ecommerencesite.Database
 
                     public DbSet<AdminTypeModel> admintypess { get; set; }
                     public DbSet<choice_MultipleLanguageModel> choicemultiplelanguagemodel { get; set; }
-                    public DbSet<State_CityNameModel> state_CityNameModels { get; set; }  
+
+
+
+                    //master
+                    public DbSet<StateNameModel> stateNameModels { get; set; }  
+                    public DbSet<CityMasterModel> cityMasterModels { get; set; }
 
 
 

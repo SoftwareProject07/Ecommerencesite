@@ -5,17 +5,17 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
           public interface IState_CityNameRepository
           {
-                    public List<State_CityNameModel> AllState_CityName();
-                    public List<StateModelDto> AllStateNameDto();
-                    public List<CityModelDto> AllCityNamedto();
-                    public void AddCityName(string CityName);
-                    public void AddStateName(string StateName);
-                    public void UpdateCityName(CityModelDto dto);
-                    public void UpdateStateName(StateModelDto stateName);                
-                    public State_CityNameModel DeleteCityName(int Id);
-                    public State_CityNameModel DeleteStateName(int Id);
-                    public State_CityNameModel GetCityName(int id);
-                    public State_CityNameModel GetStateName(int id);
+                    public List<StateNameModel> AllStateyName();//..statelist
+              //      public List<StateNameModel> AllStateNameDto();
+                    public List<CityMasterModel> AllCityName();// citylist
+                    public void AddCityName(CityMasterModel CityName); //addcity
+                    public void AddStateName(StateNameModel StateName);//addstate
+                    public void UpdateCityName(CityMasterModel dto);//updatecity
+                    public void UpdateStateName(StateNameModel stateName);  //updatestate               
+                    public CityMasterModel DeleteCityName(int Id);//deletecity  
+                    public StateNameModel DeleteStateName(int Id);//deletestate 
+                    public CityMasterModel GetCityName(int id);//getcitybyid
+                    public StateNameModel GetStateName(int id);//getstatebyid
 
 
           }

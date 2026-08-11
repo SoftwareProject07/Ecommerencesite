@@ -2,11 +2,11 @@
 
 namespace Ecommerencesite.Model
 {
-          public class State_CityNameModel
+          public class StateNameModel
           {
                     [Key]
                     public int Id { get; set; }
                     public string? StateName { get; set; } = null;
-                    public string? CityName { get; set; } = null;
+                    ///   public string? CityName { get; set; } = null;
           }
 }

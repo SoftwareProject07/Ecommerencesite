@@ -14,107 +14,73 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this._context = context;                
                                         
                     }
-                    public void AddCityName(string CityName)
+
+                    public void AddCityName(CityMasterModel CityName)
                     {
-                             _context.state_CityNameModels.Add(new State_CityNameModel { CityName = CityName });
+                             _context.cityMasterModels.Add(CityName);
+                    }
+
+                    public void AddStateName(StateNameModel StateName)
+                    {
+                            _context.stateNameModels.Add(StateName);
+                    }
+
+                    public List<CityMasterModel> AllCityName()
+                    {
+                            var istcity = _context.cityMasterModels.ToList();   
+                              return istcity;
+                    }
+
+                    public List<StateNameModel> AllStateyName()
+                    {
+                          var liststate = _context.stateNameModels.ToList();
+                              return liststate;   
+                    }
+
+                    public CityMasterModel DeleteCityName(int Id)
+                    {
+                              var citydelete = _context.cityMasterModels.FirstOrDefault(x => x.cityid == Id);
+                              if (citydelete != null)
+                              {
+                                        _context.cityMasterModels.Remove(citydelete);
+                                        _context.SaveChanges();
+                              }
+                              return citydelete;
+                    }
+
+                    public StateNameModel DeleteStateName(int Id)
+                    {
+                            var statedelete = _context.stateNameModels.FirstOrDefault(x => x.Id == Id);
+                              if (statedelete != null)
+                              {
+                                        _context.stateNameModels.Remove(statedelete);
+                                        _context.SaveChanges();
+                              }
+                              return statedelete; 
+                    }
+
+                    public CityMasterModel GetCityName(int id)
+                    {
+                            var getcity = _context.cityMasterModels.FirstOrDefault(x => x.cityid == id);
+                              return getcity;     
+                    }
+
+                    public StateNameModel GetStateName(int id)
+                    {
+                           var stateget= _context.stateNameModels.FirstOrDefault(x => x.Id == id);
+                              return stateget;
+                    }
+
+                    public void UpdateCityName(CityMasterModel dto)
+                    {
+                             _context.cityMasterModels.Update(dto);
                               _context.SaveChanges();
                     }
 
-                    public void AddStateName(string StateName)
+                    public void UpdateStateName(StateNameModel stateName)
                     {
-                            _context.state_CityNameModels.Add(new State_CityNameModel { StateName = StateName });
-                              _context.SaveChanges();
-                    }
-
-                    public List<CityModelDto> AllCityNamedto()
-                    {
-                             var listcitymodel = _context.state_CityNameModels.Select(x => new CityModelDto
-                             {
-                                       cityId = x.Id,
-                                       CityName = x.CityName
-                             }).ToList();   
-                              return listcitymodel;         
-                    }
-
-                    public List<StateModelDto> AllStateNameDto()
-                    {
-                            var liststatemodel = _context.state_CityNameModels.Select(x => new StateModelDto
-                            {
-                                      stateId = x.Id,
-                                      StateName = x.StateName
-                            }).ToList();    
-                              return liststatemodel;
-                    }
-
-                    public List<State_CityNameModel> AllState_CityName()
-                    {
-                              var liststatecitymodel = _context.state_CityNameModels.ToList();
-                              return liststatecitymodel;
-                    }
-
-                    public State_CityNameModel DeleteCityName(int Id)
-                    {
-                             var citymodel = _context.state_CityNameModels.FirstOrDefault(x => x.Id == Id);
-                              if(citymodel != null)
-                              {
-                                        _context.state_CityNameModels.Remove(citymodel);
-                                        _context.SaveChanges();
-                              }
-                              return citymodel; 
-
-                    }
-
-                    public State_CityNameModel DeleteStateName(int Id)
-                    {
-                              var statemodel = _context.state_CityNameModels.FirstOrDefault(x => x.Id == Id);
-                              if(statemodel != null)
-                              {
-                                        _context.state_CityNameModels.Remove(statemodel);
-                                        _context.SaveChanges();
-                              }
-                              return statemodel;
-                    }
-
-                    public State_CityNameModel GetCityName(int id)
-                    {
-                             var citymodel = _context.state_CityNameModels.FirstOrDefault(x => x.Id == id);
-                              return citymodel;   
-                    }
-
-                    public State_CityNameModel GetStateName(int id)
-                    {
-                             var statemodel = _context.state_CityNameModels.FirstOrDefault(x => x.Id == id);
-                              return statemodel;  
-                    }
-
-                    public void UpdateCityName(CityModelDto dto)
-                    {
-                              var citymodel = _context.state_CityNameModels.FirstOrDefault(x => x.Id == dto.cityId);
-                              if (citymodel != null)
-                              {
-                                        citymodel.Id = dto.cityId;
-                                        citymodel.CityName = dto.CityName;
-                                        _context.SaveChanges();
-                              }
-
-                              _context.state_CityNameModels.Update(citymodel);
-                              _context.SaveChanges();
-                              //   return  citymodel;   
-                    }
-
-
-                    public void UpdateStateName(StateModelDto stateName)
-                    {
-                              var statemodel = _context.state_CityNameModels.FirstOrDefault(x => x.Id == stateName.stateId);
-                              if (statemodel != null)
-                              {
-                                        statemodel.Id = stateName.stateId;
-                                        statemodel.StateName = stateName.StateName;
-                                        _context.SaveChanges();
-                              }
-
-                              _context.state_CityNameModels.Update(statemodel);
-
+                             _context.stateNameModels.Update(stateName);
+                              _context.SaveChanges();       
                     }
           }
 }

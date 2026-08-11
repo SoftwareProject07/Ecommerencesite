@@ -16,60 +16,60 @@ namespace Ecommerencesite.Controllers
                               this._state_CityNameRepository = state_CityNameRepository;
                     }
                     [HttpPost("AddCityName")]
-                    public void AddCityName(string CityName)
+                    public void AddCityName(CityMasterModel CityName)
                     {
                               _state_CityNameRepository.AddCityName(CityName);
 
                     }
                     [HttpPost("AddStateName")]
-                    public void AddStateName(string StateName)
+                    public void AddStateName(StateNameModel StateName)
                     {
                               _state_CityNameRepository.AddStateName(StateName);
                     }
                     [HttpGet("AllCityNamedto")]
-                    public List<CityModelDto> AllCityNamedto()
+                    public List<CityMasterModel> AllCityName()
                     {
-                              return _state_CityNameRepository.AllCityNamedto();
+                              return _state_CityNameRepository.AllCityName().ToList();
                     }
                     [HttpGet("AllStateNameDto")]
-                    public List<StateModelDto> AllStateNameDto()
+                    public List<StateNameModel> AllStateyName()
                     {
-                              return _state_CityNameRepository.AllStateNameDto();
+                              return _state_CityNameRepository.AllStateyName().ToList();
                     }
-                    [HttpGet("AllState_CityName")]
-                    public List<State_CityNameModel> AllState_CityName()
-                    {
-                              return _state_CityNameRepository.AllState_CityName();
-                    }
+                    //[HttpGet("AllState_CityName")]
+                    //public List<State_CityNameModel> AllState_CityName()
+                    //{
+                    //          return _state_CityNameRepository.AllState_CityName();
+                    //}
                     [HttpDelete("DeleteCityName")]
-                    public State_CityNameModel DeleteCityName(int Id)
+                    public CityMasterModel DeleteCityName(int Id)
                     {
                               return _state_CityNameRepository.DeleteCityName(Id);
                     }
                     [HttpDelete("DeleteStateName")]
-                    public State_CityNameModel DeleteStateName(int Id)
+                    public StateNameModel DeleteStateName(int Id)
                     {
                               return _state_CityNameRepository.DeleteStateName(Id);
                     }
                     [HttpGet("DetailsCityName")]
-                    public State_CityNameModel GetCityName(int id)
-                    {
-                              return _state_CityNameRepository.GetCityName(id);
-                    }
-                    [HttpGet("DetailsStateName")]
-
-                    public State_CityNameModel GetStateName(int id)
+                    public StateNameModel GetStateName(int id)
                     {
                               return _state_CityNameRepository.GetStateName(id);
                     }
+                    [HttpGet("DetailsStateName")]
+
+                    public CityMasterModel GetCityName(int id)
+                    {
+                              return _state_CityNameRepository.GetCityName(id);
+                    }
                     [HttpPut("UpdateCityName")]
 
-                    public void UpdateCityName(CityModelDto dto)
+                    public void UpdateCityName(CityMasterModel dto)
                     {
                               _state_CityNameRepository.UpdateCityName(dto);
                     }
                     [HttpPut("UpdateStateName")]
-                    public void UpdateStateName(StateModelDto stateName)
+                    public void UpdateStateName(StateNameModel stateName)
                     {
                               _state_CityNameRepository.UpdateStateName(stateName);
                     }

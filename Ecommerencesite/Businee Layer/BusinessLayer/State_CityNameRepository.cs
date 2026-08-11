@@ -15,15 +15,54 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         
                     }
 
+                    //public void AddCityName(CityMasterModel CityName)
+                    //{
+                    //         _context.cityMasterModels.Add(CityName);
+                    //}
                     public void AddCityName(CityMasterModel CityName)
                     {
-                             _context.cityMasterModels.Add(CityName);
+                              // Check if the city already exists (replace 'Name' with your actual property name)
+                              bool exists = _context.cityMasterModels
+                                  .Any(s => s.Cityname == CityName.Cityname);   
+                              if (exists)
+                              {
+                                        // Duplicate exists, return false
+                                        return;
+                              }
+
+                              // Add and save if it doesn't exist
+                              _context.cityMasterModels.Add(CityName);
+                              _context.SaveChanges();
+
+                              // Successfully added, return true
+                              return;
                     }
 
+                    //public void AddStateName(StateNameModel StateName)
+                    //{
+                    //        _context.stateNameModels.Add(StateName);
+                    //          _context.SaveChanges();
+                    //}
                     public void AddStateName(StateNameModel StateName)
                     {
-                            _context.stateNameModels.Add(StateName);
+                              // Check if the state already exists (replace 'Name' with your actual property name)
+                              bool exists = _context.stateNameModels
+                                  .Any(s => s.StateName == StateName.StateName);
+
+                              if (exists)
+                              {
+                                        // Duplicate exists, return false
+                                        return ;
+                              }
+
+                              // Add and save if it doesn't exist
+                              _context.stateNameModels.Add(StateName);
+                              _context.SaveChanges();
+
+                              // Successfully added, return true
+                              return ;
                     }
+
 
                     public List<CityMasterModel> AllCityName()
                     {

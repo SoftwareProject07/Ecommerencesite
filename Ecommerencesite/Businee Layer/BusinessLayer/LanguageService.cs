@@ -18,20 +18,20 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this._context = context;
                     }
 
-                    //public List<choice_MultipleLanguageModel> AllCurrentLanguageAsync()
-                    //{
-                    //          var listlanguarge= _context.choicemultiplelanguagemodel.ToList();     
-                    //          return listlanguarge;
-                    //}
-
                     public List<choice_MultipleLanguageModel> AllCurrentLanguageAsync()
                     {
-                              var listlanguarge = _context.choicemultiplelanguagemodel
-                                  .DistinctBy(l => l.PreferredLanguage) // Assumes your property is named 'PreferredLanguage'
-                                  .ToList();
-
+                              var listlanguarge = _context.choicemultiplelanguagemodel.ToList();
                               return listlanguarge;
                     }
+
+                    //public List<choice_MultipleLanguageModel> AllCurrentLanguageAsync()
+                    //{
+                    //          var listlanguarge = _context.choicemultiplelanguagemodel
+                    //              .DistinctBy(l => l.PreferredLanguage) // Assumes your property is named 'PreferredLanguage'
+                    //              .ToList();
+
+                    //          return listlanguarge;
+                    //}
                     //public async Task<string> AllCurrentLanguageAsync()
                     //{
                     //          // Fetching the latest configuration from database (adjust table name as per your DB context)
@@ -43,25 +43,48 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     //public void CreateLanguage(choice_MultipleLanguageModel createmodel)
                     //{
-                    //        _context.choicemultiplelanguagemodel.Add(createmodel);
-                    //              _context.SaveChanges();
+                    //          _context.choicemultiplelanguagemodel.Add(createmodel);
+                    //          _context.SaveChanges();
                     //}
 
-                    public void CreateLanguage(choice_MultipleLanguageModel createmodel)
+                    //public void CreateLanguage(choice_MultipleLanguageModel createmodel)
+                    //{
+                    //          // Check if a record with the same preferred language already exists
+                    //          bool exists = _context.choicemultiplelanguagemodel
+                    //              .Any(l => l.PreferredLanguage.ToLower() == createmodel.PreferredLanguage.ToLower());
+
+                    //          if (exists)
+                    //          {
+                    //                    // Agar pehle se maujoud hai, toh yahin se wapas ho jao (add mat karo)
+                    //                    return;
+                    //          }
+
+                    //          // Add new record if it doesn't exist
+                    //          _context.choicemultiplelanguagemodel.Add(createmodel);
+                    //          _context.SaveChanges();
+                    //}
+
+                    public void  CreateLanguage(choice_MultipleLanguageModel createmodel)
                     {
-                              // Check if a record with the same preferred language already exists
+                              // Pehle incoming data ko Trim() kar lo taaki extra spaces hat jayein
+                              string incomingName = createmodel.PreferredLanguage.Trim();
+
+                              // Database mein check karo (case-insensitive aur trim karke)
                               bool exists = _context.choicemultiplelanguagemodel
-                                  .Any(l => l.PreferredLanguage.ToLower() == createmodel.PreferredLanguage.ToLower());
+                                  .Any(l => l.PreferredLanguage.Trim().ToLower() == incomingName.ToLower());
 
                               if (exists)
                               {
-                                        // Agar pehle se maujoud hai, toh yahin se wapas ho jao (add mat karo)
-                                        return;
+                                        // Agar pehle se maujoud hai, toh message return karo
+                                        return ;
                               }
 
-                              // Add new record if it doesn't exist
+                              // Agar nahi hai, toh save kar do
+                              createmodel.PreferredLanguage = incomingName; // Clean version save karein
                               _context.choicemultiplelanguagemodel.Add(createmodel);
                               _context.SaveChanges();
+
+                              return ;
                     }
                     public choice_MultipleLanguageModel DeleteLanguage(int id)
                     {

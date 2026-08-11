@@ -36,16 +36,20 @@ namespace Ecommerencesite.Controllers
 
                     public List<choice_MultipleLanguageModel> AllCurrentLanguageAsync()
                     {
-                              try
-                              {
-                                        var lang = _languageService.AllCurrentLanguageAsync();
-                                        return lang;
-                              }
-                              catch (Exception ex)
-                              {
-                                        // Handle the exception as needed, e.g., log it
-                                        throw new Exception("An error occurred while retrieving languages.", ex);
-                              }
+                              //          try
+                              //          {
+                              //                    var lang = _languageService.AllCurrentLanguageAsync();
+                              //                    return lang;
+                              //          }
+                              //          catch (Exception ex)
+                              //          {
+                              //                    // Handle the exception as needed, e.g., log it
+                              //                    throw new Exception("An error occurred while retrieving languages.", ex);
+                              //          }
+
+                              var  lstcurrentlangurage = _languageService.AllCurrentLanguageAsync();
+                              return lstcurrentlangurage;
+
                     }
 
                     // POST: api/LanguageAPI

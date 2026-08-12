@@ -88,6 +88,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return citydelete;
                     }
 
+
                     public StateNameModel DeleteStateName(int Id)
                     {
                             var statedelete = _context.stateNameModels.FirstOrDefault(x => x.Id == Id);

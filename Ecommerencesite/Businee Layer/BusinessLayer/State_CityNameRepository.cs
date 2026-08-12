@@ -79,7 +79,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public CityMasterModel DeleteCityName(int Id)
                     {
-                              var citydelete = _context.cityMasterModels.FirstOrDefault(x => x.cityid == Id);
+                              var citydelete = _context.cityMasterModels.Where(x => x.cityid == Id).FirstOrDefault();
                               if (citydelete != null)
                               {
                                         _context.cityMasterModels.Remove(citydelete);

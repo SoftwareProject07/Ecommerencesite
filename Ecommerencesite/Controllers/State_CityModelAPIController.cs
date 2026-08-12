@@ -36,11 +36,7 @@ namespace Ecommerencesite.Controllers
                     {
                               return _state_CityNameRepository.AllStateyName().ToList();
                     }
-                    //[HttpGet("AllState_CityName")]
-                    //public List<State_CityNameModel> AllState_CityName()
-                    //{
-                    //          return _state_CityNameRepository.AllState_CityName();
-                    //}
+                
                     [HttpDelete("DeleteCityName")]
                     public CityMasterModel DeleteCityName(int Id)
                     {

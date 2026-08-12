@@ -45,6 +45,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //}
                     public void AddStateName(StateNameModel StateName)
                     {
+
                               // Check if the state already exists (replace 'Name' with your actual property name)
                               bool exists = _context.stateNameModels
                                   .Any(s => s.StateName == StateName.StateName);

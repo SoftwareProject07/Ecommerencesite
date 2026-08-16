@@ -57,5 +57,8 @@ namespace Ecommerencesite.Database
                     public DbSet<CandidateApplicationModule> candidateapplicationmodules { get; set; }
 
 
+                    public DbSet<CustomerAccountantAccount> customerAccountantAccounts { get; set; }
+
+
           }
 }

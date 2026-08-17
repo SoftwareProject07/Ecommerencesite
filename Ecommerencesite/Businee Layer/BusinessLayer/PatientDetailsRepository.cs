@@ -14,6 +14,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this._context = context;
 
                     }
+
+                    public void AddDeliveryAssignto(DeliveryAssigntoModel adddeliveryAssignto)
+                    {
+                           _context.deliveryAssigntoModells.Add(adddeliveryAssignto);
+                              _context.SaveChanges();
+                    }
+
                     public void AddDoctorAssigntoPatient(DoctorAssigntoPatientMOdel adddoctorAssigntoPatientMOdel)
                     {
                           _context.doctorAssigntoPatientMOdels.Add(adddoctorAssigntoPatientMOdel);
@@ -26,6 +33,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               _context.SaveChanges();
                     }
 
+                    public List<DeliveryAssigntoModel> AllDeliveryAssignto()
+                    {
+                            var listdeliveryAssignto = _context.deliveryAssigntoModells.ToList();
+                              return listdeliveryAssignto;  
+                    }
+
                     public List<DoctorAssigntoPatientMOdel> AllDoctorAssigntoPatient()
                     {
                             var listdoctorAssigntoPatient = _context.doctorAssigntoPatientMOdels.ToList();    
@@ -36,6 +49,17 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     {
                              var listpatientDetails = _context.patientDetailsModels.ToList();
                               return listpatientDetails;    
+                    }
+
+                    public DeliveryAssigntoModel DeleteDeliveryAssignto(int id)
+                    {
+                             var deletedeliveryAssignto = _context.deliveryAssigntoModells.Where(s=>s.DeliveryAssgintoId==id).FirstOrDefault();
+                              if (deletedeliveryAssignto != null)
+                              {
+                                        _context.deliveryAssigntoModells.Remove(deletedeliveryAssignto);
+                                        _context.SaveChanges();
+                              }
+                              return deletedeliveryAssignto;
                     }
 
                     public DoctorAssigntoPatientMOdel DeleteDoctorAssigntoPatient(int id)
@@ -60,6 +84,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return patientDetails;
                     }
 
+                    public DeliveryAssigntoModel GetDeliveryAssigntoById(int id)
+                    {
+                            var deliveryAssignto = _context.deliveryAssigntoModells.Find(id);
+                              return deliveryAssignto;
+                    }
+
                     public DoctorAssigntoPatientMOdel GetDoctorAssigntoPatientById(int id)
                     {
 
@@ -71,6 +101,12 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     {
                              var patientDetails = _context.patientDetailsModels.Find(id);
                               return patientDetails;
+                    }
+
+                    public void UpdateDeliveryAssignto(DeliveryAssigntoModel updatedeliveryAssignto)
+                    {
+                             _context.deliveryAssigntoModells.Update(updatedeliveryAssignto);
+                              _context.SaveChanges();
                     }
 
                     public void UpdateDoctorAssigntoPatient(DoctorAssigntoPatientMOdel updatedoctorAssigntoPatientMOdel)

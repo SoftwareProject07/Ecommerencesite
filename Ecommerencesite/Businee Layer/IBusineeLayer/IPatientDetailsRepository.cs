@@ -17,9 +17,19 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public DoctorAssigntoPatientMOdel GetDoctorAssigntoPatientById(int id);
                     public DoctorAssigntoPatientMOdel DeleteDoctorAssigntoPatient(int id);
 
+                    //DeliveryAssignto
+                    public List<DeliveryAssigntoModel> AllDeliveryAssignto();
+                    public void AddDeliveryAssignto(DeliveryAssigntoModel adddeliveryAssignto);
+                    public void UpdateDeliveryAssignto(DeliveryAssigntoModel updatedeliveryAssignto);
+                    public DeliveryAssigntoModel GetDeliveryAssigntoById(int id);
+                    public DeliveryAssigntoModel DeleteDeliveryAssignto(int id);
 
 
-                    
+
+
+
+
+
 
 
           }

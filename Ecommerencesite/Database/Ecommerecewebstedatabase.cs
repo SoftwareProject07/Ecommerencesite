@@ -59,6 +59,8 @@ namespace Ecommerencesite.Database
 
                     public DbSet<CustomerAccountantAccount> customerAccountantAccounts { get; set; }
 
+                    public DbSet<DeliveryAssigntoModel> deliveryAssigntoModells { get; set; }
+
 
           }
 }

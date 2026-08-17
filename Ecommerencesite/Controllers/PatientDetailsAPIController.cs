@@ -79,6 +79,43 @@ namespace Ecommerencesite.Controllers
                     {
                                                            _ipatientDetailsRepository.UpdatePatientDetails(updatepatientDetailsModel);      
                     }
+
+                    //DeliveryAssignto  
+                    [HttpGet("AllDeliveryAssignto")]
+                    public List<DeliveryAssigntoModel> AllDeliveryAssignto()
+                    {
+                              var deliveryAssigntoModels = _ipatientDetailsRepository.AllDeliveryAssignto().ToList() ;
+                            return deliveryAssigntoModels;
+                    }
+
+                    [HttpPost("AddDeliveryAssignto")]
+                    public void AddDeliveryAssignto(DeliveryAssigntoModel adddeliveryAssignto)
+                    {
+                              _ipatientDetailsRepository.AddDeliveryAssignto(adddeliveryAssignto);
+                    }
+
+                    [HttpPut("UpdateDeliveryAssignto")]
+                    public void UpdateDeliveryAssignto(DeliveryAssigntoModel updatedeliveryAssignto)
+                    {
+                              _ipatientDetailsRepository.UpdateDeliveryAssignto(updatedeliveryAssignto);
+                    }
+
+                    [HttpGet("GetDeliveryAssignt")]
+                    public DeliveryAssigntoModel GetDeliveryAssigntoById(int id)
+                    {
+                              var deliveryAssigntoModel = _ipatientDetailsRepository.GetDeliveryAssigntoById(id);
+                            return deliveryAssigntoModel;
+                    }
+
+                    [HttpDelete("DeleteDeliveryAssignto")]
+                    public DeliveryAssigntoModel DeleteDeliveryAssignto(int id)
+                    {
+                              var deliveryAssigntoModel = _ipatientDetailsRepository.DeleteDeliveryAssignto(id);
+                            return deliveryAssigntoModel;
+                    }
+
+
+
           }
 
 

@@ -16,10 +16,18 @@ namespace Ecommerencesite.Controllers
                             this.  _ipatientDetailsRepository = ipatientDetailsRepository;
                     }
 
+                    // Doctor AssigntoPatient
+                    //[HttpPost("AddDoctorAssigntoPatient")]
+                    //public void AddDoctorAssigntoPatient(DoctorAssigntoPatientMOdel adddoctorAssigntoPatientMOdel)
+                    //{
+                    //              _ipatientDetailsRepository.AddDoctorAssigntoPatient(adddoctorAssigntoPatientMOdel);
+                    //}
+
                     [HttpPost("AddDoctorAssigntoPatient")]
-                    public void AddDoctorAssigntoPatient(DoctorAssigntoPatientMOdel adddoctorAssigntoPatientMOdel)
+                    public IActionResult AddDoctorAssigntoPatient([FromBody] DoctorAssigntoPatientMOdel adddoctorAssigntoPatientMOdel)
                     {
-                                  _ipatientDetailsRepository.AddDoctorAssigntoPatient(adddoctorAssigntoPatientMOdel);
+                              _ipatientDetailsRepository.AddDoctorAssigntoPatient(adddoctorAssigntoPatientMOdel);
+                              return Ok(new { message = "Doctor added successfully" });
                     }
 
                     [HttpPost("AddPatientDetails")]
@@ -27,14 +35,23 @@ namespace Ecommerencesite.Controllers
                     {
                                           _ipatientDetailsRepository.AddPatientDetails(patientDetailsModel);
                     }
+                    // Doctor AssigntoPatient
+
+                    //[HttpGet("AllDoctorAssigntoPatient")]
+
+                    //public List<DoctorAssigntoPatientMOdel> AllDoctorAssigntoPatient()
+                    //{
+                    //       var doctorAssigntoPatientMOdels = _ipatientDetailsRepository.AllDoctorAssigntoPatient();
+                    //        return doctorAssigntoPatientMOdels;
+                    // }
+
                     [HttpGet("AllDoctorAssigntoPatient")]
-
-                    public List<DoctorAssigntoPatientMOdel> AllDoctorAssigntoPatient()
+                    public ActionResult<List<DoctorAssigntoPatientMOdel>> AllDoctorAssigntoPatient()
                     {
-                           var doctorAssigntoPatientMOdels = _ipatientDetailsRepository.AllDoctorAssigntoPatient();
-                            return doctorAssigntoPatientMOdels;
+                              var doctorAssigntoPatientMOdels = _ipatientDetailsRepository.AllDoctorAssigntoPatient();
+                              return Ok(doctorAssigntoPatientMOdels);
                     }
-
+                    // PatientDetails
                     [HttpGet("AllPatientDetails")]
                     public List<PatientDetailsModel> AllPatientDetails()
                     {
@@ -81,18 +98,34 @@ namespace Ecommerencesite.Controllers
                     }
 
                     //DeliveryAssignto  
-                    [HttpGet("AllDeliveryAssignto")]
-                    public List<DeliveryAssigntoModel> AllDeliveryAssignto()
+                    //[HttpGet("AllDeliveryAssignto")]
+                    //public List<DeliveryAssigntoModel> AllDeliveryAssignto()
+                    //{
+                    //          var deliveryAssigntoModels = _ipatientDetailsRepository.AllDeliveryAssignto().ToList() ;
+                    //        return deliveryAssigntoModels;
+                    //}
+
+                    [HttpGet("AllDeliveryAssigntoModel")]
+                    public ActionResult<List<DeliveryAssigntoModel>> AllDeliveryAssigntoModel()
                     {
-                              var deliveryAssigntoModels = _ipatientDetailsRepository.AllDeliveryAssignto().ToList() ;
-                            return deliveryAssigntoModels;
+                              var deliveryModels = _ipatientDetailsRepository.AllDeliveryAssignto().ToList();
+                              return Ok(deliveryModels);
                     }
 
-                    [HttpPost("AddDeliveryAssignto")]
-                    public void AddDeliveryAssignto(DeliveryAssigntoModel adddeliveryAssignto)
+                    //[HttpPost("AddDeliveryAssignto")]
+                    //public void AddDeliveryAssignto(DeliveryAssigntoModel adddeliveryAssignto)
+                    //{
+                    //          _ipatientDetailsRepository.AddDeliveryAssignto(adddeliveryAssignto);
+
+                    //}
+
+                    [HttpPost("AddDeliveryAssigntoModel")]
+                    public IActionResult AddDeliveryAssigntoModel([FromBody] DeliveryAssigntoModel addDeliveryModel)
                     {
-                              _ipatientDetailsRepository.AddDeliveryAssignto(adddeliveryAssignto);
+                              _ipatientDetailsRepository.AddDeliveryAssignto(addDeliveryModel);
+                              return Ok(new { message = "Delivery person added successfully" });
                     }
+
 
                     [HttpPut("UpdateDeliveryAssignto")]
                     public void UpdateDeliveryAssignto(DeliveryAssigntoModel updatedeliveryAssignto)

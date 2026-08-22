@@ -23,6 +23,13 @@ namespace Ecommerencesite.Model
                     public string? CustomerZipCode { get; set; } = null;
                     //   public string? CustomerCountry { get; set; } = null;
 
+                    // Existing Doctor Assignment Field
+                    public string? AssignedDoctor { get; set; } = null;
+
+                    // ✅ New Field: Delivery Person assign karne ke liye
+                    public string? AssignedDeliveryPerson { get; set; } = null;
+
+
                     public DateTime? CreatedOn { get; set; } = DateTime.UtcNow;
                    
           }

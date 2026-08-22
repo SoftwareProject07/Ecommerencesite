@@ -1,4 +1,5 @@
 ﻿using Ecommerencesite.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
@@ -16,6 +17,8 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void UpdateDoctorAssigntoPatient(DoctorAssigntoPatientMOdel   updatedoctorAssigntoPatientMOdel);
                     public DoctorAssigntoPatientMOdel GetDoctorAssigntoPatientById(int id);
                     public DoctorAssigntoPatientMOdel DeleteDoctorAssigntoPatient(int id);
+
+
 
                     //DeliveryAssignto
                     public List<DeliveryAssigntoModel> AllDeliveryAssignto();

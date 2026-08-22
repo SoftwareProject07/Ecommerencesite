@@ -91,11 +91,11 @@ namespace Ecommerencesite.Controllers
                     {
                               _ipatientDetailsRepository.UpdateDoctorAssigntoPatient(updatedoctorAssigntoPatientMOdel);
                     }
-                    [HttpPut("UpdatePatientDetails")]
-                    public void UpdatePatientDetails(PatientDetailsModel updatepatientDetailsModel)
-                    {
-                                                           _ipatientDetailsRepository.UpdatePatientDetails(updatepatientDetailsModel);      
-                    }
+                    //[HttpPut("UpdatePatientDetails")]
+                    //public void UpdatePatientDetails(PatientDetailsModel updatepatientDetailsModel)
+                    //{
+                    //                                       _ipatientDetailsRepository.UpdatePatientDetails(updatepatientDetailsModel);      
+                    //}
 
                   //  DeliveryAssignto
                     [HttpGet("AllDeliveryAssignto")]

@@ -4,6 +4,7 @@ using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -28,7 +29,9 @@ namespace Ecommerencesite.Controllers
 
                               // Agar status false hai, to hum 400 Bad Request bhej sakte hain ya 200 ke andar status false
                               return Ok(result);
+
                     }
+
 
                     [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)

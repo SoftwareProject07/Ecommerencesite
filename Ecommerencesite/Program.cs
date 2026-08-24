@@ -144,11 +144,20 @@ app.UseHttpsRedirection();
 
 
 app.UseAuthorization();
+app.UseStaticFiles(new StaticFileOptions
+{
+          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+          RequestPath = "/uploads"
+});
 
 app.UseStaticFiles();
 
 app.MapControllers();
 app.MapHub<TrackingHub>("/trackingHub");
-
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+//          RequestPath = "/uploads"
+//});
 
 app.Run();

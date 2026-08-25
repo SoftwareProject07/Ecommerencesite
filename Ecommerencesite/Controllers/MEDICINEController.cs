@@ -22,16 +22,89 @@ namespace Ecommerencesite.Controllers
                     }
 
 
+                    //[HttpPost("CreateMedicine")]
+                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                    //{
+                    //          var result = await imedicineresp.CreateMedicineAsync(medicine, image);
+
+                    //          // Agar status false hai, to hum 400 Bad Request bhej sakte hain ya 200 ke andar status false
+                    //          return Ok(result);
+
+                    //}
+
+
+                    //[HttpPost("CreateMedicine")]
+                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine model, IFormFile image)
+                    //{
+                    //          try
+                    //          {
+                    //                    // 1. Image save karne ka logic agar file aayi hai
+                    //                    if (image != null && image.Length > 0)
+                    //                    {
+                    //                              var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                    //                              if (!Directory.Exists(uploadsFolder))
+                    //                              {
+                    //                                        Directory.CreateDirectory(uploadsFolder);
+                    //                              }
+
+                    //                              var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                    //                              var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    //                              using (var stream = new FileStream(filePath, FileMode.Create))
+                    //                              {
+                    //                                        await image.CopyToAsync(stream);
+                    //                              }
+
+                    //                              // Model ke image property mein path assign karna
+                    //                              model.Image = "/uploads/" + uniqueFileName;
+                    //                    }
+
+                    //                    // 2. Repository ke zariye database mein save karna (Aapke repository method ka naam alag ho sakta hai, jaise AddMedicine ya InsertAsync)
+                    //                    var result = await imedicineresp.CreateMedicineAsync(model,image); // Ya jo bhi aapki repository ka method ho
+
+                    //                    return Ok(new { success = true, message = "Medicine added successfully", data = result });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new { success = false, message = ex.Message });
+                    //          }
+                    //}
+
+
                     [HttpPost("CreateMedicine")]
-                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
+                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine model, IFormFile image)
                     {
-                              var result = await imedicineresp.CreateMedicineAsync(medicine, image);
+                              try
+                              {
+                                        // Folder check and creation logic
+                                        if (image != null && image.Length > 0)
+                                        {
+                                                  var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                                                  if (!Directory.Exists(uploadsFolder))
+                                                  {
+                                                            Directory.CreateDirectory(uploadsFolder);
+                                                  }
 
-                              // Agar status false hai, to hum 400 Bad Request bhej sakte hain ya 200 ke andar status false
-                              return Ok(result);
+                                                  var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                                                  var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
+                                                  using (var stream = new FileStream(filePath, FileMode.Create))
+                                                  {
+                                                            await image.CopyToAsync(stream);
+                                                  }
+
+                                                  // Relative path save karna database ke liye
+                                                  model.Image = "/uploads/" + uniqueFileName;
+                                        }
+
+                                        var result = await imedicineresp.CreateMedicineAsync(model,image);
+                                        return Ok(new { success = true, message = "Medicine added successfully", data = result });
+                              }
+                              catch (Exception ex)
+                              {
+                                        return StatusCode(500, new { success = false, message = ex.Message });
+                              }
                     }
-
 
                     [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)
@@ -131,13 +204,49 @@ namespace Ecommerencesite.Controllers
                                         });
                               }
                     }
+                    //[HttpGet("AllListMedicineProduct")]
+                    //public IActionResult lstmedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var list = imedicineresp.GetAllMedicine();
+                    //                    return Ok(list);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+                    //          }
+
+                    //}
+
+
+
                     [HttpGet("AllListMedicineProduct")]
                     public IActionResult lstmedicine()
                     {
                               try
                               {
-                                        var list = imedicineresp.GetAllMedicine();
-                                        return Ok(list);
+                                        var response = imedicineresp.GetAllMedicine();
+
+                                        // Image path ke aage base URL append karna taaki frontend par direct load ho sake
+                                        if (response != null && response.LSTmedicines != null)
+                                        {
+                                                  foreach (var med in response.LSTmedicines)
+                                                  {
+                                                            if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
+                                                            {
+                                                                    //  med.Image = "http://localhost:5256" + med.Image;
+                                                                      med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                                                            }
+                                                  }
+                                        }
+
+                                        return Ok(response);
                               }
                               catch (Exception ex)
                               {
@@ -147,15 +256,14 @@ namespace Ecommerencesite.Controllers
                                                   Error = ex.Message,
                                                   Detail = ex.InnerException?.Message
                                         });
+
                               }
 
-                    }
+                              }
 
 
 
 
-
-                    
 
 
 

@@ -384,17 +384,56 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               dbcontext.SaveChanges();
                     }
 
+                    //public ResponseModel GetAllMedicine()
+                    //{
+                    //          ResponseModel response = new ResponseModel();
+
+                    //          // Fix: .ToLower() use karke grouping karein taaki Case-Sensitivity ka issue solve ho jaye
+                    //          var medicineList = dbcontext.medicinesss
+                    //                              .Where(m => m.STATUS == 1)
+                    //                              .AsEnumerable() // Memory mein lakar filter karne ke liye (Case-insensitive support)
+                    //                              .GroupBy(m => m.Name.Trim().ToLower())
+                    //                              .Select(g => g.First())
+                    //                              .ToList();
+
+                    //          if (medicineList != null && medicineList.Any())
+                    //          {
+                    //                    response.status = true;
+                    //                    response.responseMessage = "Success";
+                    //                    response.LSTmedicines = medicineList;
+                    //          }
+                    //          else
+                    //          {
+                    //                    response.status = false;
+                    //                    response.responseMessage = "No medicines found.";
+                    //          }
+
+                    //          return response;
+                    //}
+
+
+
                     public ResponseModel GetAllMedicine()
                     {
                               ResponseModel response = new ResponseModel();
 
-                              // Fix: .ToLower() use karke grouping karein taaki Case-Sensitivity ka issue solve ho jaye
                               var medicineList = dbcontext.medicinesss
-                                                  .Where(m => m.STATUS == 1)
-                                                  .AsEnumerable() // Memory mein lakar filter karne ke liye (Case-insensitive support)
-                                                  .GroupBy(m => m.Name.Trim().ToLower())
-                                                  .Select(g => g.First())
-                                                  .ToList();
+                                                          .Where(m => m.STATUS == 1)
+                                                          .AsEnumerable()
+                                                          .GroupBy(m => m.Name.Trim().ToLower())
+                                                          .Select(g => g.First())
+                                                          .ToList();
+
+                              // 👇 Har ek medicine ki image ke aage backend URL jodna taaki frontend par direct load ho sake
+                              foreach (var med in medicineList)
+                              {
+                                        if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
+                                        {
+                                             //     med.Image = "http://localhost:5256" + med.Image; 
+
+                                                  med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                                        }
+                              }
 
                               if (medicineList != null && medicineList.Any())
                               {

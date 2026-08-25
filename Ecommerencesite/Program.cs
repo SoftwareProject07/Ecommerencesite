@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using System;
+using System.IO;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -144,13 +146,25 @@ app.UseHttpsRedirection();
 
 
 app.UseAuthorization();
-app.UseStaticFiles(new StaticFileOptions
-{
-          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
-          RequestPath = "/uploads"
-});
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+//          RequestPath = "/uploads"
+//});
 
 app.UseStaticFiles();
+
+var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+if (!Directory.Exists(uploadsPath))
+{
+          Directory.CreateDirectory(uploadsPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+          FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
+          RequestPath = "/uploads"
+});
 
 app.MapControllers();
 app.MapHub<TrackingHub>("/trackingHub");

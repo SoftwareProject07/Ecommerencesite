@@ -60,7 +60,7 @@ namespace Ecommerencesite.Controllers
                     //                    }
 
                     //                    // 2. Repository ke zariye database mein save karna (Aapke repository method ka naam alag ho sakta hai, jaise AddMedicine ya InsertAsync)
-                    //                    var result = await imedicineresp.CreateMedicineAsync(model,image); // Ya jo bhi aapki repository ka method ho
+                    //                    var result = await imedicineresp.CreateMedicineAsync(model, image); // Ya jo bhi aapki repository ka method ho
 
                     //                    return Ok(new { success = true, message = "Medicine added successfully", data = result });
                     //          }
@@ -97,7 +97,7 @@ namespace Ecommerencesite.Controllers
                                                   model.Image = "/uploads/" + uniqueFileName;
                                         }
 
-                                        var result = await imedicineresp.CreateMedicineAsync(model,image);
+                                        var result = await imedicineresp.CreateMedicineAsync(model, image);
                                         return Ok(new { success = true, message = "Medicine added successfully", data = result });
                               }
                               catch (Exception ex)
@@ -204,49 +204,13 @@ namespace Ecommerencesite.Controllers
                                         });
                               }
                     }
-                    //[HttpGet("AllListMedicineProduct")]
-                    //public IActionResult lstmedicine()
-                    //{
-                    //          try
-                    //          {
-                    //                    var list = imedicineresp.GetAllMedicine();
-                    //                    return Ok(list);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-                    //          }
-
-                    //}
-
-
-
                     [HttpGet("AllListMedicineProduct")]
                     public IActionResult lstmedicine()
                     {
                               try
                               {
-                                        var response = imedicineresp.GetAllMedicine();
-
-                                        // Image path ke aage base URL append karna taaki frontend par direct load ho sake
-                                        if (response != null && response.LSTmedicines != null)
-                                        {
-                                                  foreach (var med in response.LSTmedicines)
-                                                  {
-                                                            if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
-                                                            {
-                                                                    //  med.Image = "http://localhost:5256" + med.Image;
-                                                                      med.Image = "https://ecommerencesite.onrender.com" + med.Image;
-                                                            }
-                                                  }
-                                        }
-
-                                        return Ok(response);
+                                        var list = imedicineresp.GetAllMedicine();
+                                        return Ok(list);
                               }
                               catch (Exception ex)
                               {
@@ -256,10 +220,46 @@ namespace Ecommerencesite.Controllers
                                                   Error = ex.Message,
                                                   Detail = ex.InnerException?.Message
                                         });
-
                               }
 
-                              }
+                    }
+
+
+
+                    //[HttpGet("AllListMedicineProduct")]
+                    //public IActionResult lstmedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var response = imedicineresp.GetAllMedicine();
+
+                    //                    // Image path ke aage base URL append karna taaki frontend par direct load ho sake
+                    //                    if (response != null && response.LSTmedicines != null)
+                    //                    {
+                    //                              foreach (var med in response.LSTmedicines)
+                    //                              {
+                    //                                        if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
+                    //                                        {
+                    //                                                //  med.Image = "http://localhost:5256" + med.Image;
+                    //                                                  med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                    //                                        }
+                    //                              }
+                    //                    }
+
+                    //                    return Ok(response);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new
+                    //                    {
+                    //                              Message = "Internal Error",
+                    //                              Error = ex.Message,
+                    //                              Detail = ex.InnerException?.Message
+                    //                    });
+
+                    //          }
+
+                    //          }
 
 
 
@@ -279,7 +279,7 @@ namespace Ecommerencesite.Controllers
 
 
 
-                              [HttpPost("UploadExcel")]
+                    [HttpPost("UploadExcel")]
                     public async Task<IActionResult> UploadExcel( IFormFile file)
                     {
                               // 1. वैलीडेशन: क्या फ़ाइल भेजी गई है?

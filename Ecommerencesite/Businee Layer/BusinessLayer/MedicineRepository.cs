@@ -1,7 +1,7 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
-
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 
@@ -77,7 +77,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     //          return response;
                     //}
 
-                    public async Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    public async Task<ResponseModel> CreateMedicineAsync([FromForm] Medicine medicine, IFormFile image)
                     {
                               ResponseModel response = new ResponseModel();
 
@@ -429,9 +429,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               {
                                         if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
                                         {
-                                             //     med.Image = "http://localhost:5256" + med.Image; 
+                                             //  med.Image = "http://localhost:5256" + med.Image; 
 
-                                                  med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                                                 med.Image = "https://ecommerencesite.onrender.com" + med.Image;
                                         }
                               }
 

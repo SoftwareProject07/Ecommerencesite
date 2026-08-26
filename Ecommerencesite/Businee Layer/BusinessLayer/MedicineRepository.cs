@@ -283,7 +283,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                         // Har ek medicine ki image path ko format karna
                                         foreach (var med in medicineList)
                                         {
-                                                  if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("http") && !med.Image.StartsWith("https"))
+                                                  if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("http"))// && !med.Image.StartsWith("https")
                                                   {
                                                             // Agar path '/' se start nahi ho raha toh slash add karein
                                                             if (!med.Image.StartsWith("/"))

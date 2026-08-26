@@ -292,8 +292,8 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                             }
 
                                                             // Backend URL prepend karna
-                                                        //    med.Image = "http://localhost:5256" + med.Image;
-                                                           med.Image = "https://ecommerencesite.onrender.com/" + med.Image;
+                                                            med.Image = "http://localhost:5256" + med.Image;
+                                                           med.Image = "https://ecommerencesite.onrender.com" + med.Image;
                                                   }
                                         }
 

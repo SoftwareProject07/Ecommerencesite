@@ -22,89 +22,22 @@ namespace Ecommerencesite.Controllers
                     }
 
 
-                    //[HttpPost("CreateMedicine")]
-                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
-                    //{
-                    //          var result = await imedicineresp.CreateMedicineAsync(medicine, image);
-
-                    //          // Agar status false hai, to hum 400 Bad Request bhej sakte hain ya 200 ke andar status false
-                    //          return Ok(result);
-
-                    //}
 
 
-                    //[HttpPost("CreateMedicine")]
-                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine model, IFormFile image)
-                    //{
-                    //          try
-                    //          {
-                    //                    // 1. Image save karne ka logic agar file aayi hai
-                    //                    if (image != null && image.Length > 0)
-                    //                    {
-                    //                              var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-                    //                              if (!Directory.Exists(uploadsFolder))
-                    //                              {
-                    //                                        Directory.CreateDirectory(uploadsFolder);
-                    //                              }
 
-                    //                              var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                    //                              var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                    //                              using (var stream = new FileStream(filePath, FileMode.Create))
-                    //                              {
-                    //                                        await image.CopyToAsync(stream);
-                    //                              }
 
-                    //                              // Model ke image property mein path assign karna
-                    //                              model.Image = "/uploads/" + uniqueFileName;
-                    //                    }
 
-                    //                    // 2. Repository ke zariye database mein save karna (Aapke repository method ka naam alag ho sakta hai, jaise AddMedicine ya InsertAsync)
-                    //                    var result = await imedicineresp.CreateMedicineAsync(model, image); // Ya jo bhi aapki repository ka method ho
-
-                    //                    return Ok(new { success = true, message = "Medicine added successfully", data = result });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new { success = false, message = ex.Message });
-                    //          }
-                    //}
 
 
                     [HttpPost("CreateMedicine")]
-                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine model, IFormFile image)
+
+                    public void CreateMedicineAsync([FromForm]Medicine medicine, IFormFile image)
                     {
-                              try
-                              {
-                                        // Folder check and creation logic
-                                        if (image != null && image.Length > 0)
-                                        {
-                                                  var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-                                                  if (!Directory.Exists(uploadsFolder))
-                                                  {
-                                                            Directory.CreateDirectory(uploadsFolder);
-                                                  }
-
-                                                  var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                                                  var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                                                  using (var stream = new FileStream(filePath, FileMode.Create))
-                                                  {
-                                                            await image.CopyToAsync(stream);
-                                                  }
-
-                                                  // Relative path save karna database ke liye
-                                                  model.Image = "/uploads/" + uniqueFileName;
-                                        }
-
-                                        var result = await imedicineresp.CreateMedicineAsync(model, image);
-                                        return Ok(new { success = true, message = "Medicine added successfully", data = result });
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, new { success = false, message = ex.Message });
-                              }
+                              imedicineresp.CreateMedicineAsync(medicine, image);
                     }
+
+
 
                     [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)
@@ -157,25 +90,70 @@ namespace Ecommerencesite.Controllers
 
 
                     //[HttpPut("UpdateMedicine")]
-                    //public void  UpdateMedicine(Medicine medicine)
+                    //public IActionResult Update(Medicine medicine)
                     //{
-                    //       imedicineresp.UpdateMedicine(medicine);
-                    //        //  return Ok(result);
+                    //          try
+                    //          {
+                    //                    // Call the void business logic method
+                    //                    imedicineresp.UpdateMedicine(medicine);
+
+                    //                    // If it succeeds with no exceptions, return success
+                    //                    return Ok(new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Medicine updated successfully."
+                    //                    });
+                    //          }
+                    //          catch (ArgumentNullException ex)
+                    //          {
+                    //                    return BadRequest(new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = ex.Message
+                    //                    });
+                    //          }
+                    //          catch (KeyNotFoundException ex)
+                    //          {
+                    //                    return NotFound(new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = ex.Message
+                    //                    });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = $"An unexpected error occurred: {ex.Message}"
+                    //                    });
+                    //          }
                     //}
 
 
+
                     [HttpPut("UpdateMedicine")]
-                    public IActionResult Update(Medicine medicine)
+                    public IActionResult Update([FromForm] Medicine medicine)
                     {
                               try
                               {
-                                        // Call the void business logic method
+                                        // 1. Basic validation check
+                                        if (medicine == null || medicine.id <= 0)
+                                        {
+                                                  return BadRequest(new ResponseModel
+                                                  {
+                                                            status = false,
+                                                            responseMessage = "Invalid medicine data or ID provided."
+                                                  });
+                                        }
+
+                                        // 2. Call the business logic method
                                         imedicineresp.UpdateMedicine(medicine);
 
-                                        // If it succeeds with no exceptions, return success
+                                        // 3. Return success response
                                         return Ok(new ResponseModel
                                         {
-                                                   status = true,
+                                                  status = true,
                                                   responseMessage = "Medicine updated successfully."
                                         });
                               }
@@ -189,7 +167,9 @@ namespace Ecommerencesite.Controllers
                               }
                               catch (KeyNotFoundException ex)
                               {
-                                        return NotFound(new ResponseModel
+                                        // Yahan NotFound() ki jagah hum proper ObjectResult return kar rahe hain 
+                                        // taaki ResponseModel ka structure har jagah ek jaisa (consistent) rahe
+                                        return StatusCode(404, new ResponseModel
                                         {
                                                   status = false,
                                                   responseMessage = ex.Message
@@ -204,83 +184,24 @@ namespace Ecommerencesite.Controllers
                                         });
                               }
                     }
+
+
+
                     [HttpGet("AllListMedicineProduct")]
-                    public IActionResult lstmedicine()
+                    public List<Medicine> lstmedicine()
                     {
-                              try
-                              {
-                                        var list = imedicineresp.GetAllMedicine();
-                                        return Ok(list);
-                              }
-                              catch (Exception ex)
-                              {
-                                        return StatusCode(500, new
-                                        {
-                                                  Message = "Internal Error",
-                                                  Error = ex.Message,
-                                                  Detail = ex.InnerException?.Message
-                                        });
-                              }
+                            
+                                        var list = imedicineresp.GetAllMedicine().ToList();
+                                        return list;
+                             
 
                     }
 
 
 
-                    //[HttpGet("AllListMedicineProduct")]
-                    //public IActionResult lstmedicine()
-                    //{
-                    //          try
-                    //          {
-                    //                    var response = imedicineresp.GetAllMedicine();
-
-                    //                    // Image path ke aage base URL append karna taaki frontend par direct load ho sake
-                    //                    if (response != null && response.LSTmedicines != null)
-                    //                    {
-                    //                              foreach (var med in response.LSTmedicines)
-                    //                              {
-                    //                                        if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
-                    //                                        {
-                    //                                                //  med.Image = "http://localhost:5256" + med.Image;
-                    //                                                  med.Image = "https://ecommerencesite.onrender.com" + med.Image;
-                    //                                        }
-                    //                              }
-                    //                    }
-
-                    //                    return Ok(response);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new
-                    //                    {
-                    //                              Message = "Internal Error",
-                    //                              Error = ex.Message,
-                    //                              Detail = ex.InnerException?.Message
-                    //                    });
-
-                    //          }
-
-                    //          }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     [HttpPost("UploadExcel")]
-                    public async Task<IActionResult> UploadExcel( IFormFile file)
+                    public async Task<IActionResult> UploadExcel(IFormFile file)
                     {
                               // 1. वैलीडेशन: क्या फ़ाइल भेजी गई है?
                               if (file == null || file.Length == 0)
@@ -313,8 +234,8 @@ namespace Ecommerencesite.Controllers
                                                   int savedCount = await imedicineresp.BulkInsertMedicinesAsync(parsedMedicines);
 
                                                   // 4. Business Layer Call: पूरी लिस्ट बिना किसी फिल्टर के प्राप्त करें
-                                                  ResponseModel response = imedicineresp.GetAllMedicine();
-                                                 // imedicineresp.GetAllMedicine();
+                                                  var response = imedicineresp.GetAllMedicine();
+                                                  // imedicineresp.GetAllMedicine();
 
                                                   return Ok(new
                                                   {
@@ -322,8 +243,8 @@ namespace Ecommerencesite.Controllers
                                                             //  message = $"सफलतापूर्वक {savedCount} दवाइयां अपलोड हो गई हैं!",
                                                             message = $"{savedCount} medications successfully uploaded!!",
                                                             count = savedCount,
-                                                              data = response.Data // 👈 यह बिना फ़िल्टर का पूरा साझा डेटा रिएक्ट को देगा
-                                                           // data = GetAllMedicine()
+                                                            data = response// 👈 यह बिना फ़िल्टर का पूरा साझा डेटा रिएक्ट को देगा
+                                                                                 // data = GetAllMedicine()
                                                   });
                                         }
                               }
@@ -337,6 +258,10 @@ namespace Ecommerencesite.Controllers
                                         });
                               }
                     }
+
+
+
+
           }
 
           }

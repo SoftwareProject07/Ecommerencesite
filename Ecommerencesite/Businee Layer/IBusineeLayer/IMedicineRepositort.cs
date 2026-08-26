@@ -1,5 +1,6 @@
 ﻿using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
@@ -7,9 +8,9 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
           {
                     //public List<Medicine> lstmedicine();
                  //   public List<Medicine> GetAllMedicine();
-                   public ResponseModel GetAllMedicine();
+                   public List<Medicine>  GetAllMedicine();
                     //  public ResponseModel CreateMedicine(Medicine createMedicine);
-                    Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image);
+                   public  void  CreateMedicineAsync( Medicine medicine, IFormFile image);
                     public void  UpdateMedicine(Medicine updatemedicine);
                     //public ResponseModel UpdateMedicineAsync(Medicine medicine);
 

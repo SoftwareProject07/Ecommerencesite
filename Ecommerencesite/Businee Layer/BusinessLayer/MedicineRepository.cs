@@ -23,111 +23,55 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               //..     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                     }
-                    //public async Task<ResponseModel> CreateMedicineAsync(Medicine medicine, IFormFile image)
-                    //{
-                    //          ResponseModel response = new ResponseModel();
 
-                    //          // 1. Validation: Name check
-                    //          if (string.IsNullOrWhiteSpace(medicine.Name))
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "Medicine name cannot be empty.";
-                    //                    return response;
-                    //          }
+      
 
-                    //          // 2. Duplicate Check (Case-Insensitive)
-                    //          bool alreadyExists = await dbcontext.medicinesss
-                    //              .AnyAsync(m => m.Name.ToLower() == medicine.Name.Trim().ToLower());
 
-                    //          if (alreadyExists)
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "This medicine already exists in the records.";
-                    //                    return response;
-                    //          }
 
-                    //          // 3. Image Upload
-                    //          string imageUrl = null;
-                    //          if (image != null && image.Length > 0)
-                    //          {
-                    //                    imageUrl = await UploadImageToImgBB(image);
-                    //          }
-
-                    //          // 4. Save Logic
-                    //          medicine.Image = imageUrl ?? "https://via.placeholder.com/300x300.png?text=No+Image";
-                    //          medicine.STATUS = 1;
-                    //          medicine.Name = medicine.Name.Trim();
-
-                    //          // ✅ ItemMedicine automatically mapped from Frontend FormData "ItemMedicine"
-
-                    //          try
-                    //          {
-                    //                    dbcontext.medicinesss.Add(medicine);
-                    //                    await dbcontext.SaveChangesAsync();
-
-                    //                    response.status = true;
-                    //                    response.responseMessage = "Medicine added successfully!";
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "Database Error: " + ex.Message;
-                    //          }
-
-                    //          return response;
-                    //}
-
-                    public async Task<ResponseModel> CreateMedicineAsync([FromForm] Medicine medicine, IFormFile image)
+                    public void CreateMedicineAsync(Medicine medicine, IFormFile image)
                     {
-                              ResponseModel response = new ResponseModel();
-
                               try
                               {
                                         if (image != null && image.Length > 0)
                                         {
-                                                  // 1. Path banayein jahan file save hogi
-                                                  string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+                                                  // 1. Folder path define karein
+                                                  string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
                                                   if (!Directory.Exists(uploadsFolder))
                                                   {
                                                             Directory.CreateDirectory(uploadsFolder);
                                                   }
 
-                                                  // 2. Unique filename banayein
+                                                  // 2. Unique file name banayein taaki naam repeat na ho
                                                   string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
                                                   string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                                                  // 3. File ko folder mein save karein
+                                                  // 3. File ko server par save karein (Synchronous CopyTo use kiya hai)
                                                   using (var fileStream = new FileStream(filePath, FileMode.Create))
                                                   {
-                                                            await image.CopyToAsync(fileStream);
+                                                            image.CopyTo(fileStream); // Note: CopyToAsync ki jagah CopyTo use hoga
                                                   }
 
-                                                  // 4. Database ke liye file ka naam assign karein
-                                                  medicine.Image = uniqueFileName;
+                                                  // 4. Medicine model ke Image property mein relative path save karein
+                                                  medicine.Image = $"/uploads/{uniqueFileName}";
+                                        }
+                                        else
+                                        {
+                                                  medicine.Image = null; // Agar image nahi aayi toh null
                                         }
 
-                                        // 5. Database mein add aur save karna ZAROORI hai (Comment hata diya hai)
+                                        // Database mein data add aur save karna (Synchronous SaveChanges)
                                         dbcontext.medicinesss.Add(medicine);
-                                        await dbcontext.SaveChangesAsync();
-
-                                        response.status = true;
-                                        response.responseMessage = "Medicine created successfully!";
+                                        dbcontext.SaveChanges(); // Note: SaveChangesAsync ki jagah SaveChanges use hoga
                               }
                               catch (Exception ex)
                               {
-                                        response.status = false;
-                                        response.responseMessage = ex.Message;
+                                        // Agar void hai toh error handle karne ke liye Console ya Throw kar sakte hain
+                                        Console.WriteLine("Error: " + ex.Message);
+                                        throw;
                               }
-
-                              return response;
                     }
-
-                    //private Task<string> UploadImageToImgBB(IFormFile image)
-                    //{
-                    //          // Instead of uploading, just return a placeholder image URL
-                    //          string placeholderUrl = "https://via.placeholder.com/300x300.png?text=Medicine+Image";
-                    //          return Task.FromResult(placeholderUrl);
-                    //}
+                    
                     private async Task<string> UploadImageToImgBB(IFormFile image)
                     {
                               try
@@ -184,10 +128,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               };
 
 
-                              //          dbcontext.medicinesss.Remove(medicine);
-                              //          dbcontext.SaveChanges();
-                              //}
-
                     }
 
                     public ResponseModel DetailsMedicine(int id)
@@ -233,228 +173,139 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
 
 
-                    //public void UpdateMedicine(Medicine updatemedicine)
+
+
+                    //public void UpdateMedicine(Medicine medicine)
                     //{
-                    //          //  // 1. Pehle check karein ki kya is naam ki koi aur medicine pehle se hai?
-                    //          //  // Hum current 'id' ko exclude ( != ) karenge taaki usi record se takrav na ho
-                    //          //  var isDuplicate = dbcontext.medicinesss
-                    //          //      .Any(x => x.Name.Trim().ToLower() == updatemedicine.Name.ToLower()
-                    //          //                && x.id != updatemedicine.id
-                    //          //                && x.STATUS == updatemedicine.STATUS);
-
-
-                    //          //  //if (isDuplicate)
-                    //          //  //{
-                    //          //  //          return new ResponseModel
-                    //          //  //          {
-                    //          //  //                    status = false,
-                    //          //  //                    responseMessage = "Duplicate Alert: Medicine   are already available."
-                    //          //  //          };
-                    //          //  //}
-
-                    //          //  // 2. Existing record find karein
-                    //          //  var medicine = dbcontext.medicinesss
-                    //          //      .FirstOrDefault(x => x.id == updatemedicine.id && x.STATUS == 1);
-
-                    //          //  if (medicine == null)
-                    //          //  {
-                    //          //            return new ResponseModel
-                    //          //            {
-                    //          //                      status = false,
-                    //          //                      responseMessage = "Medicine not found"
-                    //          //            };
-                    //          //  }
-
-                    //          //  // 3. Data update karein
-                    //          //  medicine.Name = updatemedicine.Name;
-                    //          //  medicine.Manufacturer = updatemedicine.Manufacturer;
-                    //          //  medicine.UnitPrice = updatemedicine.UnitPrice;
-                    //          //  medicine.Discount = updatemedicine.Discount;
-                    //          //  medicine.Quantity = updatemedicine.Quantity;
-                    //          //  medicine.ExpiryDate = updatemedicine.ExpiryDate;
-                    //          //medicine.Image = updatemedicine.Image;
-                    //          //  medicine.MedicinesType = updatemedicine.MedicinesType;
-                    //          //  medicine.Type = updatemedicine.Type;
-                    //          //  medicine.ItemMedicine = updatemedicine.ItemMedicine;
-                    //          //  medicine.STATUS = updatemedicine.STATUS;
-
-                    //          //  dbcontext.SaveChanges();
-
-                    //          //  return new ResponseModel
-                    //          //  {
-                    //          //            status = true,
-                    //          //            responseMessage = "Medicine Updated Successfully",
-                    //          //            medicine = medicine
-                    //          //  };
-
-
-
-                    //          //dbcontext.medicinesss.Update(updatemedicine);
-                    //          //dbcontext.SaveChanges();
-
-
-                    //          if (updatemedicine == null)
+                    //          if (medicine == null)
                     //          {
-                    //                    throw new ArgumentNullException(nameof(updatemedicine), "Medicine data cannot be null.");
+                    //                    throw new ArgumentNullException(nameof(medicine), "Medicine data cannot be null.");
                     //          }
 
-                    //          // 2. Find the existing record
-                    //          var existing = dbcontext.medicinesss.Find(updatemedicine.id);
+                    //          // 1. Database se pehle ka original data nikalen
+                    //          var existing = dbcontext.medicinesss.Find(medicine.id);
                     //          if (existing == null)
                     //          {
-                    //                    throw new KeyNotFoundException($"Medicine with ID {updatemedicine.id} was not found.");
+                    //                    throw new KeyNotFoundException($"Medicine with ID {medicine.id} not found.");
                     //          }
 
-                    //          // 3. Update the values
-                    //          existing.id = updatemedicine.id;
-                    //          existing.UserId = updatemedicine.UserId;
-                    //          existing.Name = updatemedicine.Name;
-                    //          existing.Manufacturer = updatemedicine.Manufacturer;
+                    //          // 2. UserId aur Status ko safe rakhein (Agar request me 0 aaye toh purana hi rehne dein)
+                    //          if (medicine.UserId > 0) existing.UserId = medicine.UserId;
 
-                    //          existing.UnitPrice = updatemedicine.UnitPrice ;
-                    //          existing.Discount = updatemedicine.Discount;
-                    //          existing.Quantity = updatemedicine.Quantity;
-                    //          existing.ExpiryDate = updatemedicine.ExpiryDate;
-                    //          existing.Image = updatemedicine.Image;
-                    //          existing.STATUS = updatemedicine.STATUS;
-                    //          existing.MedicinesType = updatemedicine.MedicinesType;
-                    //          existing.ItemMedicine = updatemedicine.ItemMedicine;
-                    //          existing.Type= updatemedicine.Type;
-                    //          //existing.Dosage = medicine.Dosage;
-                    //          //existing.StockQuantity = medicine.StockQuantity;
+                    //          // Sabse important: Agar status request me 0 hai aur purana status 1 tha, toh use 1 hi rehne dein
+                    //          // Taki list se data gayab na ho
+                    //          if (medicine.STATUS != 0)
+                    //          {
+                    //                    existing.STATUS = medicine.STATUS;
+                    //          }
 
-                    //          // 4. Save to database
+                    //          // 3. Baaki fields ko tabhi update karein jab wo "string" ya empty na hon
+                    //          if (!string.IsNullOrEmpty(medicine.Name) && medicine.Name != "string")
+                    //                    existing.Name = medicine.Name;
+
+                    //          if (!string.IsNullOrEmpty(medicine.Manufacturer) && medicine.Manufacturer != "string")
+                    //                    existing.Manufacturer = medicine.Manufacturer;
+
+                    //          if (!string.IsNullOrEmpty(medicine.MedicinesType) && medicine.MedicinesType != "string")
+                    //                    existing.MedicinesType = medicine.MedicinesType;
+
+                    //          if (!string.IsNullOrEmpty(medicine.ItemMedicine) && medicine.ItemMedicine != "string")
+                    //                    existing.ItemMedicine = medicine.ItemMedicine;
+
+                    //          if (!string.IsNullOrEmpty(medicine.Type) && medicine.Type != "string")
+                    //                    existing.Type = medicine.Type;
+
+                    //          if (!string.IsNullOrEmpty(medicine.Image) && medicine.Image != "string")
+                    //                    existing.Image = medicine.Image;
+
+                    //          // Numbers aur Dates ko update karein
+                    //          if (medicine.UnitPrice > 0) existing.UnitPrice = medicine.UnitPrice;
+                    //          if (medicine.Discount >= 0) existing.Discount = medicine.Discount;
+                    //          if (medicine.Quantity >= 0) existing.Quantity = medicine.Quantity;
+
+                    //          // Valid date check
+                    //          if (medicine.ExpiryDate != default) existing.ExpiryDate = medicine.ExpiryDate;
+
+                    //          // 4. Save Changes
                     //          dbcontext.SaveChanges();
-
                     //}
 
 
-                    public void UpdateMedicine(Medicine medicine)
+                    public void UpdateMedicine(Medicine updateMedicine)
                     {
-                              if (medicine == null)
+                              if (updateMedicine == null)
                               {
-                                        throw new ArgumentNullException(nameof(medicine), "Medicine data cannot be null.");
+                                        throw new ArgumentNullException(nameof(updateMedicine), "Medicine data cannot be null.");
                               }
 
-                              // 1. Database se pehle ka original data nikalen
-                              var existing = dbcontext.medicinesss.Find(medicine.id);
-                              if (existing == null)
+                              if (updateMedicine.id <= 0)
                               {
-                                        throw new KeyNotFoundException($"Medicine with ID {medicine.id} not found.");
+                                        throw new ArgumentNullException(nameof(updateMedicine.id), "Invalid Medicine ID provided.");
                               }
 
-                              // 2. UserId aur Status ko safe rakhein (Agar request me 0 aaye toh purana hi rehne dein)
-                              if (medicine.UserId > 0) existing.UserId = medicine.UserId;
+                              // 1. Check if the record actually exists in the database first
+                              var existingMedicine = dbcontext.medicinesss.Find(updateMedicine.id);
 
-                              // Sabse important: Agar status request me 0 hai aur purana status 1 tha, toh use 1 hi rehne dein
-                              // Taki list se data gayab na ho
-                              if (medicine.STATUS != 0)
+                              if (existingMedicine == null)
                               {
-                                        existing.STATUS = medicine.STATUS;
+                                        // Agar record nahi mila, toh yahin se exception throw kar do 
+                                        // aur aage ka code execute nahi hoga (matlab SaveChanges nahi chalega)
+                                        throw new KeyNotFoundException($"Medicine with ID {updateMedicine.id} was not found in the database.");
                               }
 
-                              // 3. Baaki fields ko tabhi update karein jab wo "string" ya empty na hon
-                              if (!string.IsNullOrEmpty(medicine.Name) && medicine.Name != "string")
-                                        existing.Name = medicine.Name;
+                              // 2. Explicitly map/update properties (Only update if record exists)
+                              existingMedicine.Name = updateMedicine.Name;
+                              existingMedicine.Manufacturer = updateMedicine.Manufacturer;
+                              existingMedicine.UnitPrice = updateMedicine.UnitPrice;
+                              existingMedicine.Quantity = updateMedicine.Quantity;
+                              existingMedicine.ExpiryDate = updateMedicine.ExpiryDate;
+                              existingMedicine.Image = updateMedicine.Image;
+                              existingMedicine.ItemMedicine = updateMedicine.ItemMedicine;
+                              existingMedicine.Type = updateMedicine.Type;
+                              existingMedicine.MedicinesType = updateMedicine.MedicinesType;
+                              existingMedicine.Discount = updateMedicine.Discount;
+                              existingMedicine.STATUS = updateMedicine.STATUS;
 
-                              if (!string.IsNullOrEmpty(medicine.Manufacturer) && medicine.Manufacturer != "string")
-                                        existing.Manufacturer = medicine.Manufacturer;
-
-                              if (!string.IsNullOrEmpty(medicine.MedicinesType) && medicine.MedicinesType != "string")
-                                        existing.MedicinesType = medicine.MedicinesType;
-
-                              if (!string.IsNullOrEmpty(medicine.ItemMedicine) && medicine.ItemMedicine != "string")
-                                        existing.ItemMedicine = medicine.ItemMedicine;
-
-                              if (!string.IsNullOrEmpty(medicine.Type) && medicine.Type != "string")
-                                        existing.Type = medicine.Type;
-
-                              if (!string.IsNullOrEmpty(medicine.Image) && medicine.Image != "string")
-                                        existing.Image = medicine.Image;
-
-                              // Numbers aur Dates ko update karein
-                              if (medicine.UnitPrice > 0) existing.UnitPrice = medicine.UnitPrice;
-                              if (medicine.Discount >= 0) existing.Discount = medicine.Discount;
-                              if (medicine.Quantity >= 0) existing.Quantity = medicine.Quantity;
-
-                              // Valid date check
-                              if (medicine.ExpiryDate != default) existing.ExpiryDate = medicine.ExpiryDate;
-
-                              // 4. Save Changes
+                              // 3. Save changes only when validation passes and record exists
                               dbcontext.SaveChanges();
                     }
-
-                    //public ResponseModel GetAllMedicine()
-                    //{
-                    //          ResponseModel response = new ResponseModel();
-
-                    //          // Fix: .ToLower() use karke grouping karein taaki Case-Sensitivity ka issue solve ho jaye
-                    //          var medicineList = dbcontext.medicinesss
-                    //                              .Where(m => m.STATUS == 1)
-                    //                              .AsEnumerable() // Memory mein lakar filter karne ke liye (Case-insensitive support)
-                    //                              .GroupBy(m => m.Name.Trim().ToLower())
-                    //                              .Select(g => g.First())
-                    //                              .ToList();
-
-                    //          if (medicineList != null && medicineList.Any())
-                    //          {
-                    //                    response.status = true;
-                    //                    response.responseMessage = "Success";
-                    //                    response.LSTmedicines = medicineList;
-                    //          }
-                    //          else
-                    //          {
-                    //                    response.status = false;
-                    //                    response.responseMessage = "No medicines found.";
-                    //          }
-
-                    //          return response;
-                    //}
-
-
-
-                    public ResponseModel GetAllMedicine()
+                    public List<Medicine> GetAllMedicine()
                     {
-                              ResponseModel response = new ResponseModel();
-
-                              var medicineList = dbcontext.medicinesss
-                                                          .Where(m => m.STATUS == 1)
-                                                          .AsEnumerable()
-                                                          .GroupBy(m => m.Name.Trim().ToLower())
-                                                          .Select(g => g.First())
-                                                          .ToList();
-
-                              // 👇 Har ek medicine ki image ke aage backend URL jodna taaki frontend par direct load ho sake
-                              foreach (var med in medicineList)
+                              try
                               {
-                                        if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("https"))
+                                        var medicineList = dbcontext.medicinesss
+                                                                    .Where(m => m.STATUS == 1)
+                                                                    .AsEnumerable()
+                                                                    .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                                                                    .Select(g => g.First())
+                                                                    .ToList();
+
+                                        // Har ek medicine ki image path ko format karna
+                                        foreach (var med in medicineList)
                                         {
-                                             //  med.Image = "http://localhost:5256" + med.Image; 
+                                                  if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("http") && !med.Image.StartsWith("https"))
+                                                  {
+                                                            // Agar path '/' se start nahi ho raha toh slash add karein
+                                                            if (!med.Image.StartsWith("/"))
+                                                            {
+                                                                      med.Image = "/" + med.Image;
+                                                            }
 
-                                                 med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                                                            // Backend URL prepend karna
+                                                            med.Image = "http://localhost:5256" + med.Image;
+                                                            med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                                                  }
                                         }
-                              }
 
-                              if (medicineList != null && medicineList.Any())
-                              {
-                                        response.status = true;
-                                        response.responseMessage = "Success";
-                                        response.LSTmedicines = medicineList;
+                                        return medicineList; // 👈 Directly List<Medicine> return ho rahi hai
                               }
-                              else
+                              catch (Exception ex)
                               {
-                                        response.status = false;
-                                        response.responseMessage = "No medicines found.";
+                                        // Agar error aaye toh empty list return karein ya log karein
+                                        Console.WriteLine("Error: " + ex.Message);
+                                        return new List<Medicine>();
                               }
-
-                              return response;
                     }
-                    //public List<Medicine> GetAllMedicine()
-                    //{
-                    //          var list = dbcontext.medicinesss.ToList();
-                    //          return list;
-                    //}
-
 
 
                     public ResponseModel GetUserSpecificMedicines(int loggedInUserId)

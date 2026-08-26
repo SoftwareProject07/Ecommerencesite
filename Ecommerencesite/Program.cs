@@ -143,9 +143,9 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-
-
 app.UseAuthorization();
+
+
 //app.UseStaticFiles(new StaticFileOptions
 //{
 //          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
@@ -166,8 +166,9 @@ app.UseStaticFiles(new StaticFileOptions
           RequestPath = "/uploads"
 });
 
-app.MapControllers();
 app.MapHub<TrackingHub>("/trackingHub");
+
+app.MapControllers();
 //app.UseStaticFiles(new StaticFileOptions
 //{
 //          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),

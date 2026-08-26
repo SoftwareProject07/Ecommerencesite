@@ -154,11 +154,11 @@ app.UseAuthorization();
 
 app.UseStaticFiles();
 
-//var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-//if (!Directory.Exists(uploadsPath))
-//{
-//          Directory.CreateDirectory(uploadsPath);//
-//}
+var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+if (!Directory.Exists(uploadsPath))
+{
+          Directory.CreateDirectory(uploadsPath);//
+}
 
 app.UseStaticFiles(new StaticFileOptions
 {

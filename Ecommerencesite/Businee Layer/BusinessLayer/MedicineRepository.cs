@@ -269,44 +269,106 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               // 3. Save changes only when validation passes and record exists
                               dbcontext.SaveChanges();
                     }
+                    //public List<Medicine> GetAllMedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var medicineList = dbcontext.medicinesss
+                    //                                                .Where(m => m.STATUS == 1)
+                    //                                                .AsEnumerable()
+                    //                                                .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                    //                                                .Select(g => g.First())
+                    //                                                .ToList();
+
+                    //                    // Har ek medicine ki image path ko format karna
+                    //                    foreach (var med in medicineList)
+                    //                    {
+                    //                              if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("http") && !med.Image.StartsWith("https"))// && !med.Image.StartsWith("https")
+                    //                              {
+                    //                                        // Agar path '/' se start nahi ho raha toh slash add karein
+                    //                                        if (!med.Image.StartsWith("/"))
+                    //                                        {
+                    //                                                  med.Image = "/" + med.Image;
+                    //                                        }
+
+                    //                                        // Backend URL prepend karna
+                    //                                     //   med.Image = "http://localhost:5256" + med.Image;
+                    //                                       med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                    //                              }
+                    //                    }
+
+                    //                    return medicineList; // 👈 Directly List<Medicine> return ho rahi hai
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    // Agar error aaye toh empty list return karein ya log karein
+                    //                    Console.WriteLine("Error: " + ex.Message);
+                    //                    return new List<Medicine>();
+                    //          }
+                    //}
+
+
                     public List<Medicine> GetAllMedicine()
                     {
                               try
                               {
                                         var medicineList = dbcontext.medicinesss
-                                                                    .Where(m => m.STATUS == 1)
-                                                                    .AsEnumerable()
-                                                                    .GroupBy(m => (m.Name ?? "").Trim().ToLower())
-                                                                    .Select(g => g.First())
-                                                                    .ToList();
+                                                                   .Where(m => m.STATUS == 1)
+                                                                   .AsEnumerable()
+                                                                   .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                                                                   .Select(g => g.First())
+                                                                   .ToList();
 
                                         // Har ek medicine ki image path ko format karna
                                         foreach (var med in medicineList)
                                         {
-                                                  if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("http") && !med.Image.StartsWith("https"))// && !med.Image.StartsWith("https")
+                                                  if (!string.IsNullOrEmpty(med.Image))
                                                   {
-                                                            // Agar path '/' se start nahi ho raha toh slash add karein
-                                                            if (!med.Image.StartsWith("/"))
+                                                            // Safety Check: Agar image base64 string ya bohot lambi string hai (jo ki file path nahi hai), toh use skip ya clear kar dein
+                                                            if (med.Image.StartsWith("data:image") || med.Image.Length > 300)
                                                             {
-                                                                      med.Image = "/" + med.Image;
+                                                                      // Agar base64 hai toh yahan handle kar sakte hain ya blank chhor sakte hain
+                                                                      continue;
                                                             }
 
-                                                            // Backend URL prepend karna
-                                                            med.Image = "http://localhost:5256" + med.Image;
-                                                           med.Image = "https://ecommerencesite.onrender.com" + med.Image;
+                                                            // Agar already http ya https se start ho raha hai toh koi change mat karo
+                                                            if (med.Image.StartsWith("http://") || med.Image.StartsWith("https://"))
+                                                            {
+                                                                      continue;
+                                                            }
+
+                                                            // Clean backslashes to forward slashes (Windows paths fix karne ke liye)
+                                                            string cleanImage = med.Image.Replace("\\", "/").Trim();
+
+                                                            // Agar path 'uploads/' se shuru ho raha hai toh use hata kar standard banayein
+                                                            if (cleanImage.StartsWith("uploads/"))
+                                                            {
+                                                                      cleanImage = cleanImage.Substring("uploads/".Length);
+                                                            }
+
+                                                            // Agar path '/' se start nahi ho raha toh slash add karein
+                                                            if (!cleanImage.StartsWith("/"))
+                                                            {
+                                                                      cleanImage = "/" + cleanImage;
+                                                            }
+
+                                                            // Final Base URL Prepend karna (uploads folder ke sath)
+                                                            med.Image = "https://ecommerencesite.onrender.com/uploads" + cleanImage;
+                                                  }
+                                                  else
+                                                  {
+                                                            med.Image = string.Empty;
                                                   }
                                         }
 
-                                        return medicineList; // 👈 Directly List<Medicine> return ho rahi hai
+                                        return medicineList;
                               }
                               catch (Exception ex)
                               {
-                                        // Agar error aaye toh empty list return karein ya log karein
                                         Console.WriteLine("Error: " + ex.Message);
                                         return new List<Medicine>();
                               }
                     }
-
 
                     public ResponseModel GetUserSpecificMedicines(int loggedInUserId)
                     {

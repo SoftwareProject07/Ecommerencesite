@@ -175,62 +175,6 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
 
 
-                    //public void UpdateMedicine(Medicine medicine)
-                    //{
-                    //          if (medicine == null)
-                    //          {
-                    //                    throw new ArgumentNullException(nameof(medicine), "Medicine data cannot be null.");
-                    //          }
-
-                    //          // 1. Database se pehle ka original data nikalen
-                    //          var existing = dbcontext.medicinesss.Find(medicine.id);
-                    //          if (existing == null)
-                    //          {
-                    //                    throw new KeyNotFoundException($"Medicine with ID {medicine.id} not found.");
-                    //          }
-
-                    //          // 2. UserId aur Status ko safe rakhein (Agar request me 0 aaye toh purana hi rehne dein)
-                    //          if (medicine.UserId > 0) existing.UserId = medicine.UserId;
-
-                    //          // Sabse important: Agar status request me 0 hai aur purana status 1 tha, toh use 1 hi rehne dein
-                    //          // Taki list se data gayab na ho
-                    //          if (medicine.STATUS != 0)
-                    //          {
-                    //                    existing.STATUS = medicine.STATUS;
-                    //          }
-
-                    //          // 3. Baaki fields ko tabhi update karein jab wo "string" ya empty na hon
-                    //          if (!string.IsNullOrEmpty(medicine.Name) && medicine.Name != "string")
-                    //                    existing.Name = medicine.Name;
-
-                    //          if (!string.IsNullOrEmpty(medicine.Manufacturer) && medicine.Manufacturer != "string")
-                    //                    existing.Manufacturer = medicine.Manufacturer;
-
-                    //          if (!string.IsNullOrEmpty(medicine.MedicinesType) && medicine.MedicinesType != "string")
-                    //                    existing.MedicinesType = medicine.MedicinesType;
-
-                    //          if (!string.IsNullOrEmpty(medicine.ItemMedicine) && medicine.ItemMedicine != "string")
-                    //                    existing.ItemMedicine = medicine.ItemMedicine;
-
-                    //          if (!string.IsNullOrEmpty(medicine.Type) && medicine.Type != "string")
-                    //                    existing.Type = medicine.Type;
-
-                    //          if (!string.IsNullOrEmpty(medicine.Image) && medicine.Image != "string")
-                    //                    existing.Image = medicine.Image;
-
-                    //          // Numbers aur Dates ko update karein
-                    //          if (medicine.UnitPrice > 0) existing.UnitPrice = medicine.UnitPrice;
-                    //          if (medicine.Discount >= 0) existing.Discount = medicine.Discount;
-                    //          if (medicine.Quantity >= 0) existing.Quantity = medicine.Quantity;
-
-                    //          // Valid date check
-                    //          if (medicine.ExpiryDate != default) existing.ExpiryDate = medicine.ExpiryDate;
-
-                    //          // 4. Save Changes
-                    //          dbcontext.SaveChanges();
-                    //}
-
-
                     public void UpdateMedicine(Medicine updateMedicine)
                     {
                               if (updateMedicine == null)
@@ -248,64 +192,31 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                               if (existingMedicine == null)
                               {
-                                        // Agar record nahi mila, toh yahin se exception throw kar do 
-                                        // aur aage ka code execute nahi hoga (matlab SaveChanges nahi chalega)
                                         throw new KeyNotFoundException($"Medicine with ID {updateMedicine.id} was not found in the database.");
                               }
 
-                              // 2. Explicitly map/update properties (Only update if record exists)
+                              // 2. Explicitly map/update properties
                               existingMedicine.Name = updateMedicine.Name;
                               existingMedicine.Manufacturer = updateMedicine.Manufacturer;
                               existingMedicine.UnitPrice = updateMedicine.UnitPrice;
                               existingMedicine.Quantity = updateMedicine.Quantity;
                               existingMedicine.ExpiryDate = updateMedicine.ExpiryDate;
-                              existingMedicine.Image = updateMedicine.Image;
+
+                              // 🔥 Image update logic: Agar frontend se nayi image string aayi hai toh hi update karein, warna purani retain rakhein
+                              if (!string.IsNullOrEmpty(updateMedicine.Image))
+                              {
+                                        existingMedicine.Image = updateMedicine.Image;
+                              }
+
                               existingMedicine.ItemMedicine = updateMedicine.ItemMedicine;
                               existingMedicine.Type = updateMedicine.Type;
                               existingMedicine.MedicinesType = updateMedicine.MedicinesType;
                               existingMedicine.Discount = updateMedicine.Discount;
                               existingMedicine.STATUS = updateMedicine.STATUS;
 
-                              // 3. Save changes only when validation passes and record exists
+                              // 3. Save changes
                               dbcontext.SaveChanges();
                     }
-                    //public List<Medicine> GetAllMedicine()
-                    //{
-                    //          try
-                    //          {
-                    //                    var medicineList = dbcontext.medicinesss
-                    //                                                .Where(m => m.STATUS == 1)
-                    //                                                .AsEnumerable()
-                    //                                                .GroupBy(m => (m.Name ?? "").Trim().ToLower())
-                    //                                                .Select(g => g.First())
-                    //                                                .ToList();
-
-                    //                    // Har ek medicine ki image path ko format karna
-                    //                    foreach (var med in medicineList)
-                    //                    {
-                    //                              if (!string.IsNullOrEmpty(med.Image) && !med.Image.StartsWith("http") && !med.Image.StartsWith("https"))// && !med.Image.StartsWith("https")
-                    //                              {
-                    //                                        // Agar path '/' se start nahi ho raha toh slash add karein
-                    //                                        if (!med.Image.StartsWith("/"))
-                    //                                        {
-                    //                                                  med.Image = "/" + med.Image;
-                    //                                        }
-
-                    //                                        // Backend URL prepend karna
-                    //                                     //   med.Image = "http://localhost:5256" + med.Image;
-                    //                                       med.Image = "https://ecommerencesite.onrender.com" + med.Image;
-                    //                              }
-                    //                    }
-
-                    //                    return medicineList; // 👈 Directly List<Medicine> return ho rahi hai
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    // Agar error aaye toh empty list return karein ya log karein
-                    //                    Console.WriteLine("Error: " + ex.Message);
-                    //                    return new List<Medicine>();
-                    //          }
-                    //}
 
 
                     public List<Medicine> GetAllMedicine()

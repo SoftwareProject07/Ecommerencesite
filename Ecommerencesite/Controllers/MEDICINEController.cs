@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using static System.Net.Mime.MediaTypeNames;
+using static Twilio.Rest.Intelligence.V3.ConfigurationResource;
 
 
 namespace Ecommerencesite.Controllers
@@ -132,60 +133,79 @@ namespace Ecommerencesite.Controllers
 
 
 
+                    //[HttpPut("UpdateMedicine")]
+                    //public IActionResult Update([FromBody] Medicine medicine)
+                    //{
+                    //          try
+                    //          {
+                    //                    // 1. Basic validation check
+                    //                    if (medicine == null || medicine.id <= 0)
+                    //                    {
+                    //                              return BadRequest(new ResponseModel
+                    //                              {
+                    //                                        status = false,
+                    //                                        responseMessage = "Invalid medicine data or ID provided."
+                    //                              });
+                    //                    }
+
+                    //                    // 2. Call the business logic method
+                    //                    imedicineresp.UpdateMedicine(medicine);
+
+                    //                    // 3. Return success response
+                    //                    return Ok(new ResponseModel
+                    //                    {
+                    //                              status = true,
+                    //                              responseMessage = "Medicine updated successfully."
+                    //                    });
+                    //          }
+                    //          catch (ArgumentNullException ex)
+                    //          {
+                    //                    return BadRequest(new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = ex.Message
+                    //                    });
+                    //          }
+                    //          catch (KeyNotFoundException ex)
+                    //          {
+                    //                    // Yahan NotFound() ki jagah hum proper ObjectResult return kar rahe hain 
+                    //                    // taaki ResponseModel ka structure har jagah ek jaisa (consistent) rahe
+                    //                    return StatusCode(404, new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = ex.Message
+                    //                    });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new ResponseModel
+                    //                    {
+                    //                              status = false,
+                    //                              responseMessage = $"An unexpected error occurred: {ex.Message}"
+                    //                    });
+                    //          }
+                    //}
+
+
+
+
                     [HttpPut("UpdateMedicine")]
-                    public IActionResult Update([FromForm] Medicine medicine)
+                    public IActionResult UpdateMedicine([FromBody] Medicine updateMedicine)
                     {
                               try
                               {
-                                        // 1. Basic validation check
-                                        if (medicine == null || medicine.id <= 0)
-                                        {
-                                                  return BadRequest(new ResponseModel
-                                                  {
-                                                            status = false,
-                                                            responseMessage = "Invalid medicine data or ID provided."
-                                                  });
-                                        }
-
-                                        // 2. Call the business logic method
-                                        imedicineresp.UpdateMedicine(medicine);
-
-                                        // 3. Return success response
-                                        return Ok(new ResponseModel
-                                        {
-                                                  status = true,
-                                                  responseMessage = "Medicine updated successfully."
-                                        });
-                              }
-                              catch (ArgumentNullException ex)
-                              {
-                                        return BadRequest(new ResponseModel
-                                        {
-                                                  status = false,
-                                                  responseMessage = ex.Message
-                                        });
+                                        imedicineresp.UpdateMedicine(updateMedicine);
+                                        return Ok(new { message = "Medicine updated successfully!" });
                               }
                               catch (KeyNotFoundException ex)
                               {
-                                        // Yahan NotFound() ki jagah hum proper ObjectResult return kar rahe hain 
-                                        // taaki ResponseModel ka structure har jagah ek jaisa (consistent) rahe
-                                        return StatusCode(404, new ResponseModel
-                                        {
-                                                  status = false,
-                                                  responseMessage = ex.Message
-                                        });
+                                        return NotFound(ex.Message);
                               }
                               catch (Exception ex)
                               {
-                                        return StatusCode(500, new ResponseModel
-                                        {
-                                                  status = false,
-                                                  responseMessage = $"An unexpected error occurred: {ex.Message}"
-                                        });
+                                        return BadRequest(ex.Message);
                               }
                     }
-
-
 
                     [HttpGet("AllListMedicineProduct")]
                     public List<Medicine> lstmedicine()

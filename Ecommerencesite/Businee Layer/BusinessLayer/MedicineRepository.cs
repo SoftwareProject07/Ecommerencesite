@@ -295,9 +295,9 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                                       cleanImage = "/" + cleanImage;
                                                             }
                                                               
-                                                           med.Image= "https://ecommerencesite.onrender.com/uploads" + cleanImage;
+                                                         med.Image= "https://ecommerencesite.onrender.com/uploads" + cleanImage;
 
-                                                              med.Image = "http://localhost:5256/uploads" + cleanImage;
+                                                           //   med.Image = "http://localhost:5256/uploads" + cleanImage;
                                                   }
                                                   else
                                                   {

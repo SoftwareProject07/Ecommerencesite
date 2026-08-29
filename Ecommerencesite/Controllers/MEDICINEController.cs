@@ -10,6 +10,8 @@ using static System.Net.Mime.MediaTypeNames;
 using static Twilio.Rest.Intelligence.V3.ConfigurationResource;
 
 
+
+
 namespace Ecommerencesite.Controllers
 {
           [Route("api/[controller]")]
@@ -31,14 +33,63 @@ namespace Ecommerencesite.Controllers
 
 
 
+                    //[HttpPost("CreateMedicine")]
+
+                    //public void CreateMedicineAsync([FromForm] Medicine medicine, IFormFile image)
+                    //{
+                    //          imedicineresp.CreateMedicineAsync(medicine, image);
+                    //}
+
+
                     [HttpPost("CreateMedicine")]
-
-                    public void CreateMedicineAsync([FromForm]Medicine medicine, IFormFile image)
+                    public async Task<IActionResult> CreateMedicine([FromForm] Medicine medicine, IFormFile image)
                     {
-                              imedicineresp.CreateMedicineAsync(medicine, image);
+                              if (!ModelState.IsValid)
+                              {
+                                        return BadRequest(ModelState);
+                              }
+
+                              await imedicineresp.CreateMedicineAsync(medicine, image);
+                              return Ok(new { message = "Medicine created successfully!" });
                     }
+                    //[HttpPost("CreateMedicine")]
+                    //public async Task<IActionResult> CreateMedicine([FromForm] Medicine model, IFormFile imageFile)
+                    //{
+                    //          try
+                    //          {
+                    //                    if (imageFile != null && imageFile.Length > 0)
+                    //                    {
+                    //                              // Folder path check karo
+                    //                              string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                    //                              if (!Directory.Exists(uploadsFolder))
+                    //                              {
+                    //                                        Directory.CreateDirectory(uploadsFolder);
+                    //                              }
 
+                    //                              // Unique file name banao
+                    //                              string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                    //                              string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
+                    //                              using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    //                              {
+                    //                                        await imageFile.CopyToAsync(fileStream);
+                    //                              }
+
+                    //                              // Database me sirf relative path save karo (e.g., "uploads/filename.jpg")
+                    //                              model.Image = "uploads/" + uniqueFileName;
+                    //                    }
+
+                    //                    // Database me save karne ka logic yahan likhein
+                    //                    // _context.medicinesss.Add(model);
+                    //                    // await _context.SaveChangesAsync();
+
+                    //                    return Ok(new { message = "Medicine created successfully", data = model });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, "Internal server error: " + ex.Message);
+                    //          }
+                    //}
 
                     [HttpDelete("DeleteMedicine/{id}")]
                     public IActionResult DeleteMedicine(int id)
@@ -88,103 +139,6 @@ namespace Ecommerencesite.Controllers
 
 
                     }
-
-
-                    //[HttpPut("UpdateMedicine")]
-                    //public IActionResult Update(Medicine medicine)
-                    //{
-                    //          try
-                    //          {
-                    //                    // Call the void business logic method
-                    //                    imedicineresp.UpdateMedicine(medicine);
-
-                    //                    // If it succeeds with no exceptions, return success
-                    //                    return Ok(new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Medicine updated successfully."
-                    //                    });
-                    //          }
-                    //          catch (ArgumentNullException ex)
-                    //          {
-                    //                    return BadRequest(new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = ex.Message
-                    //                    });
-                    //          }
-                    //          catch (KeyNotFoundException ex)
-                    //          {
-                    //                    return NotFound(new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = ex.Message
-                    //                    });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = $"An unexpected error occurred: {ex.Message}"
-                    //                    });
-                    //          }
-                    //}
-
-
-
-                    //[HttpPut("UpdateMedicine")]
-                    //public IActionResult Update([FromBody] Medicine medicine)
-                    //{
-                    //          try
-                    //          {
-                    //                    // 1. Basic validation check
-                    //                    if (medicine == null || medicine.id <= 0)
-                    //                    {
-                    //                              return BadRequest(new ResponseModel
-                    //                              {
-                    //                                        status = false,
-                    //                                        responseMessage = "Invalid medicine data or ID provided."
-                    //                              });
-                    //                    }
-
-                    //                    // 2. Call the business logic method
-                    //                    imedicineresp.UpdateMedicine(medicine);
-
-                    //                    // 3. Return success response
-                    //                    return Ok(new ResponseModel
-                    //                    {
-                    //                              status = true,
-                    //                              responseMessage = "Medicine updated successfully."
-                    //                    });
-                    //          }
-                    //          catch (ArgumentNullException ex)
-                    //          {
-                    //                    return BadRequest(new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = ex.Message
-                    //                    });
-                    //          }
-                    //          catch (KeyNotFoundException ex)
-                    //          {
-                    //                    // Yahan NotFound() ki jagah hum proper ObjectResult return kar rahe hain 
-                    //                    // taaki ResponseModel ka structure har jagah ek jaisa (consistent) rahe
-                    //                    return StatusCode(404, new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = ex.Message
-                    //                    });
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new ResponseModel
-                    //                    {
-                    //                              status = false,
-                    //                              responseMessage = $"An unexpected error occurred: {ex.Message}"
-                    //                    });
-                    //          }
-                    //}
 
 
 

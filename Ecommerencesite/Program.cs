@@ -143,8 +143,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-app.UseAuthorization();
 
+app.MapHub<TrackingHub>("/trackingHub");
 
 //app.UseStaticFiles(new StaticFileOptions
 //{
@@ -152,13 +152,33 @@ app.UseAuthorization();
 //          RequestPath = "/uploads"
 //});
 
-app.UseStaticFiles();
+
+//var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+//if (!Directory.Exists(uploadsPath))
+//{
+//          Directory.CreateDirectory(uploadsPath);//
+//}
+
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//          FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
+//          RequestPath = "/uploads"
+//});
 
 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 if (!Directory.Exists(uploadsPath))
 {
-          Directory.CreateDirectory(uploadsPath);//
+          Directory.CreateDirectory(uploadsPath);
 }
+
+// 2. Static files ke liye middleware configure karna
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//          FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+//        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
+//          RequestPath = "/uploads"
+//});
+
 
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -166,9 +186,13 @@ app.UseStaticFiles(new StaticFileOptions
           RequestPath = "/uploads"
 });
 
-app.MapHub<TrackingHub>("/trackingHub");
+app.UseStaticFiles();
 
+app.UseAuthorization();
 app.MapControllers();
+
+
+
 //app.UseStaticFiles(new StaticFileOptions
 //{
 //          FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),

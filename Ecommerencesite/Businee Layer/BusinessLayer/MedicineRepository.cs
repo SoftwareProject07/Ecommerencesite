@@ -24,84 +24,297 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     }
 
-      
 
 
 
-                    public void CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    //public void CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    //{
+                    //          try
+                    //          {
+                    //                    if (image != null && image.Length > 0)
+                    //                    {
+                    //                              // 1. Folder path define karein
+                    //                              string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+                    //                              if (!Directory.Exists(uploadsFolder))
+                    //                              {
+                    //                                        Directory.CreateDirectory(uploadsFolder);
+                    //                              }
+
+                    //                              // 2. Unique file name banayein taaki naam repeat na ho
+                    //                              string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
+                    //                              string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    //                              // 3. File ko server par save karein (Synchronous CopyTo use kiya hai)
+                    //                              using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    //                              {
+                    //                                        image.CopyTo(fileStream); // Note: CopyToAsync ki jagah CopyTo use hoga
+                    //                              }
+
+                    //                              // 4. Medicine model ke Image property mein relative path save karein--uploads
+                    //                              medicine.Image = $"/{uniqueFileName}";
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                              medicine.Image = null; // Agar image nahi aayi toh null
+                    //                    }
+
+                    //                    // Database mein data add aur save karna (Synchronous SaveChanges)
+                    //                    dbcontext.medicinesss.Add(medicine);
+                    //                    dbcontext.SaveChanges(); // Note: SaveChangesAsync ki jagah SaveChanges use hoga
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    // Agar void hai toh error handle karne ke liye Console ya Throw kar sakte hain
+                    //                    Console.WriteLine("Error: " + ex.Message);
+                    //                    throw;
+                    //          }
+                    //}
+
+                    //private async Task<string> UploadImageToImgBB(IFormFile image)
+                    //{
+                    //          try
+                    //          {
+                    //                    // 1. Root path mein 'uploads' folder ka path banayein
+                    //                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+
+                    //                    if (!Directory.Exists(uploadsFolder))
+                    //                    {
+                    //                              Directory.CreateDirectory(uploadsFolder);
+                    //                    }
+
+                    //                    // 2. Unique file name banayein taaki duplicate naam ki file clash na kare
+                    //                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
+                    //                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    //                    // 3. File ko server ki physical memory/folder mein copy karein
+                    //                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    //                    {
+                    //                              await image.CopyToAsync(fileStream);
+                    //                    }
+
+                    //                    // 4. Database ke liye sirf file ka naam ya relative path return karein
+                    //                    return uniqueFileName;
+                    //          }
+                    //          catch (Exception)
+                    //          {
+                    //                    return null;
+                    //          }
+                    //}
+
+
+
+                    //correct crate 
+
+                    // 1. Medicine Create / Add Method
+                    //public void  CreateMedicineAsync(Medicine medicine, IFormFile image)
+                    //{
+                    //          try
+                    //          {
+                    //                    if (image != null && image.Length > 0)
+                    //                    {
+                    //                              // wwwroot/uploads folder ka path banayein
+                    //                              string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+                    //                              if (!Directory.Exists(uploadsFolder))
+                    //                              {
+                    //                                        Directory.CreateDirectory(uploadsFolder);
+                    //                              }
+
+                    //                              // Unique file name banayein taaki naam repeat na ho
+                    //                              string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
+                    //                              string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    //                              // File ko server par save karein
+                    //                              using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    //                              {
+                    //                                         image.CopyToAsync(fileStream);
+                    //                              }
+
+                    //                              // Database mein relative path save karein
+                    //                              medicine.Image = "uploads/" + uniqueFileName;
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                              medicine.Image = string.Empty;
+                    //                    }
+
+                    //                    dbcontext.medicinesss.Add(medicine);
+                    //                     dbcontext.SaveChangesAsync();
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    Console.WriteLine("Error: " + ex.Message);
+                    //                    throw;
+                    //          }
+                    //}
+
+
+
+
+
+                    //single list --correct 
+
+
+                    //public List<Medicine> GetAllMedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var medicineList = dbcontext.medicinesss
+                    //                               .Where(m => m.STATUS == 1)
+                    //                               .AsEnumerable()
+                    //                               .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                    //                               .Select(g => g.First())
+                    //                               .ToList();
+
+                    //                    foreach (var med in medicineList)
+                    //                    {
+                    //                              if (!string.IsNullOrEmpty(med.Image))
+                    //                              {
+                    //                                        // Agar image Base64 string ya pehle se valid HTTP URL hai
+                    //                                        if (med.Image.StartsWith("data:image") || med.Image.Length > 500)
+                    //                                        {
+                    //                                                  continue;
+                    //                                        }
+
+                    //                                        if (med.Image.StartsWith("http://") || med.Image.StartsWith("https://"))
+                    //                                        {
+                    //                                                  // Agar URL me double 'uploads/uploads/' hai toh use single 'uploads/' me badlein
+                    //                                                  med.Image = med.Image.Replace("/uploads/uploads/", "/uploads/");
+                    //                                                  continue;
+                    //                                        }
+
+                    //                                        // Windows backslashes ko forward slashes me badlein
+                    //                                        string cleanImage = med.Image.Replace("\\", "/").Trim();
+
+                    //                                        // Saare extra 'uploads/' prefixes ko loop chala kar hata dein
+                    //                                        while (cleanImage.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase))
+                    //                                        {
+                    //                                                  cleanImage = cleanImage.Substring("uploads/".Length);
+                    //                                        }
+
+                    //                                        // Agar aage slash nahi hai toh laga dein
+                    //                                        if (!cleanImage.StartsWith("/"))
+                    //                                        {
+                    //                                                  cleanImage = "/" + cleanImage;
+                    //                                        }
+
+                    //                                        // Final single base URL ke sath combine karein
+                    //                                        med.Image = "https://ecommerencesite.onrender.com/uploads" + cleanImage;
+                    //                              }
+                    //                              else
+                    //                              {
+                    //                                        med.Image = string.Empty;
+                    //                              }
+                    //                    }
+
+                    //                    return medicineList;
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    Console.WriteLine("Error: " + ex.Message);
+                    //                    return new List<Medicine>();
+                    //          }
+                    //}
+
+                    public async Task CreateMedicineAsync(Medicine medicine, IFormFile image)
                     {
                               try
                               {
                                         if (image != null && image.Length > 0)
                                         {
-                                                  // 1. Folder path define karein
                                                   string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-
                                                   if (!Directory.Exists(uploadsFolder))
                                                   {
                                                             Directory.CreateDirectory(uploadsFolder);
                                                   }
 
-                                                  // 2. Unique file name banayein taaki naam repeat na ho
                                                   string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
                                                   string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                                                  // 3. File ko server par save karein (Synchronous CopyTo use kiya hai)
                                                   using (var fileStream = new FileStream(filePath, FileMode.Create))
                                                   {
-                                                            image.CopyTo(fileStream); // Note: CopyToAsync ki jagah CopyTo use hoga
+                                                            await image.CopyToAsync(fileStream);
                                                   }
 
-                                                  // 4. Medicine model ke Image property mein relative path save karein
-                                                  medicine.Image = $"/uploads/{uniqueFileName}";
+                                                  medicine.Image = "uploads/" + uniqueFileName;
                                         }
                                         else
                                         {
-                                                  medicine.Image = null; // Agar image nahi aayi toh null
+                                                  medicine.Image = string.Empty;
                                         }
 
-                                        // Database mein data add aur save karna (Synchronous SaveChanges)
                                         dbcontext.medicinesss.Add(medicine);
-                                        dbcontext.SaveChanges(); // Note: SaveChangesAsync ki jagah SaveChanges use hoga
+                                        await dbcontext.SaveChangesAsync();
                               }
                               catch (Exception ex)
                               {
-                                        // Agar void hai toh error handle karne ke liye Console ya Throw kar sakte hain
-                                        Console.WriteLine("Error: " + ex.Message);
+                                        string errorDetails = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                                        Console.WriteLine("Detailed Error: " + errorDetails);
                                         throw;
                               }
                     }
-                    
-                    private async Task<string> UploadImageToImgBB(IFormFile image)
+                    public List<Medicine> GetAllMedicine()
                     {
                               try
                               {
-                                        // 1. Root path mein 'uploads' folder ka path banayein
-                                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+                                        var medicineList = dbcontext.medicinesss
+                                                    .Where(m => m.STATUS == 1)
+                                                    .AsEnumerable()
+                                                    .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                                                    .Select(g => g.First())
+                                                    .ToList();
 
-                                        if (!Directory.Exists(uploadsFolder))
+                                        foreach (var med in medicineList)
                                         {
-                                                  Directory.CreateDirectory(uploadsFolder);
+                                                  if (!string.IsNullOrEmpty(med.Image))
+                                                  {
+                                                            if (med.Image.StartsWith("data:image") || med.Image.Length > 500)
+                                                            {
+                                                                      continue;
+                                                            }
+
+                                                            if (med.Image.StartsWith("http://") || med.Image.StartsWith("https://"))
+                                                            {
+                                                                      if (med.Image.Contains("/uploads/uploads/"))
+                                                                      {
+                                                                                med.Image = med.Image.Replace("/uploads/uploads/", "/uploads/");
+                                                                      }
+                                                                      continue;
+                                                            }
+
+                                                            string cleanImage = med.Image.Replace("\\", "/").Trim();
+
+                                                            while (cleanImage.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase))
+                                                            {
+                                                                      cleanImage = cleanImage.Substring("uploads/".Length);
+                                                            }
+
+                                                            if (!cleanImage.StartsWith("/"))
+                                                            {
+                                                                      cleanImage = "/" + cleanImage;
+                                                            }
+                                                              
+                                                           med.Image= "https://ecommerencesite.onrender.com/uploads" + cleanImage;
+
+                                                              med.Image = "http://localhost:5256/uploads" + cleanImage;
+                                                  }
+                                                  else
+                                                  {
+                                                            med.Image = string.Empty;
+                                                  }
                                         }
 
-                                        // 2. Unique file name banayein taaki duplicate naam ki file clash na kare
-                                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
-                                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                                        // 3. File ko server ki physical memory/folder mein copy karein
-                                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                                        {
-                                                  await image.CopyToAsync(fileStream);
-                                        }
-
-                                        // 4. Database ke liye sirf file ka naam ya relative path return karein
-                                        return uniqueFileName;
+                                        return medicineList;
                               }
-                              catch (Exception)
+                              catch (Exception ex)
                               {
-                                        return null;
+                                        Console.WriteLine("Error: " + ex.Message);
+                                        return new List<Medicine>();
                               }
                     }
+
+
 
                     public ResponseModel DeleteMedicine(int id)
                     {
@@ -219,68 +432,129 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
 
-                    public List<Medicine> GetAllMedicine()
-                    {
-                              try
-                              {
-                                        var medicineList = dbcontext.medicinesss
-                                                                   .Where(m => m.STATUS == 1)
-                                                                   .AsEnumerable()
-                                                                   .GroupBy(m => (m.Name ?? "").Trim().ToLower())
-                                                                   .Select(g => g.First())
-                                                                   .ToList();
+                    //public List<Medicine> GetAllMedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var medicineList = dbcontext.medicinesss
+                    //                                .Where(m => m.STATUS == 1)
+                    //                                .AsEnumerable()
+                    //                                .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                    //                                .Select(g => g.First())
+                    //                                .ToList();
 
-                                        // Har ek medicine ki image path ko format karna
-                                        foreach (var med in medicineList)
-                                        {
-                                                  if (!string.IsNullOrEmpty(med.Image))
-                                                  {
-                                                            // Safety Check: Agar image base64 string ya bohot lambi string hai (jo ki file path nahi hai), toh use skip ya clear kar dein
-                                                            if (med.Image.StartsWith("data:image") || med.Image.Length > 300)
-                                                            {
-                                                                      // Agar base64 hai toh yahan handle kar sakte hain ya blank chhor sakte hain
-                                                                      continue;
-                                                            }
+                    //                    // Har ek medicine ki image path ko format karna
+                    //                    foreach (var med in medicineList)
+                    //                    {
+                    //                              if (!string.IsNullOrEmpty(med.Image))
+                    //                              {
+                    //                                        // Safety Check: Agar image base64 string ya bohot lambi string hai, toh use skip kar dein taaki format na ho
+                    //                                        if (med.Image.StartsWith("data:image") || med.Image.Length > 500)
+                    //                                        {
+                    //                                                  continue;
+                    //                                        }
 
-                                                            // Agar already http ya https se start ho raha hai toh koi change mat karo
-                                                            if (med.Image.StartsWith("http://") || med.Image.StartsWith("https://"))
-                                                            {
-                                                                      continue;
-                                                            }
+                    //                                        // Agar already http ya https se start ho raha hai toh koi change mat karo
+                    //                                        if (med.Image.StartsWith("http://") || med.Image.StartsWith("https://"))
+                    //                                        {
+                    //                                                  continue;
+                    //                                        }
 
-                                                            // Clean backslashes to forward slashes (Windows paths fix karne ke liye)
-                                                            string cleanImage = med.Image.Replace("\\", "/").Trim();
+                    //                                        // Clean backslashes to forward slashes (Windows paths fix karne ke liye)
+                    //                                        string cleanImage = med.Image.Replace("\\", "/").Trim();
 
-                                                            // Agar path 'uploads/' se shuru ho raha hai toh use hata kar standard banayein
-                                                            if (cleanImage.StartsWith("uploads/"))
-                                                            {
-                                                                      cleanImage = cleanImage.Substring("uploads/".Length);
-                                                            }
+                    //                                        // Agar path 'uploads/' se shuru ho raha hai toh use hata kar standard banayein
+                    //                                        if (cleanImage.StartsWith("uploads/"))
+                    //                                        {
+                    //                                                  cleanImage = cleanImage.Substring("uploads/".Length);
+                    //                                        }
 
-                                                            // Agar path '/' se start nahi ho raha toh slash add karein
-                                                            if (!cleanImage.StartsWith("/"))
-                                                            {
-                                                                      cleanImage = "/" + cleanImage;
-                                                            }
+                    //                                        // Agar path '/' se start nahi ho raha toh slash add karein
+                    //                                        if (!cleanImage.StartsWith("/"))
+                    //                                        {
+                    //                                                  cleanImage = "/" + cleanImage;
+                    //                                        }
 
-                                                            // Final Base URL Prepend karna (uploads folder ke sath)
-                                                            med.Image = "https://ecommerencesite.onrender.com/uploads" + cleanImage;
-                                                  }
-                                                  else
-                                                  {
-                                                            med.Image = string.Empty;
-                                                  }
-                                        }
+                    //                                        // Final Base URL Prepend karna (uploads folder ke sath)
+                    //                                        med.Image = "https://ecommerencesite.onrender.com/uploads" + cleanImage;
+                    //                                        //   med.Image = "http://localhost:5256/uploads" + cleanImage;
 
-                                        return medicineList;
-                              }
-                              catch (Exception ex)
-                              {
-                                        Console.WriteLine("Error: " + ex.Message);
-                                        return new List<Medicine>();
-                              }
-                    }
+                    //                              }
+                    //                              else
+                    //                              {
+                    //                                        med.Image = string.Empty;
+                    //                              }
+                    //                    }
 
+                    //                    return medicineList;
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    Console.WriteLine("Error: " + ex.Message);
+                    //                    return new List<Medicine>();
+                    //          }
+                    //}
+
+
+               //     public List<Medicine> GetAllMedicine()
+                    //{
+                    //          try
+                    //          {
+                    //                    var medicineList = dbcontext.medicinesss
+                    //                                .Where(m => m.STATUS == 1)
+                    //                                .AsEnumerable()
+                    //                                .GroupBy(m => (m.Name ?? "").Trim().ToLower())
+                    //                                .Select(g => g.First())
+                    //                                .ToList();
+
+                    //                    foreach (var med in medicineList)
+                    //                    {
+                    //                              if (!string.IsNullOrEmpty(med.Image))
+                    //                              {
+                    //                                        // Agar image Base64 string hai ya pehle se sahi HTTP URL hai
+                    //                                        if (med.Image.StartsWith("data:image") || med.Image.Length > 300 ||
+                    //                                            med.Image.StartsWith("http://") || med.Image.StartsWith("https://"))
+                    //                                        {
+                    //                                                  // Agar URL me double uploads/ hai toh use ek me fix karein
+                    //                                                  if (med.Image.Contains("/uploads/uploads/"))
+                    //                                                  {
+                    //                                                            med.Image = med.Image.Replace("/uploads/uploads/", "/uploads/");
+                    //                                                  }
+                    //                                                  continue;
+                    //                                        }
+
+                    //                                        // Backslashes ko forward slashes me badlein
+                    //                                        string cleanImage = med.Image.Replace("\\", "/").Trim();
+
+                    //                                        // Jitne bhi extra 'uploads/' ya path prefix hain unhe hata dein
+                    //                                        while (cleanImage.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase))
+                    //                                        {
+                    //                                                  cleanImage = cleanImage.Substring("uploads/".Length);
+                    //                                        }
+
+                    //                                        // Aage slash ensure karein
+                    //                                        if (!cleanImage.StartsWith("/"))
+                    //                                        {
+                    //                                                  cleanImage = "/" + cleanImage;
+                    //                                        }
+
+                    //                                        // Final Base URL ke sath set karein
+                    //                                        med.Image = "https://ecommerencesite.onrender.com/uploads" + cleanImage;
+                    //                              }
+                    //                              else
+                    //                              {
+                    //                                        med.Image = string.Empty;
+                    //                              }
+                    //                    }
+
+                    //                    return medicineList;
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    Console.WriteLine("Error: " + ex.Message);
+                    //                    return new List<Medicine>();
+                    //          }
+                    //}
                     public ResponseModel GetUserSpecificMedicines(int loggedInUserId)
                     {
                               ResponseModel response = new ResponseModel();
@@ -398,7 +672,7 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return await dbcontext.SaveChangesAsync();
                     }
 
-                  
+                 
           }
 }
 

@@ -411,9 +411,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               // 2. Explicitly map/update properties
                               existingMedicine.Name = updateMedicine.Name;
                               existingMedicine.Manufacturer = updateMedicine.Manufacturer;
+                              existingMedicine.ONlyMgMEDICINE = updateMedicine.ONlyMgMEDICINE;
                               existingMedicine.UnitPrice = updateMedicine.UnitPrice;
                               existingMedicine.Quantity = updateMedicine.Quantity;
                               existingMedicine.ExpiryDate = updateMedicine.ExpiryDate;
+
 
                               // 🔥 Image update logic: Agar frontend se nayi image string aayi hai toh hi update karein, warna purani retain rakhein
                               if (!string.IsNullOrEmpty(updateMedicine.Image))
@@ -617,11 +619,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                                             Discount = decimal.TryParse(worksheet.Cells[row, 4].Value?.ToString(), out decimal discount) ? discount : 0.00m,
                                                             Quantity = int.TryParse(worksheet.Cells[row, 5].Value?.ToString(), out int qty) ? qty : 100,
                                                             ExpiryDate = worksheet.Cells[row, 6].Value?.ToString()?.Trim() ?? "01/12/2029",
-                                                            Image = worksheet.Cells[row, 7].Value?.ToString()?.Trim() ?? "",
                                                             STATUS = int.TryParse(worksheet.Cells[row, 8].Value?.ToString(), out int status) ? status : 1,
                                                             MedicinesType = worksheet.Cells[row, 9].Value?.ToString()?.Trim() ?? "Tablet",
                                                             ItemMedicine = worksheet.Cells[row, 10].Value?.ToString()?.Trim() ?? "General",
-                                                            Type = worksheet.Cells[row, 11].Value?.ToString()?.Trim() ?? "General"
+                                                            Type = worksheet.Cells[row, 11].Value?.ToString()?.Trim() ?? "General",
+                                                            ONlyMgMEDICINE= worksheet.Cells[row, 12].Value?.ToString()?.Trim() ?? " ",
+                                                            Image = worksheet.Cells[row, 7].Value?.ToString()?.Trim() ?? "",
+
                                                   };
 
                                                   medicinesList.Add(medicine);

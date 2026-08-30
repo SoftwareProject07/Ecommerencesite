@@ -15,7 +15,11 @@ namespace Ecommerencesite.Model
 
                     public string? Name { get; set; } = null; // medicine name 
                     public string? Manufacturer { get; set; } = null;
+
+
+                    public string? ONlyMgMEDICINE { get; set; } = null;
                     [Column(TypeName = "decimal(18,2)")]
+
 
                     public Decimal? UnitPrice { get; set; }          = null;
                     public Decimal? Discount { get; set; } = null;

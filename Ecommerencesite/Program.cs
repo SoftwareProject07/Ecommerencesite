@@ -3,6 +3,7 @@
 
 
 
+using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
@@ -118,6 +119,7 @@ builder.Services.AddScoped<IHiringServiceRepository, HiringServiceRepository>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<IState_CityNameRepository, State_CityNameRepository>();
 builder.Services.AddScoped<ICustomerAccountantAccountRepository, CustomerAccountantAccountRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSignalR();

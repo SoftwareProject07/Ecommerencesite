@@ -1,10 +1,12 @@
-﻿using Ecommerencesite.Businee_Layer.BusinessLayer;
+﻿using Ecommerencesite.Businee_Layer.BusineeLayer;
+using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Ecommerencesite.MODELDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Ecommerencesite.Controllers
@@ -16,10 +18,12 @@ namespace Ecommerencesite.Controllers
                     private readonly Ecommerecewebstedatabase _context;
                     private readonly IHttpClientFactory _httpClientFactory;
                     private readonly string _googleApiKey = "YOUR_GOOGLE_MAPS_API_KEY";
-                    public OrderAPIController(Ecommerecewebstedatabase context, IHttpClientFactory httpClientFactory)
+                    public readonly IOrderRepository _iorderRepository;
+                    public OrderAPIController(Ecommerecewebstedatabase context, IHttpClientFactory httpClientFactory,IOrderRepository iorderrespository)
                     {
                          this.     _context = context;
                          this.     _httpClientFactory = httpClientFactory;
+                             this. _iorderRepository = iorderrespository;       
                     }
                     [HttpPost("place-order")]
                     public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderDto dto)
@@ -63,6 +67,50 @@ namespace Ecommerencesite.Controllers
 
                               return Ok(new { success = true, message = "Order placed successfully", orderId = order.id, distance = distanceKm, eta = durationText });
                     }
-                   
+                    [HttpGet("AllOrderItem")]
+                    public List<OrderItem> Listorderitem()
+                    {
+                              var listorderitem = _iorderRepository.Listorderitem().ToList();
+                              return listorderitem;
+                    }
+                    [HttpGet("AllOrder")]
+                    public List<Order> ListOrder()
+                    {
+                              var listorder = _iorderRepository.ListOrder().ToList();
+                              return listorder;
+                    }
+
+                    [HttpPost("CreateOrder")]
+                    public void CreateOrder(Order order)
+                    {
+                              _iorderRepository.CreateOrder(order);   
+                    }
+
+
+                    // GET: api/orders
+                    //[HttpGet("AllOrder")]
+                    //public async Task<ActionResult<IEnumerable<Order>>> ListOrder()
+                    //{
+                    //          var orders = await _context.orderss
+                    //              .Include(o => o.orderItemss) // Saare order items load karega
+                    //              .Include(o => o.User)       // User details
+                    //              .Include(o => o.Address)    // Delivery address details
+                    //              .ToListAsync();
+
+                    //          return Ok(orders);
+                    //}
+
+                    //// GET: api/orders/items
+                    //[HttpGet("AllOrderItem")]
+                    //public async Task<ActionResult<IEnumerable<OrderItem>>> Listorderitem()
+                    //{
+                    //          var orderItems = await _context.orderItemss
+                    //              .Include(oi => oi.Order)    // Parent order details
+                    //              .ToListAsync();
+
+                    //          return Ok(orderItems);
+                    //}
+
+
           }
 }

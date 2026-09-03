@@ -17,6 +17,18 @@ namespace Ecommerencesite.Database
                     public DbSet<Cart> cartss { get; set; }
                     public DbSet<Order> orderss { get; set; }
                     public DbSet<OrderItem> orderItemss{ get; set; }
+
+                    protected override void OnModelCreating(ModelBuilder modelBuilder)
+                    {
+                              base.OnModelCreating(modelBuilder);
+
+                              // Explicit relationship configuration (Optional since data annotations are already used)
+                              modelBuilder.Entity<Order>()
+                                  .HasMany(o => o.orderItemss)
+                                  .WithOne(oi => oi.Order)
+                                  .HasForeignKey(oi => oi.OrderId)
+                                  .OnDelete(DeleteBehavior.Cascade);
+                    }
                     public DbSet<Medicine> medicinesss { get; set; }
                     public DbSet<UserMedicine> userMediciness { get; set; }//User 
                     public DbSet<Medicationgetmodel> Medications { get; set; }

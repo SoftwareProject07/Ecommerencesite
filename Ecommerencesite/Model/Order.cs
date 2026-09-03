@@ -6,27 +6,7 @@ namespace Ecommerencesite.Model
 {
           public class Order
           {
-                    //[Key]
-                    //public int id { get; set; }
-                    //[Required]
-
-                    //public int UserId { get; set; }
-                    //[Required]
-                    //[MaxLength(50)]
-                    //public string? OrderNumber { get; set; } = null;
-                    //[Column(TypeName = "decimal(18,2)")]
-
-                    //public Decimal? Ordertotal { get; set; } = null;
-                    //// ❌ DateTime OrderStatus galat hai
-                    //// ✅ Status + Date alag rakho
-                    //[Required]
-                    //public string OrderStatus { get; set; }   // Pending, Paid, Shipped
-
-                    //public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-                    //// 🔗 Relation (optional but recommended)
-                    //[ForeignKey("UserId")]
-                    //public UserMedicine User { get; set; }
+                    
 
 
 
@@ -71,7 +51,7 @@ namespace Ecommerencesite.Model
                     public string? EstimatedTime { get; set; } // ETA (jaise "15 mins")
 
                     // 🔗 Relation with OrderItems (Aapka pehle wala model)
-                    public ICollection<OrderItem> OrderItems { get; set; }
+                    public ICollection<OrderItem> orderItemss { get; set; }
 
           }
 }

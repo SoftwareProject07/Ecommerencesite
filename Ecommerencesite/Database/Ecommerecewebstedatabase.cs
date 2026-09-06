@@ -28,7 +28,17 @@ namespace Ecommerencesite.Database
                                   .WithOne(oi => oi.Order)
                                   .HasForeignKey(oi => oi.OrderId)
                                   .OnDelete(DeleteBehavior.Cascade);
+
+
+
+        //                      modelBuilder.Entity<Order>()
+        //.HasMany(o => o.orderItemss)
+        //.WithOne(i => i.Order)
+        //.HasForeignKey(i => i.OrderId);
                     }
+
+
+
                     public DbSet<Medicine> medicinesss { get; set; }
                     public DbSet<UserMedicine> userMediciness { get; set; }//User 
                     public DbSet<Medicationgetmodel> Medications { get; set; }

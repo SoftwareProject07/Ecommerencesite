@@ -32,6 +32,12 @@ builder.Services.AddCors(options =>
 });
 
 
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//              options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//    });
+
 //// 1. CORS Policy mein dono URLs add karein
 //builder.Services.AddCors(options => {
 //          //AllowAll

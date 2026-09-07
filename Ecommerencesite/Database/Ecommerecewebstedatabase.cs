@@ -31,10 +31,10 @@ namespace Ecommerencesite.Database
 
 
 
-        //                      modelBuilder.Entity<Order>()
-        //.HasMany(o => o.orderItemss)
-        //.WithOne(i => i.Order)
-        //.HasForeignKey(i => i.OrderId);
+                              modelBuilder.Entity<Order>()
+        .HasMany(o => o.orderItemss)
+        .WithOne(i => i.Order)
+        .HasForeignKey(i => i.OrderId);
                     }
 
 

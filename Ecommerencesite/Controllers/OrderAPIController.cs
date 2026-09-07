@@ -53,7 +53,7 @@ namespace Ecommerencesite.Controllers
                               var order = new Order
                               {
                                         UserId = int.Parse(dto.UserId),
-                                        OrderNumber = "ORD-" + new Random().Next(100000, 999999),
+                                        OrderNumber = "#" + new Random().Next(100000, 999999),
                                         AddressId = dto.AddressId,
                                         StoreId = 1,
                                         Ordertotal = dto.TotalAmount,
@@ -61,6 +61,15 @@ namespace Ecommerencesite.Controllers
                                         DistanceInKm = distanceKm,
                                         EstimatedTime = durationText,
                                         CreatedAt = DateTime.UtcNow
+
+                                        //OrderNumber = dto.ordernu,
+                                        //OrderStatus = o.OrderStatus,
+                                        //Ordertotal = order.or, // Model ke mutabiq 'Ordertotal'
+                                        //PaymentMode = o.PaymentMode, // Ab error nahi aayega
+                                        //AddressId = o.AddressId,
+                                        //StoreId = o.StoreId,
+                                        //CreatedAt = o.CreatedAt,
+                                        //Address = o.Address,
                               };
 
                               _context.orderss.Add(order);
@@ -114,7 +123,7 @@ namespace Ecommerencesite.Controllers
                                         }
 
                                         var result = listorder.Select(o => new {
-                                                  Id = o.id,
+                                                //  Id = o.id,
                                                   OrderNumber = o.OrderNumber,
                                                   OrderStatus = o.OrderStatus,
                                                   OrderTotal = o.Ordertotal, // Model ke mutabiq 'Ordertotal'

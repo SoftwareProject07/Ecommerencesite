@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="uploads\" />
+    <Folder Include="uploads\qrcodes\" />
     <Folder Include="wwwroot\uploads\medicines\" />
   </ItemGroup>
 

@@ -12,11 +12,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               this._ecommerecewebstedatabase= ecommerecewebstedatabase;
                     }
 
-                    public void AddQRCashCodeModels(QRCashCodeModels qRCashCodeModels)
-                    {
-                           _ecommerecewebstedatabase.qRCashCodeModelss.Add(qRCashCodeModels);
-                              _ecommerecewebstedatabase.SaveChanges();
-                    }
+                    //public void AddQRCashCodeModels(QRCashCodeModels qRCashCodeModels)
+                    //{
+                    //       _ecommerecewebstedatabase.qRCashCodeModelss.Add(qRCashCodeModels);
+                    //          _ecommerecewebstedatabase.SaveChanges();
+                    //}
 
                     public QRCashCodeModels DeleteQRCashCodeModels(int id)
                     {
@@ -29,6 +29,11 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                               return qRCashCodeModels;
                     }
 
+                    public async Task<QRCashCodeModels?> GetQRCodeByIdAsync(int id)
+                    {
+                              return await _ecommerecewebstedatabase.qRCashCodeModelss.FindAsync(id);
+                    }
+
                     public List<QRCashCodeModels> listqucasehmodel()
                     {
                             var list= _ecommerecewebstedatabase.qRCashCodeModelss.ToList();
@@ -39,6 +44,39 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     {
                             _ecommerecewebstedatabase.qRCashCodeModelss.Update(qRCashCodeModels);
                               _ecommerecewebstedatabase.SaveChanges();
+                    }
+
+                    public async Task<QRCashCodeModels> UploadQRCodeAsync(IFormFile file, string webRootPath)
+                    {
+                              if (file == null || file.Length == 0)
+                                        throw new ArgumentException("Invalid file.");
+
+                              // Define folder path: wwwroot/uploads/qrcodes
+                              var uploadsFolder = Path.Combine(webRootPath, "uploads", "qrcodes");
+                              if (!Directory.Exists(uploadsFolder))
+                              {
+                                        Directory.CreateDirectory(uploadsFolder);
+                              }
+
+                              // Generate unique file name to prevent overwriting
+                              var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                              var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                              using (var fileStream = new FileStream(filePath, FileMode.Create))
+                              {
+                                        await file.CopyToAsync(fileStream);
+                              }
+
+                              // Save relative path to database
+                              var qrCodeModel = new QRCashCodeModels
+                              {
+                                        QRCodeImageUrl = $"/uploads/qrcodes/{uniqueFileName}"
+                              };
+
+                              object value = _ecommerecewebstedatabase.qRCashCodeModelss.Add(qrCodeModel);
+                              await _ecommerecewebstedatabase.SaveChangesAsync();
+
+                              return qrCodeModel;
                     }
           }
 }

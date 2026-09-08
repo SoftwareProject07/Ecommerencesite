@@ -24,7 +24,7 @@ namespace Ecommerencesite.Database
 
                               // Explicit relationship configuration (Optional since data annotations are already used)
                               modelBuilder.Entity<Order>()
-                                  .HasMany(o => o.orderItemss)
+                                  .HasMany(o => o.OrderItemss)
                                   .WithOne(oi => oi.Order)
                                   .HasForeignKey(oi => oi.OrderId)
                                   .OnDelete(DeleteBehavior.Cascade);
@@ -32,7 +32,7 @@ namespace Ecommerencesite.Database
 
 
                               modelBuilder.Entity<Order>()
-        .HasMany(o => o.orderItemss)
+        .HasMany(o => o.OrderItemss)
         .WithOne(i => i.Order)
         .HasForeignKey(i => i.OrderId);
                     }

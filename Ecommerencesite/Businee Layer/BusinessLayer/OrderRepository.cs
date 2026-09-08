@@ -14,23 +14,23 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     }
 
-                    public void CreateOrder(Order order)
-                    {
-                              _context.orderss.Add(order);
-                              _context.SaveChanges();
-                    }
+                    //public void CreateOrder(Order order)
+                    //{
+                    //          _context.orderss.Add(order);
+                    //          _context.SaveChanges();
+                    //}
 
                     // 1. ALL ORDERS / SEARCHING FUNCTION
                     public async Task<IEnumerable<Order>> GetAllOrSearchOrdersAsync(string searchQuery)
                     {
                               var query = _context.orderss
-                                  .Include(o => o.orderItemss) // Ensure navigation property matches your model
+                                  .Include(o => o.OrderItemss) // Ensure navigation property matches your model
                                   .AsQueryable();
 
                               if (!string.IsNullOrEmpty(searchQuery))
                               {
                                         query = query.Where(o =>
-                                            o.id.ToString().Contains(searchQuery) ||
+                                            o.Id.ToString().Contains(searchQuery) ||
                                             o.OrderStatus.Contains(searchQuery)
                                         );
                               }
@@ -42,8 +42,8 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     public async Task<Order> GetOrderDetailsByIdAsync(int orderId)
                     {
                               return await _context.orderss
-                                  .Include(o => o.orderItemss)
-                                  .FirstOrDefaultAsync(o => o.id == orderId);
+                                  .Include(o => o.OrderItemss)
+                                  .FirstOrDefaultAsync(o => o.Id == orderId);
                     }
 
                     // 3. UPDATE FUNCTION
@@ -67,13 +67,13 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     public async Task<bool> DeleteOrderAsync(int orderId)
                     {
                               var order = await _context.orderss
-                                  .Include(o => o.orderItemss)
-                                  .FirstOrDefaultAsync(o => o.id == orderId);
+                                  .Include(o => o.OrderItemss)
+                                  .FirstOrDefaultAsync(o => o.Id == orderId);
 
                               if (order == null) return false;
 
                               // Optional: Remove associated order items first if cascade delete isn't configured in DB
-                              _context.orderItemss.RemoveRange(order.orderItemss);
+                              _context.orderItemss.RemoveRange(order.OrderItemss);
                               _context.orderss.Remove(order);
 
                               await _context.SaveChangesAsync();
@@ -81,33 +81,46 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                     }
 
                     // 1. Get all orders with their respective OrderItems included
+
+
                     //public List<Order> ListOrder()
                     //{
                     //          return _context.orderss
-                    //              .Include(o => o.orderItemss) // Ye order ke andar ke sabhi items le aayega
-                    //              .Include(o => o.User)       // Optional: User details lane ke liye
-                    //              .Include(o => o.Address)    // Optional: Delivery address lane ke liye
+                    //              .Include(o => o.orderItemss)
+                    //              .Include(o => o.User)
+                    //              .Include(o => o.Address)
                     //              .ToList();
                     //}
 
-                    //// 2. Get all individual order items
                     //public List<OrderItem> Listorderitem()
                     //{
                     //          return _context.orderItemss
-                    //              .Include(oi => oi.Order)    // Optional: Item ke sath parent order ki details ke liye
+                    //              .Include(oi => oi.Order)
                     //              .ToList();
                     //}
 
 
-                    public List<Order> ListOrder()
-                    {
-                              return _context.orderss
-                                  .Include(o => o.orderItemss)
-                                  .Include(o => o.User)
-                                  .Include(o => o.Address)
-                                  .ToList();
-                    }
 
+
+
+                    // --- Repository Methods ---
+
+                    //public List<Order> ListOrder()
+                    //{
+                    //          return _context.orderss
+                    //              .Include(o => o.OrderItemss)
+                    //              .Include(o => o.User)
+                    //              .Include(o => o.Address)
+                    //              .ToList();
+                    //}
+
+                    public IEnumerable<Order> ListOrder()
+                    {
+                              // Sirf OrderItemss ko include karein, User ya Address ko nahi
+                              return _context.orderss
+                                             .Include(o => o.OrderItemss)
+                                             .ToList();
+                    }
                     public List<OrderItem> Listorderitem()
                     {
                               return _context.orderItemss
@@ -115,9 +128,10 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
                                   .ToList();
                     }
 
-                    //public Task<bool> UpdateOrderAsync(int orderId, Order updatedOrderDto)
-                    //{
-                    //          throw new NotImplementedException();
-                    //}
+                    public void CreateOrder(Order order)
+                    {
+                              _context.orderss.Add(order);
+                              _context.SaveChanges();
+                    }
           }
 }

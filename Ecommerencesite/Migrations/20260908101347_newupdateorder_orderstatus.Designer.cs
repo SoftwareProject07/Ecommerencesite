@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260908101347_newupdateorder_orderstatus")]
+    partial class newupdateorder_orderstatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -621,7 +624,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("Ordertotal")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<string>("PaymentMode")
                         .IsRequired()
@@ -635,6 +638,8 @@ namespace Ecommerencesite.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("orderss");
                 });
 
@@ -647,7 +652,7 @@ namespace Ecommerencesite.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<int>("MedicineId")
                         .HasColumnType("integer");
@@ -659,10 +664,10 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Totalprice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -750,9 +755,26 @@ namespace Ecommerencesite.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QRcashcodeid"));
 
-                    b.Property<string>("QRCodeImageUrl")
-                        .IsRequired()
+                    b.Property<string>("BankName")
                         .HasColumnType("text");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("QRcashcode")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("TOTALAMOUNT")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("itemprice")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("totalitem")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("totalquantity")
+                        .HasColumnType("double precision");
 
                     b.HasKey("QRcashcodeid");
 
@@ -1044,6 +1066,17 @@ namespace Ecommerencesite.Migrations
                     b.HasKey("TicketId");
 
                     b.ToTable("CustomerTicketRaise");
+                });
+
+            modelBuilder.Entity("Ecommerencesite.Model.Order", b =>
+                {
+                    b.HasOne("Ecommerencesite.Model.UserMedicine", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.OrderItem", b =>

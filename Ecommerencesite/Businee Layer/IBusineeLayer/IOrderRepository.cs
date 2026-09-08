@@ -6,7 +6,7 @@ namespace Ecommerencesite.Businee_Layer.BusineeLayer
           {
                     // public ResponseModel AddToCART(Cart cartsorder);
                     public List<OrderItem> Listorderitem();
-                    public List<Order> ListOrder();
+                    public IEnumerable<Order> ListOrder();
                     public void  CreateOrder(Order order);
 
 

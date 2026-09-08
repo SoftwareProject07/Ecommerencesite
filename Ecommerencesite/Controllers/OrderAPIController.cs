@@ -26,12 +26,16 @@ namespace Ecommerencesite.Controllers
                               this._httpClientFactory = httpClientFactory;
                               this._iorderRepository = iorderrespository;
                     }
+             
+
                     [HttpPost("place-order")]
                     public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderDto dto)
                     {
+                              // 1. Address validate karein
                               var address = await _context.deliverypartnermodels.FindAsync(dto.AddressId);
                               if (address == null) return NotFound("Address not found");
 
+                              // 2. Store coordinates aur Google Maps API call
                               decimal storeLat = 28.5355m;
                               decimal storeLng = 77.3910m;
 
@@ -40,16 +44,17 @@ namespace Ecommerencesite.Controllers
 
                               var response = await client.GetFromJsonAsync<GoogleDirectionsResponse>(url);
 
-                              decimal distanceKm = 0;
+                              decimal distanceKms = 0;
                               string durationText = "15 mins";
 
                               if (response?.routes != null && response.routes.Count > 0)
                               {
                                         var leg = response.routes[0].legs[0];
-                                        distanceKm = (decimal)(leg.distance.value / 1000.0);
+                                        distanceKms = (decimal)(leg.distance.value / 1000.0);
                                         durationText = leg.duration.text;
                               }
 
+                              // 3. Order object create karein (explicit casting ke sath taaki type mismatch error na aaye)
                               var order = new Order
                               {
                                         UserId = int.Parse(dto.UserId),
@@ -58,58 +63,42 @@ namespace Ecommerencesite.Controllers
                                         StoreId = 1,
                                         Ordertotal = dto.TotalAmount,
                                         OrderStatus = "Dispatched",
-                                        DistanceInKm = distanceKm,
+                                        DistanceInKm = (double)distanceKms, // Agar model me double hai toh cast kiya gaya hai
                                         EstimatedTime = durationText,
-                                        CreatedAt = DateTime.UtcNow
+                                        CreatedAt = DateTime.UtcNow,
+                                        PaymentMode = string.IsNullOrEmpty(dto.PaymentMode) ? "COD" : dto.PaymentMode,
 
-                                        //OrderNumber = dto.ordernu,
-                                        //OrderStatus = o.OrderStatus,
-                                        //Ordertotal = order.or, // Model ke mutabiq 'Ordertotal'
-                                        //PaymentMode = o.PaymentMode, // Ab error nahi aayega
-                                        //AddressId = o.AddressId,
-                                        //StoreId = o.StoreId,
-                                        //CreatedAt = o.CreatedAt,
-                                        //Address = o.Address,
+                                        // Order Items mapping (ensure karein ki DTO me Items list maujood ho)
+                                        OrderItemss = dto.Items?.Select(i => new OrderItem
+                                        {
+                                                  MedicineId = i.MedicineId,
+                                                  UnitPrice = i.UnitPrice,
+                                                  Discount = i.Discount,
+                                                  Quantity = i.Quantity,
+                                                  Totalprice = (i.UnitPrice - i.Discount) * i.Quantity
+                                        }).ToList()
                               };
 
+                              // 4. Database me save karein
                               _context.orderss.Add(order);
                               await _context.SaveChangesAsync();
 
-                              return Ok(new { success = true, message = "Order placed successfully", orderId = order.id, distance = distanceKm, eta = durationText });
+                              // 5. Success response return karein
+                              return Ok(new
+                              {
+                                        success = true,
+                                        message = "Order placed successfully",
+                                        orderId = order.Id,
+                                        orderNumber = order.OrderNumber,
+                                        distance = distanceKms,
+                                        eta = durationText
+                              });
                     }
-                    //[HttpGet("AllOrderItem")]
-                    //public List<OrderItem> Listorderitem()
-                    //{
-                    //          var listorderitem = _iorderRepository.Listorderitem().ToList();
-                    //          return listorderitem;
-                    //}
-                    //[HttpGet("AllOrder")]
-                    //public List<Order> ListOrder()
-                    //{
-                    //          var listorder = _iorderRepository.ListOrder().ToList();
-                    //          return listorder;
-                    //}
 
 
 
-                    //[HttpGet("AllOrder")]
-                    //public ActionResult<IEnumerable<Order>> GetAllOrders()
-                    //{
-                    //          try
-                    //          {
-                    //                    var listorder = _iorderRepository.ListOrder();
-                    //                    if (listorder == null || !listorder.Any())
-                    //                    {
-                    //                              return NotFound(new { message = "No orders found." });
-                    //                    }
-                    //                    return Ok(listorder);
-                    //          }
-                    //          catch (Exception ex)
-                    //          {
-                    //                    return StatusCode(500, new { message = ex.Message });
-                    //          }
-                    //}
 
+                    // --- API Controllers ---
 
                     [HttpGet("AllOrder")]
                     public ActionResult<IEnumerable<object>> GetAllOrders()
@@ -123,18 +112,23 @@ namespace Ecommerencesite.Controllers
                                         }
 
                                         var result = listorder.Select(o => new {
-                                                //  Id = o.id,
+                                                  Id = o.Id,
+                                                  UserId = o.UserId,
                                                   OrderNumber = o.OrderNumber,
                                                   OrderStatus = o.OrderStatus,
-                                                  OrderTotal = o.Ordertotal, // Model ke mutabiq 'Ordertotal'
-                                                  PaymentMode = o.PaymentMode, // Ab error nahi aayega
+                                                  OrderTotal = o.Ordertotal,
+                                                  PaymentMode = o.PaymentMode,
                                                   AddressId = o.AddressId,
                                                   StoreId = o.StoreId,
                                                   CreatedAt = o.CreatedAt,
-                                                  Address = o.Address,
-                                                  OrderItemss = o.orderItemss?.Select(i => new {
+                                                  OrderItemss = o.OrderItemss?.Select(i => new {
                                                             Id = i.Id,
-                                                            // baki item properties agar hon toh
+                                                            OrderId = i.OrderId,
+                                                            MedicineId = i.MedicineId,
+                                                            Quantity = i.Quantity,
+                                                            UnitPrice = i.UnitPrice,
+                                                            Discount = i.Discount,
+                                                            TotalPrice = i.Totalprice
                                                   })
                                         });
 
@@ -145,8 +139,9 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, new { message = ex.Message });
                               }
                     }
+
                     [HttpGet("AllOrderItem")]
-                    public ActionResult<IEnumerable<OrderItem>> GetAllOrderItems()
+                    public ActionResult<IEnumerable<object>> GetAllOrderItems()
                     {
                               try
                               {
@@ -155,7 +150,19 @@ namespace Ecommerencesite.Controllers
                                         {
                                                   return NotFound(new { message = "No order items found." });
                                         }
-                                        return Ok(listorderitem);
+
+                                        var result = listorderitem.Select(i => new {
+                                                  Id = i.Id,
+                                                  OrderId = i.OrderId,
+                                                  MedicineId = i.MedicineId,
+                                                  OrderNumber = i.Order != null ? i.Order.OrderNumber : string.Empty,
+                                                  Quantity = i.Quantity,
+                                                  UnitPrice = i.UnitPrice,
+                                                  Discount = i.Discount,
+                                                  TotalPrice = i.Totalprice
+                                        });
+
+                                        return Ok(result);
                               }
                               catch (Exception ex)
                               {
@@ -163,57 +170,110 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    //[HttpPost("CreateOrder")]
-                    //public void CreateOrder(Order order)
+                    //[HttpGet("AllOrderItem")]
+                    //public ActionResult<IEnumerable<object>> GetAllOrderItems()
                     //{
-                    //          _iorderRepository.CreateOrder(order);   
+                    //          try
+                    //          {
+                    //                    var listorderitem = _iorderRepository.Listorderitem();
+                    //                    if (listorderitem == null || !listorderitem.Any())
+                    //                    {
+                    //                              return NotFound(new { message = "No order items found." });
+                    //                    }
+
+                    //                    var result = listorderitem.Select(i => new {
+                    //                              Id = i.Id,
+                    //                              OrderId = i.OrderId,
+                    //                              MedicineId = i.MedicineId,
+                    //                              OrderNumber = i.Order?.OrderNumber ?? string.Empty, // Null safety ke liye
+                    //                              Quantity = i.Quantity,
+                    //                              UnitPrice = i.UnitPrice,
+                    //                              Discount = i.Discount,
+                    //                              TotalPrice = i.Totalprice
+                    //                    });
+
+                    //                    return Ok(result);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new { message = ex.Message });
+                    //          }
                     //}
 
+
                     [HttpPost("CreateOrder")]
-                    public async Task<IActionResult> CreateOrder(Order order)
+                    public async Task<IActionResult> CreateOrder([FromBody] Order order)
                     {
-                              // Agar koi model state validation error ho toh detail return karega
+                              // 1. Clear navigation property validation errors
+                              foreach (var key in ModelState.Keys.Where(k => k.EndsWith(".Order") || k == "User" || k == "Address").ToList())
+                              {
+                                        ModelState.Remove(key);
+                              }
+
                               if (!ModelState.IsValid)
                               {
                                         return BadRequest(ModelState);
                               }
 
+                              if (order == null)
+                              {
+                                        return BadRequest(new { success = false, message = "Order payload cannot be null." });
+                              }
+
+                              if (_context == null || _context.orderss == null)
+                              {
+                                        return StatusCode(500, new { success = false, message = "Database context is not initialized." });
+                              }
+
                               try
                               {
-                                        if (order == null || order.orderItemss == null || !order.orderItemss.Any())
+                                        if (order.OrderItemss == null || !order.OrderItemss.Any())
                                         {
-                                                  return BadRequest(new { message = "Invalid order data or empty items list." });
+                                                  return BadRequest(new { success = false, message = "Order items list cannot be empty." });
                                         }
 
-                                        order.User = null;
-                                        order.Address = null;
-                                       // order.OrderNumber = "ORD-" + new Random().Next(100000, 999999);
-                                        order.OrderNumber = "#" + new Random().Next(100000, 999999);
+                                        // Optional: Check if user exists in database to prevent FK violation crash
+                                        bool userExists = _context.userMediciness != null && await _context.userMediciness.AnyAsync(u => u.id == order.UserId);
+                                        if (!userExists)
+                                        {
+                                                  return BadRequest(new { success = false, message = $"User with ID {order.UserId} does not exist in the database." });
+                                        }
 
+                                        // Generate unique order details safely
+                                        order.OrderNumber = "#" + new Random().Next(100000, 999999);
                                         order.OrderStatus = "Pending";
-                                        //order.PaymentMode = "";
+                                        order.PaymentMode = string.IsNullOrEmpty(order.PaymentMode) ? "COD" : order.PaymentMode;
                                         order.CreatedAt = DateTime.UtcNow;
 
-                                        foreach (var item in order.orderItemss)
+                                        // Null-safe iteration over order items
+                                        foreach (var item in order.OrderItemss)
                                         {
-                                                  item.Order = null; // Clear navigation property reference
-                                                  if (item.Totalprice == null || item.Totalprice == 0)
+                                                  if (item != null)
                                                   {
-                                                            item.Totalprice = (item.UnitPrice ?? 0) * item.Quantity;
+                                                            item.Order = null; // Prevent circular reference tracking issues
+                                                            if (item.Totalprice == 0)
+                                                            {
+                                                                      item.Totalprice = item.UnitPrice * item.Quantity;
+                                                            }
                                                   }
                                         }
 
                                         _context.orderss.Add(order);
                                         await _context.SaveChangesAsync();
 
-                                        return Ok(new { success = true, message = "Order created successfully", orderId = order.id, orderNumber = order.OrderNumber });
+                                        return Ok(new
+                                        {
+                                                  success = true,
+                                                  message = "Order created successfully",
+                                                  orderId = order.Id,
+                                                  orderNumber = order.OrderNumber
+                                        });
                               }
                               catch (Exception ex)
                               {
                                         return StatusCode(500, new { success = false, message = ex.InnerException?.Message ?? ex.Message });
                               }
                     }
-
 
                     // GET: api/OrderAPI/AllOrder?search=query
                     [HttpGet("SearchOrders")]

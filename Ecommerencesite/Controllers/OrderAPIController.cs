@@ -100,6 +100,49 @@ namespace Ecommerencesite.Controllers
 
                     // --- API Controllers ---
 
+                    //[HttpGet("AllOrder")]
+                    //public ActionResult<IEnumerable<object>> GetAllOrders()
+                    //{
+                    //          try
+                    //          {
+                    //                    var listorder = _iorderRepository.ListOrder();
+                    //                    if (listorder == null || !listorder.Any())
+                    //                    {
+                    //                              return NotFound(new { message = "No orders found." });
+                    //                    }
+
+                    //                    var result = listorder.Select(o => new {
+                    //                              Id = o.Id,
+                    //                              UserId = o.UserId,
+                    //                              OrderNumber = o.OrderNumber,
+                    //                              OrderStatus = o.OrderStatus,
+                    //                              OrderTotal = o.Ordertotal,
+                    //                              PaymentMode = o.PaymentMode,
+                    //                              AddressId = o.AddressId,
+                    //                              StoreId = o.StoreId,
+                    //                              CreatedAt = o.CreatedAt,
+                    //                              OrderItemss = o.OrderItemss?.Select(i => new {
+                    //                                        Id = i.Id,
+                    //                                        OrderId = i.OrderId,
+                    //                                        MedicineId = i.MedicineId,
+                    //                                        Quantity = i.Quantity,
+                    //                                        UnitPrice = i.UnitPrice,
+                    //                                        Discount = i.Discount,
+                    //                                        TotalPrice = i.Totalprice
+                    //                              })
+                    //                    });
+
+                    //                    return Ok(result);
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new { message = ex.Message });
+                    //          }
+                    //}
+
+
+
+
                     [HttpGet("AllOrder")]
                     public ActionResult<IEnumerable<object>> GetAllOrders()
                     {
@@ -112,23 +155,25 @@ namespace Ecommerencesite.Controllers
                                         }
 
                                         var result = listorder.Select(o => new {
-                                                  Id = o.Id,
-                                                  UserId = o.UserId,
-                                                  OrderNumber = o.OrderNumber,
-                                                  OrderStatus = o.OrderStatus,
-                                                  OrderTotal = o.Ordertotal,
-                                                  PaymentMode = o.PaymentMode,
-                                                  AddressId = o.AddressId,
-                                                  StoreId = o.StoreId,
-                                                  CreatedAt = o.CreatedAt,
-                                                  OrderItemss = o.OrderItemss?.Select(i => new {
-                                                            Id = i.Id,
-                                                            OrderId = i.OrderId,
-                                                            MedicineId = i.MedicineId,
-                                                            Quantity = i.Quantity,
-                                                            UnitPrice = i.UnitPrice,
-                                                            Discount = i.Discount,
-                                                            TotalPrice = i.Totalprice
+                                                  id = o.Id,
+                                                  userId = o.UserId,
+                                                  orderNumber = o.OrderNumber,
+                                                  orderStatus = o.OrderStatus,
+                                                  orderTotal = o.Ordertotal,
+                                                  paymentMode = o.PaymentMode,
+                                                  addressId = o.AddressId,
+                                                  storeId = o.StoreId,
+                                                  distanceInKm = o.DistanceInKm,
+                                                  estimatedTime = o.EstimatedTime,
+                                                  createdAt = o.CreatedAt,
+                                                  orderItemss = o.OrderItemss?.Select(i => new {
+                                                            id = i.Id,
+                                                            orderId = i.OrderId,
+                                                            medicineId = i.MedicineId,
+                                                            quantity = i.Quantity,
+                                                            unitPrice = i.UnitPrice,
+                                                            discount = i.Discount,
+                                                            totalprice = i.Totalprice
                                                   })
                                         });
 
@@ -139,7 +184,6 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, new { message = ex.Message });
                               }
                     }
-
                     [HttpGet("AllOrderItem")]
                     public ActionResult<IEnumerable<object>> GetAllOrderItems()
                     {

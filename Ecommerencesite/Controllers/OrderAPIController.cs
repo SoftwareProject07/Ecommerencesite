@@ -101,46 +101,20 @@ namespace Ecommerencesite.Controllers
                     // --- API Controllers ---
 
                     //[HttpGet("AllOrder")]
-                    //public ActionResult<IEnumerable<object>> GetAllOrders()
+                    //public async Task<IActionResult> AllOrder()
                     //{
                     //          try
                     //          {
-                    //                    var listorder = _iorderRepository.ListOrder();
-                    //                    if (listorder == null || !listorder.Any())
-                    //                    {
-                    //                              return NotFound(new { message = "No orders found." });
-                    //                    }
-
-                    //                    var result = listorder.Select(o => new {
-                    //                              Id = o.Id,
-                    //                              UserId = o.UserId,
-                    //                              OrderNumber = o.OrderNumber,
-                    //                              OrderStatus = o.OrderStatus,
-                    //                              OrderTotal = o.Ordertotal,
-                    //                              PaymentMode = o.PaymentMode,
-                    //                              AddressId = o.AddressId,
-                    //                              StoreId = o.StoreId,
-                    //                              CreatedAt = o.CreatedAt,
-                    //                              OrderItemss = o.OrderItemss?.Select(i => new {
-                    //                                        Id = i.Id,
-                    //                                        OrderId = i.OrderId,
-                    //                                        MedicineId = i.MedicineId,
-                    //                                        Quantity = i.Quantity,
-                    //                                        UnitPrice = i.UnitPrice,
-                    //                                        Discount = i.Discount,
-                    //                                        TotalPrice = i.Totalprice
-                    //                              })
-                    //                    });
-
-                    //                    return Ok(result);
+                    //                    var orders = await _context.orderss
+                    //                        .Include(o => o.OrderItemss)
+                    //                        .ToListAsync();
+                    //                    return Ok(orders);
                     //          }
                     //          catch (Exception ex)
                     //          {
-                    //                    return StatusCode(500, new { message = ex.Message });
+                    //                    return StatusCode(500, new { success = false, message = ex.Message });
                     //          }
                     //}
-
-
 
 
                     [HttpGet("AllOrder")]
@@ -154,7 +128,8 @@ namespace Ecommerencesite.Controllers
                                                   return NotFound(new { message = "No orders found." });
                                         }
 
-                                        var result = listorder.Select(o => new {
+                                        var result = listorder.Select(o => new
+                                        {
                                                   id = o.Id,
                                                   userId = o.UserId,
                                                   orderNumber = o.OrderNumber,
@@ -166,7 +141,8 @@ namespace Ecommerencesite.Controllers
                                                   distanceInKm = o.DistanceInKm,
                                                   estimatedTime = o.EstimatedTime,
                                                   createdAt = o.CreatedAt,
-                                                  orderItemss = o.OrderItemss?.Select(i => new {
+                                                  orderItemss = o.OrderItemss?.Select(i => new
+                                                  {
                                                             id = i.Id,
                                                             orderId = i.OrderId,
                                                             medicineId = i.MedicineId,
@@ -184,6 +160,11 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, new { message = ex.Message });
                               }
                     }
+
+
+
+
+
                     [HttpGet("AllOrderItem")]
                     public ActionResult<IEnumerable<object>> GetAllOrderItems()
                     {
@@ -214,41 +195,90 @@ namespace Ecommerencesite.Controllers
                               }
                     }
 
-                    //[HttpGet("AllOrderItem")]
-                    //public ActionResult<IEnumerable<object>> GetAllOrderItems()
+
+
+                    //[HttpPost("CreateOrder")]
+                    //public async Task<IActionResult> CreateOrder([FromBody] Order order)
                     //{
+                    //          // 1. Clear navigation property validation errors
+                    //          foreach (var key in ModelState.Keys.Where(k => k.EndsWith(".Order") || k == "User" || k == "Address").ToList())
+                    //          {
+                    //                    ModelState.Remove(key);
+                    //          }
+
+                    //          if (!ModelState.IsValid)
+                    //          {
+                    //                    return BadRequest(ModelState);
+                    //          }
+
+                    //          if (order == null)
+                    //          {
+                    //                    return BadRequest(new { success = false, message = "Order payload cannot be null." });
+                    //          }
+
+                    //          if (_context == null || _context.orderss == null)
+                    //          {
+                    //                    return StatusCode(500, new { success = false, message = "Database context is not initialized." });
+                    //          }
+
                     //          try
                     //          {
-                    //                    var listorderitem = _iorderRepository.Listorderitem();
-                    //                    if (listorderitem == null || !listorderitem.Any())
+                    //                    if (order.OrderItemss == null || !order.OrderItemss.Any())
                     //                    {
-                    //                              return NotFound(new { message = "No order items found." });
+                    //                              return BadRequest(new { success = false, message = "Order items list cannot be empty." });
                     //                    }
 
-                    //                    var result = listorderitem.Select(i => new {
-                    //                              Id = i.Id,
-                    //                              OrderId = i.OrderId,
-                    //                              MedicineId = i.MedicineId,
-                    //                              OrderNumber = i.Order?.OrderNumber ?? string.Empty, // Null safety ke liye
-                    //                              Quantity = i.Quantity,
-                    //                              UnitPrice = i.UnitPrice,
-                    //                              Discount = i.Discount,
-                    //                              TotalPrice = i.Totalprice
-                    //                    });
+                    //                    // Optional: Check if user exists in database to prevent FK violation crash
+                    //                    bool userExists = _context.userMediciness != null && await _context.userMediciness.AnyAsync(u => u.id == order.UserId);
+                    //                    if (!userExists)
+                    //                    {
+                    //                              return BadRequest(new { success = false, message = $"User with ID {order.UserId} does not exist in the database." });
+                    //                    }
 
-                    //                    return Ok(result);
+                    //                    // Generate unique order details safely
+                    //                    order.OrderNumber = "#" + new Random().Next(100000, 999999);
+                    //                    order.OrderStatus = "",
+                    //                              //"Pending";
+                    //                    order.PaymentMode = string.IsNullOrEmpty(order.PaymentMode) ? "COD" : order.PaymentMode;
+                    //                    order.CreatedAt = DateTime.UtcNow;
+
+                    //                    // Null-safe iteration over order items
+                    //                    foreach (var item in order.OrderItemss)
+                    //                    {
+                    //                              if (item != null)
+                    //                              {
+                    //                                        item.Order = null; // Prevent circular reference tracking issues
+                    //                                        if (item.Totalprice == 0)
+                    //                                        {
+                    //                                                  item.Totalprice = item.UnitPrice * item.Quantity;
+                    //                                        }
+                    //                              }
+                    //                    }
+
+                    //                    _context.orderss.Add(order);
+                    //                    await _context.SaveChangesAsync();
+
+                    //                    return Ok(new
+                    //                    {
+                    //                              success = true,
+                    //                              message = "Order created successfully",
+                    //                              orderId = order.Id,
+                    //                              orderNumber = order.OrderNumber
+                    //                    });
                     //          }
                     //          catch (Exception ex)
                     //          {
-                    //                    return StatusCode(500, new { message = ex.Message });
+                    //                    return StatusCode(500, new { success = false, message = ex.InnerException?.Message ?? ex.Message });
                     //          }
                     //}
+
+
+
 
 
                     [HttpPost("CreateOrder")]
                     public async Task<IActionResult> CreateOrder([FromBody] Order order)
                     {
-                              // 1. Clear navigation property validation errors
                               foreach (var key in ModelState.Keys.Where(k => k.EndsWith(".Order") || k == "User" || k == "Address").ToList())
                               {
                                         ModelState.Remove(key);
@@ -276,25 +306,27 @@ namespace Ecommerencesite.Controllers
                                                   return BadRequest(new { success = false, message = "Order items list cannot be empty." });
                                         }
 
-                                        // Optional: Check if user exists in database to prevent FK violation crash
                                         bool userExists = _context.userMediciness != null && await _context.userMediciness.AnyAsync(u => u.id == order.UserId);
                                         if (!userExists)
                                         {
                                                   return BadRequest(new { success = false, message = $"User with ID {order.UserId} does not exist in the database." });
                                         }
 
-                                        // Generate unique order details safely
-                                        order.OrderNumber = "#" + new Random().Next(100000, 999999);
+                                        // FIXED: Ensure order number is only generated if not already provided, preventing random overwrites
+                                        if (string.IsNullOrEmpty(order.OrderNumber) || order.OrderNumber == "#")
+                                        {
+                                                  order.OrderNumber = "#" + new Random().Next(100000, 999999);
+                                        }
+
                                         order.OrderStatus = "Pending";
                                         order.PaymentMode = string.IsNullOrEmpty(order.PaymentMode) ? "COD" : order.PaymentMode;
                                         order.CreatedAt = DateTime.UtcNow;
 
-                                        // Null-safe iteration over order items
                                         foreach (var item in order.OrderItemss)
                                         {
                                                   if (item != null)
                                                   {
-                                                            item.Order = null; // Prevent circular reference tracking issues
+                                                            item.Order = null;
                                                             if (item.Totalprice == 0)
                                                             {
                                                                       item.Totalprice = item.UnitPrice * item.Quantity;
@@ -318,6 +350,7 @@ namespace Ecommerencesite.Controllers
                                         return StatusCode(500, new { success = false, message = ex.InnerException?.Message ?? ex.Message });
                               }
                     }
+
 
                     // GET: api/OrderAPI/AllOrder?search=query
                     [HttpGet("SearchOrders")]

@@ -8,11 +8,7 @@ using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Options;
-using System;
-using System.IO;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -126,6 +122,7 @@ builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<IState_CityNameRepository, State_CityNameRepository>();
 builder.Services.AddScoped<ICustomerAccountantAccountRepository, CustomerAccountantAccountRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IDashBoardServicesRepository, DashBoardServicesRepository>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSignalR();

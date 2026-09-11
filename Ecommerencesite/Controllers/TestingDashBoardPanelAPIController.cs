@@ -26,5 +26,43 @@ namespace Ecommerencesite.Controllers
 
                               return Ok(dashboardData);
                     }
+
+
+
+                    //MEDICATION API CONTROLLER CODE        
+                    [HttpGet("GetAllMediciation")]
+                    public List<Medication> GetAllMediciation()
+                    {
+                              var medications = context.GetAllAsync();
+                              return medications;
+
+                    }
+
+                    [HttpGet("{id}")]
+                    public Medication GetByIdAsync(int id)
+                    {
+                              var med = context.GetByIdAsync(id);
+
+                              return med;
+                    }
+
+                    [HttpPost("Create")]
+                    public void Create([FromBody] Medication medication)
+                    {
+                              context.AddAsync(medication);
+                    }
+
+                    [HttpPut("{id}")]
+                    public void  Update(int id, [FromBody] Medication medication)
+                    {
+                              context.UpdateAsync( medication);
+                    }
+
+                    [HttpDelete("{id}")]
+                    public async Task<IActionResult> Delete(int id)
+                    {
+                               context.DeleteAsync(id);
+                              return NoContent();
+                    }
           }
 }

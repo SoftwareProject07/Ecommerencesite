@@ -2,6 +2,7 @@
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Ecommerencesite.Model.DASHBOARDS;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,40 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                    this._context   = context;
           }
 
+          public   List<Medication> GetAllAsync()
+          {
+
+                    var medications = _context.Medicationss.ToList();
+                    return medications;
+          }
+
+          public Medication GetByIdAsync(int id)
+          {
+                 var medication = _context.Medicationss.FirstOrDefault(m => m.Id == id);
+                       return medication;
+          }
+
+          public void AddAsync(Medication medicationsss)
+          {
+                    _context.Medicationss.Add(medicationsss);
+                     _context.SaveChanges();
+          }
+
+          public void  UpdateAsync(Medication medicationssss)
+          {
+                    _context.Medicationss.Update(medicationssss);
+                     _context.SaveChanges();
+          }
+
+          public async Task DeleteAsync(int id)
+          {
+                    var medication = await _context.Medications.FindAsync(id);
+                    if (medication != null)
+                    {
+                              _context.Medications.Remove(medication);
+                              await _context.SaveChangesAsync();
+                    }
+          }
           public DashboardDataModel GetCustomerDashboard(int customerId)
           {
                     // 1. Fetch customer name dynamically
@@ -76,4 +111,9 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                               CartMedicines = cartMedicines
                     };
           }
+
+          //public Task UpdateAsync(Medication medication)
+          //{
+          //          throw new NotImplementedException();
+          //}
 }

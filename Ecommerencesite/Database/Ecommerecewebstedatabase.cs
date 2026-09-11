@@ -97,10 +97,9 @@ namespace Ecommerencesite.Database
                     public DbSet<Help_SupportTicketModel> SupportTicketModels { get; set; }
                     public DbSet<UserSettingsModel> UserSettingsModels { get; set; }
                     public DbSet<AvailableTestModel> AvailableTestModels { get; set; }
+                  public DbSet<Medication> Medicationss { get; set; }
 
-
-                   
-          }
+                    }
 
 
 

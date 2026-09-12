@@ -64,5 +64,41 @@ namespace Ecommerencesite.Controllers
                                context.DeleteAsync(id);
                               return NoContent();
                     }
+                    //Testing Dashboard API CONTROLLER CODE 
+                    [HttpGet("AllTestReports")]
+
+                    public List<TestReport> AllTestReports()
+                    {
+                              var testReports = context.AllTestReports();
+                              return testReports; 
+                    }
+                    [HttpGet("GetTestReportById/{id}")]
+                    public TestReport GetTestReportById(int id)
+                    {
+                              var testReport = context.GetTestReportById(id);
+                              return testReport;  
+
+                    }
+                    [HttpPost("CreateTestReport")]
+                    public void CreateTestReport([FromBody] TestReport newReport)
+                    {
+                              context.CreateTestReport(newReport);
+                    }
+
+                    [HttpPut("UpdateTestReport/{id}")]
+                     
+                     public void UpdateTestReport(TestReport updatedReport)
+                      {
+                               
+          
+                                 context.UpdateTestReport(updatedReport);
+                    }
+                    [HttpDelete("DeleteTestReport/{id}")]
+                    public TestReport DeleteTestReport(int id)
+                    {
+                              var deletedReport = context.DeleteTestReport(id);
+                              return deletedReport;         
+                    }
           }
+
 }

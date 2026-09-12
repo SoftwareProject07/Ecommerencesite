@@ -99,7 +99,9 @@ namespace Ecommerencesite.Database
                     public DbSet<AvailableTestModel> AvailableTestModels { get; set; }
                   public DbSet<Medication> Medicationss { get; set; }
 
-                    }
+                    public DbSet<TestReport> TestReports { get; set; }          
+
+          }
 
 
 

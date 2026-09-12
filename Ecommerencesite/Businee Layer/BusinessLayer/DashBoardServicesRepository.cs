@@ -3,6 +3,7 @@ using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Ecommerencesite.Model.DASHBOARDS;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,6 +111,42 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                               BloodPressure = bloodPressure,
                               CartMedicines = cartMedicines
                     };
+          }
+
+          public List<TestReport> AllTestReports()
+          {
+                 var testReports = _context.TestReports.ToList();
+                    return testReports; 
+          }
+
+          public TestReport GetTestReportById(int id)
+          {
+                  var testReport = _context.TestReports.FirstOrDefault(tr => tr.Id == id);
+                    return testReport;  
+          }
+
+          public void CreateTestReport( TestReport newReport)
+          {
+                    _context.TestReports.Add(newReport);
+                    _context.SaveChanges();
+          }
+
+          public void UpdateTestReport(TestReport updatedReport)
+          {
+                  _context.TestReports.Update(updatedReport);
+                    _context.SaveChanges();
+
+          }
+
+          public TestReport DeleteTestReport(int id)
+          {
+                    var reportToDelete = _context.TestReports.FirstOrDefault(tr => tr.Id == id);
+                    if (reportToDelete != null)
+                    {
+                              _context.TestReports.Remove(reportToDelete);
+                              _context.SaveChanges();
+                    }
+                    return reportToDelete;
           }
 
           //public Task UpdateAsync(Medication medication)

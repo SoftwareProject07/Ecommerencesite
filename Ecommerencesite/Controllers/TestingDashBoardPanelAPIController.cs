@@ -29,8 +29,9 @@ namespace Ecommerencesite.Controllers
 
 
 
-                    //MEDICATION API CONTROLLER CODE        
-                    [HttpGet("GetAllMediciation")]
+                    //MEDICATION API CONTROLLER CODE
+                    
+                    [HttpGet("AllMedicationtracker")]
                     public List<Medication> GetAllMediciation()
                     {
                               var medications = context.GetAllAsync();
@@ -38,7 +39,8 @@ namespace Ecommerencesite.Controllers
 
                     }
 
-                    [HttpGet("{id}")]
+
+                    [HttpGet("DetailsMedicationtracker")]
                     public Medication GetByIdAsync(int id)
                     {
                               var med = context.GetByIdAsync(id);
@@ -46,25 +48,27 @@ namespace Ecommerencesite.Controllers
                               return med;
                     }
 
-                    [HttpPost("Create")]
+                    [HttpPost("CreateMedicationtracker")]
                     public void Create([FromBody] Medication medication)
                     {
                               context.AddAsync(medication);
                     }
 
-                    [HttpPut("{id}")]
-                    public void  Update(int id, [FromBody] Medication medication)
+                    [HttpPut("UpdateMedicationtracker")]
+                    public void  Update(Medication medication)
                     {
                               context.UpdateAsync( medication);
                     }
 
-                    [HttpDelete("{id}")]
-                    public async Task<IActionResult> Delete(int id)
+                    [HttpDelete("DeleteMedicationtracker")]
+                    public Medication DeleteAsync(int id)
                     {
-                               context.DeleteAsync(id);
-                              return NoContent();
+                             var deleteMedicationtracker= context.DeleteAsync(id);
+                             return deleteMedicationtracker;
                     }
+
                     //Testing Dashboard API CONTROLLER CODE 
+
                     [HttpGet("AllTestReports")]
 
                     public List<TestReport> AllTestReports()
@@ -72,7 +76,7 @@ namespace Ecommerencesite.Controllers
                               var testReports = context.AllTestReports();
                               return testReports; 
                     }
-                    [HttpGet("GetTestReportById/{id}")]
+                    [HttpGet("DetailsTestReport")]
                     public TestReport GetTestReportById(int id)
                     {
                               var testReport = context.GetTestReportById(id);
@@ -85,7 +89,7 @@ namespace Ecommerencesite.Controllers
                               context.CreateTestReport(newReport);
                     }
 
-                    [HttpPut("UpdateTestReport/{id}")]
+                    [HttpPut("UpdateTestReport")]
                      
                      public void UpdateTestReport(TestReport updatedReport)
                       {
@@ -93,7 +97,7 @@ namespace Ecommerencesite.Controllers
           
                                  context.UpdateTestReport(updatedReport);
                     }
-                    [HttpDelete("DeleteTestReport/{id}")]
+                    [HttpDelete("DeleteTestReport")]
                     public TestReport DeleteTestReport(int id)
                     {
                               var deletedReport = context.DeleteTestReport(id);

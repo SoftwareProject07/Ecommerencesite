@@ -42,14 +42,15 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                      _context.SaveChanges();
           }
 
-          public async Task DeleteAsync(int id)
+          public Medication DeleteAsync(int id)
           {
-                    var medication = await _context.Medications.FindAsync(id);
+                    var medication =  _context.Medicationss.Where(S=>S.Id==id).FirstOrDefault();
                     if (medication != null)
                     {
-                              _context.Medications.Remove(medication);
-                              await _context.SaveChangesAsync();
+                              _context.Medicationss.Remove(medication);
+                              _context.SaveChanges();       
                     }
+                    return medication;
           }
           public DashboardDataModel GetCustomerDashboard(int customerId)
           {

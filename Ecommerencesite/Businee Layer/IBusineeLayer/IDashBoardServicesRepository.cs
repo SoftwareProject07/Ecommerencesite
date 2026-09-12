@@ -18,7 +18,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public Medication GetByIdAsync(int id);
                     public void AddAsync(Medication medicationsss);
                     public void UpdateAsync(Medication medicationssss);
-                              Task DeleteAsync(int id);
+                    Medication DeleteAsync(int id);
                     //TEST REPORT iBUSINESS LAYER CODE
                     public List<TestReport> AllTestReports();
 

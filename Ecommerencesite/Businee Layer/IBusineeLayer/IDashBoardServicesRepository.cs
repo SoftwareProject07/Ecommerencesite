@@ -44,7 +44,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     public List<HealthHistoryModel> GetAllHealthHistories();
 
-                    Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId);
+               //     Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId);
                     public HealthHistoryModel DetailsHealthhistory(int id);
                     public HealthHistoryModel DeleteHealthHistory(int id);
                     public void CreateHealthHistory(HealthHistoryModel createhealthHistory);

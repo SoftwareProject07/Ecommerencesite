@@ -143,12 +143,12 @@ namespace Ecommerencesite.Controllers
                     {
                               context.UpdateHealthHistory(updatehelath);
                     }
-                    [HttpGet("GetHealthHistoryByUserId/{userId}")]
-                    Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
-                    {
-                              var healthHistories = context.GetByUserIdAsync(userId);
-                              return healthHistories;
-                    }
+                    //[HttpGet("GetHealthHistoryByUserId/{userId}")]
+                    //Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
+                    //{
+                    //          var healthHistories = context.GetByUserIdAsync(userId);
+                    //          return healthHistories;
+                    //}
 
 
 

@@ -185,13 +185,13 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     _context.SaveChanges();
           }
 
-          public async Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
-          {
-                    return await _context.HealthHistoryModels
-                        .Where(h => h.UserId == userId)
-                        .OrderByDescending(h => h.DiagnosisDate)
-                        .ToListAsync();
-          }
+          //public async Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
+          //{
+          //          return await _context.HealthHistoryModels
+          //              .Where(h => h.UserId == userId)
+          //              .OrderByDescending(h => h.DiagnosisDate)
+          //              .ToListAsync();
+          //}
 
           //public Task UpdateAsync(Medication medication)
           //{

@@ -19,6 +19,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void AddAsync(MedicationTrackerModel medicationsss);
                     public void UpdateAsync(MedicationTrackerModel medicationssss);
                     MedicationTrackerModel DeleteAsync(int id);
+
                     //TEST REPORT iBUSINESS LAYER CODE
                     public List<TestReport> AllTestReports();
 
@@ -27,5 +28,28 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void CreateTestReport(TestReport newReport);
                     public void  UpdateTestReport(TestReport updatedReport);
                     public TestReport DeleteTestReport(int id);
+
+
+
+
+                    //HEALTH HISTORY iBUSINESS LAYER CODE
+
+                    //Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId);
+                    //Task<HealthHistoryModel> GetByIdAsync(int id);
+                    //Task<HealthHistoryModel> CreateAsync(HealthHistoryModel history);
+                    //Task<bool> UpdateAsync(HealthHistoryModel history);
+                    //Task<bool> DeleteAsync(int id);
+
+                    //HEALTH HISTORY iBUSINESS LAYER CODE
+
+                    public List<HealthHistoryModel> GetAllHealthHistories();
+
+                    Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId);
+                    public HealthHistoryModel DetailsHealthhistory(int id);
+                    public HealthHistoryModel DeleteHealthHistory(int id);
+                    public void CreateHealthHistory(HealthHistoryModel createhealthHistory);
+                    public void UpdateHealthHistory(HealthHistoryModel updatehelath);
+
+
           }
 }

@@ -150,6 +150,49 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     return reportToDelete;
           }
 
+          public List<HealthHistoryModel> GetAllHealthHistories()
+          {
+                   var listhealthHistories = _context.HealthHistoryModels.ToList();
+                    return  listhealthHistories;  
+          }
+
+          public HealthHistoryModel DetailsHealthhistory(int id)
+          {
+                   var detailsHealthHistory = _context.HealthHistoryModels.FirstOrDefault(hh => hh.Id == id);
+                    return detailsHealthHistory;
+          }
+
+          public HealthHistoryModel DeleteHealthHistory(int id)
+          {
+                   var deleteHealthHistory = _context.HealthHistoryModels.FirstOrDefault(hh => hh.Id == id);
+                    if (deleteHealthHistory != null)
+                    {
+                              _context.HealthHistoryModels.Remove(deleteHealthHistory);
+                              _context.SaveChanges();
+                    }
+                    return deleteHealthHistory;   
+          }
+
+          public void CreateHealthHistory(HealthHistoryModel createhealthHistory)
+          {
+                   _context.HealthHistoryModels.Add(createhealthHistory);
+                    _context.SaveChanges();
+          }
+
+          public void UpdateHealthHistory(HealthHistoryModel updatehelath)
+          {
+                   _context.HealthHistoryModels.Update(updatehelath);
+                    _context.SaveChanges();
+          }
+
+          public async Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
+          {
+                    return await _context.HealthHistoryModels
+                        .Where(h => h.UserId == userId)
+                        .OrderByDescending(h => h.DiagnosisDate)
+                        .ToListAsync();
+          }
+
           //public Task UpdateAsync(Medication medication)
           //{
           //          throw new NotImplementedException();

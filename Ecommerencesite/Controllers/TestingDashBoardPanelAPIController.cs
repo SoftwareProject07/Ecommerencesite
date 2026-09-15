@@ -103,6 +103,55 @@ namespace Ecommerencesite.Controllers
                               var deletedReport = context.DeleteTestReport(id);
                               return deletedReport;         
                     }
+
+
+
+
+                    // HEALTH HISTORY API CONTROLLER CODE   
+
+
+                    [HttpGet("AllHealthHistories")]
+                      
+                    public List<HealthHistoryModel> GetAllHealthHistories()
+                    {
+                              var listhealthHistories = context.GetAllHealthHistories();
+                              return  listhealthHistories;
+                    }
+
+                    [HttpGet("DetailsHealthHistory")]
+                    public HealthHistoryModel DetailsHealthhistory(int id)
+                    {
+                              var detailsHealthHistory = context.DetailsHealthhistory(id);
+                              return detailsHealthHistory;
+                    }
+
+                    [HttpDelete("DeleteHealthHistory")]
+                    public HealthHistoryModel DeleteHealthHistory(int id)
+                    {
+                              var deleteHealthHistory = context.DeleteHealthHistory(id);
+                              return deleteHealthHistory;
+                    }
+
+                    [HttpPost("CreateHealthHistory")]
+                    public void CreateHealthHistory(HealthHistoryModel createhealthHistory)
+                    {
+                              context.CreateHealthHistory(createhealthHistory);
+                    }
+
+                    [HttpPut("UpdateHealthHistory")]
+                    public void UpdateHealthHistory(HealthHistoryModel updatehelath)
+                    {
+                              context.UpdateHealthHistory(updatehelath);
+                    }
+                    [HttpGet("GetHealthHistoryByUserId/{userId}")]
+                    Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
+                    {
+                              var healthHistories = context.GetByUserIdAsync(userId);
+                              return healthHistories;
+                    }
+
+
+
           }
 
 }

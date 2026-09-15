@@ -14,17 +14,17 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     //MEDICATION TRACKER iBUSINESS LAYER CODE
 
-                 public   List<Medication> GetAllAsync();
-                    public Medication GetByIdAsync(int id);
-                    public void AddAsync(Medication medicationsss);
-                    public void UpdateAsync(Medication medicationssss);
-                    Medication DeleteAsync(int id);
+                 public   List<MedicationTrackerModel> GetAllAsync();
+                    public MedicationTrackerModel GetByIdAsync(int id);
+                    public void AddAsync(MedicationTrackerModel medicationsss);
+                    public void UpdateAsync(MedicationTrackerModel medicationssss);
+                    MedicationTrackerModel DeleteAsync(int id);
                     //TEST REPORT iBUSINESS LAYER CODE
                     public List<TestReport> AllTestReports();
 
 
                     public TestReport GetTestReportById(int id);
-                    public void CreateTestReport( TestReport newReport);
+                    public void CreateTestReport(TestReport newReport);
                     public void  UpdateTestReport(TestReport updatedReport);
                     public TestReport DeleteTestReport(int id);
           }

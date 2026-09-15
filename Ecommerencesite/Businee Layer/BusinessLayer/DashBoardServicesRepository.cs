@@ -17,37 +17,37 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                    this._context   = context;
           }
 
-          public   List<Medication> GetAllAsync()
+          public   List<MedicationTrackerModel> GetAllAsync()
           {
 
-                    var medications = _context.Medicationss.ToList();
+                    var medications = _context.MedicationTrackerModels.ToList();
                     return medications;
           }
 
-          public Medication GetByIdAsync(int id)
+          public MedicationTrackerModel GetByIdAsync(int id)
           {
-                 var medication = _context.Medicationss.FirstOrDefault(m => m.Id == id);
+                 var medication = _context.MedicationTrackerModels.FirstOrDefault(m => m.Id == id);
                        return medication;
           }
 
-          public void AddAsync(Medication medicationsss)
+          public void AddAsync(MedicationTrackerModel medicationsss)
           {
-                    _context.Medicationss.Add(medicationsss);
+                    _context.MedicationTrackerModels.Add(medicationsss);
                      _context.SaveChanges();
           }
 
-          public void  UpdateAsync(Medication medicationssss)
+          public void  UpdateAsync(MedicationTrackerModel medicationssss)
           {
-                    _context.Medicationss.Update(medicationssss);
+                    _context.MedicationTrackerModels.Update(medicationssss);
                      _context.SaveChanges();
           }
 
-          public Medication DeleteAsync(int id)
+          public MedicationTrackerModel DeleteAsync(int id)
           {
-                    var medication =  _context.Medicationss.Where(S=>S.Id==id).FirstOrDefault();
+                    var medication =  _context.MedicationTrackerModels.Where(S=>S.Id==id).FirstOrDefault();
                     if (medication != null)
                     {
-                              _context.Medicationss.Remove(medication);
+                              _context.MedicationTrackerModels.Remove(medication);
                               _context.SaveChanges();       
                     }
                     return medication;

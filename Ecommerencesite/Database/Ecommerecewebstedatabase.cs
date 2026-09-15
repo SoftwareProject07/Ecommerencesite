@@ -89,7 +89,7 @@ namespace Ecommerencesite.Database
                     public DbSet<CartItem> CartItems { get; set; }
                     public DbSet<DashboardDataModel> DashboardDataModels { get; set; }
                     public DbSet<MedicationTrackerModel> MedicationTrackerModels { get; set; }
-                    public DbSet<TestReportModel> TestReportModels { get; set; }
+                    //public DbSet<TestReportModel> TestReportModels { get; set; }
                     public DbSet<HealthHistoryModel> HealthHistoryModels { get; set; }
                     public DbSet<MonthlyProgressModel> MonthlyProgressModels { get; set; }
                     public DbSet<PrescriptionModel> PrescriptionModels { get; set; }
@@ -97,7 +97,7 @@ namespace Ecommerencesite.Database
                     public DbSet<Help_SupportTicketModel> SupportTicketModels { get; set; }
                     public DbSet<UserSettingsModel> UserSettingsModels { get; set; }
                     public DbSet<AvailableTestModel> AvailableTestModels { get; set; }
-                  public DbSet<Medication> Medicationss { get; set; }
+                  //public DbSet<Medication> Medicationss { get; set; }
 
                     public DbSet<TestReport> TestReports { get; set; }          
 

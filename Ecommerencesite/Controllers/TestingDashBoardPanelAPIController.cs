@@ -32,7 +32,7 @@ namespace Ecommerencesite.Controllers
                     //MEDICATION API CONTROLLER CODE
                     
                     [HttpGet("AllMedicationtracker")]
-                    public List<Medication> GetAllMediciation()
+                    public List<MedicationTrackerModel> GetAllMediciation()
                     {
                               var medications = context.GetAllAsync();
                               return medications;
@@ -41,7 +41,7 @@ namespace Ecommerencesite.Controllers
 
 
                     [HttpGet("DetailsMedicationtracker")]
-                    public Medication GetByIdAsync(int id)
+                    public MedicationTrackerModel GetByIdAsync(int id)
                     {
                               var med = context.GetByIdAsync(id);
 
@@ -49,19 +49,19 @@ namespace Ecommerencesite.Controllers
                     }
 
                     [HttpPost("CreateMedicationtracker")]
-                    public void Create([FromBody] Medication medication)
+                    public void Create(MedicationTrackerModel medication)
                     {
                               context.AddAsync(medication);
                     }
 
                     [HttpPut("UpdateMedicationtracker")]
-                    public void  Update(Medication medication)
+                    public void  Update(MedicationTrackerModel medication)
                     {
                               context.UpdateAsync( medication);
                     }
 
                     [HttpDelete("DeleteMedicationtracker")]
-                    public Medication DeleteAsync(int id)
+                    public MedicationTrackerModel DeleteAsync(int id)
                     {
                              var deleteMedicationtracker= context.DeleteAsync(id);
                              return deleteMedicationtracker;

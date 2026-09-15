@@ -6,10 +6,11 @@ namespace Ecommerencesite.Model.DASHBOARDS
           {
                     [Key]
                     public int Id { get; set; }
-                    public int UserId { get; set; }         
-                    public string MedicineName { get; set; }
+                    public string MedicationName { get; set; }
                     public string Dosage { get; set; }
-                    public string Timing { get; set; }
-                    public bool IsTaken { get; set; }
+                    public string Frequency { get; set; }
+                    public DateTime? StartDate { get; set; }
+                    public DateTime? EndDate { get; set; }
+                    public string Status { get; set; }
           }
 }

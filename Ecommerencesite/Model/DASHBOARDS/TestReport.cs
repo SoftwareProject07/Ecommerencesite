@@ -6,9 +6,16 @@ namespace Ecommerencesite.Model.DASHBOARDS
           {
                     [Key]
                     public int Id { get; set; }
+
+                    [Required]
                     public string TestName { get; set; }
+
                     public string Date { get; set; }
+
                     public string Status { get; set; }
+
                     public string ResultSummary { get; set; }
+
+                    public string Laboratory { get; set; } //
           }
 }

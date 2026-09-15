@@ -17,7 +17,7 @@ namespace Ecommerencesite.Model.DASHBOARDS
                               BloodPressure = new List<BloodPressureData>();
                               CartMedicines = new List<CartItem>();
                               MedicationTrackers = new List<MedicationTrackerModel>();
-                              TestReports = new List<TestReportModel>();
+                              TestReports = new List<TestReport>();
                               HealthHistories = new List<HealthHistoryModel>();
                               MonthlyProgresses = new List<MonthlyProgressModel>();
                               Prescriptions = new List<PrescriptionModel>();
@@ -37,7 +37,7 @@ namespace Ecommerencesite.Model.DASHBOARDS
 
                     // Sidebar items and dynamic features
                     public List<MedicationTrackerModel> MedicationTrackers { get; set; }
-                    public List<TestReportModel> TestReports { get; set; }
+                    public List<TestReport> TestReports { get; set; }
                     public List<HealthHistoryModel> HealthHistories { get; set; }
                     public List<MonthlyProgressModel> MonthlyProgresses { get; set; }
                     public List<PrescriptionModel> Prescriptions { get; set; }

@@ -151,7 +151,7 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           }
 
           public List<HealthHistoryModel> GetAllHealthHistories()
-          {
+         {
                    var listhealthHistories = _context.HealthHistoryModels.ToList();
                     return  listhealthHistories;  
           }
@@ -185,6 +185,58 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     _context.SaveChanges();
           }
 
+
+          //MonthlyProgressModel 
+          public List<MonthlyProgressModel> AllMonthlyProgress()
+          {
+                   var listMonthlyProgress = _context.MonthlyProgressModels.ToList();
+                    return listMonthlyProgress;
+          }
+
+          public MonthlyProgressModel DetialsMonthlyProgress(int id)
+          {
+                  var detailsMonthlyProgress = _context.MonthlyProgressModels.FirstOrDefault(mp => mp.Id == id);
+                    return detailsMonthlyProgress;
+          }
+
+          public void CreateMonthlyProgress(MonthlyProgressModel newMonthlyProgress)
+          {
+                    _context.MonthlyProgressModels.Add(newMonthlyProgress);
+                    _context.SaveChanges();
+          }
+
+          public void UpdateMonthlyProgress(MonthlyProgressModel updatedMonthlyProgress)
+          {
+                    _context.MonthlyProgressModels.Update(updatedMonthlyProgress);
+                    _context.SaveChanges();
+          }
+
+          public MonthlyProgressModel DeleteMonthlyProgress(int id)
+          {
+                    var deleteMonthlyProgress = _context.MonthlyProgressModels.FirstOrDefault(mp => mp.Id == id);
+                    if (deleteMonthlyProgress != null)
+                    {
+                              _context.MonthlyProgressModels.Remove(deleteMonthlyProgress);
+                              _context.SaveChanges();
+                    }
+                    return deleteMonthlyProgress;
+          }
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           //public async Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
           //{
           //          return await _context.HealthHistoryModels
@@ -197,4 +249,3 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           //{
           //          throw new NotImplementedException();
           //}
-}

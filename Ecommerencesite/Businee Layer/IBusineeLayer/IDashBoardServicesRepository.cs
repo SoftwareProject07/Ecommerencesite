@@ -51,5 +51,17 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void UpdateHealthHistory(HealthHistoryModel updatehelath);
 
 
+
+                    //  MOnthly Progress iBUSINESS LAYER CODE         
+                    public List<MonthlyProgressModel> AllMonthlyProgress();
+                    public MonthlyProgressModel DetialsMonthlyProgress(int id);
+                    public void CreateMonthlyProgress(MonthlyProgressModel newMonthlyProgress);
+                    public void UpdateMonthlyProgress(MonthlyProgressModel updatedMonthlyProgress);
+                    public MonthlyProgressModel DeleteMonthlyProgress(int id);
+
+
+
+
+
           }
 }

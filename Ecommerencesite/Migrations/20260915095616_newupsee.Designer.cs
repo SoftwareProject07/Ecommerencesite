@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260915095616_newupsee")]
+    partial class newupsee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -638,26 +641,22 @@ namespace Ecommerencesite.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AvgGlucose")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("BloodPressureStatus")
-                        .HasColumnType("text");
-
                     b.Property<int?>("DashboardDataModelid")
                         .HasColumnType("integer");
 
-                    b.Property<string>("MonthYear")
+                    b.Property<string>("MetricName")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Notes")
+                    b.Property<string>("Month")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("RecordedDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<double>("Score")
+                        .HasColumnType("double precision");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("numeric");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

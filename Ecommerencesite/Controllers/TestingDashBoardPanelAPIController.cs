@@ -143,6 +143,82 @@ namespace Ecommerencesite.Controllers
                     {
                               context.UpdateHealthHistory(updatehelath);
                     }
+
+
+
+
+
+
+
+                    //MonthlyProgressModel API CONTROLLER CODE        
+
+
+                    [HttpGet("AllMonthlyProgress")]         
+              public List<MonthlyProgressModel> AllMonthlyProgress()
+                    {
+                              var monthlyProgressList = context.AllMonthlyProgress();
+                              return monthlyProgressList;
+                    }
+
+                    [HttpGet("DetailsMonthlyProgress")]
+                    public MonthlyProgressModel DetialsMonthlyProgress(int id)
+                    {
+                              var detailsMonthlyProgress = context.DetialsMonthlyProgress(id);
+                              return detailsMonthlyProgress;
+                    }
+                   
+                    [HttpPost("CreateMonthlyProgress")]
+                    public void CreateMonthlyProgress(MonthlyProgressModel newMonthlyProgress)
+                    {
+                              context.CreateMonthlyProgress(newMonthlyProgress);
+                    }
+
+                    [HttpPut("UpdateMonthlyProgress")]
+                    public void UpdateMonthlyProgress(MonthlyProgressModel updatedMonthlyProgress)
+                    {
+                              context.UpdateMonthlyProgress(updatedMonthlyProgress);
+                    }
+
+                    [HttpDelete("DeleteMonthlyProgress")]
+                    public MonthlyProgressModel DeleteMonthlyProgress(int id)
+                    {
+                              var deletedMonthlyProgress = context.DeleteMonthlyProgress(id);
+                              return deletedMonthlyProgress;
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     //[HttpGet("GetHealthHistoryByUserId/{userId}")]
                     //Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
                     //{

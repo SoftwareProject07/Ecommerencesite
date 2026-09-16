@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260916101512_newuddod")]
+    partial class newuddod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace Ecommerencesite.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ADMINid"));
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -137,7 +140,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("BankRefundableAmountid");
 
@@ -153,7 +156,7 @@ namespace Ecommerencesite.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AppliedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("CurrentCTC")
                         .HasColumnType("decimal(18,2)");
@@ -263,7 +266,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal?>("CurrentBalance")
                         .HasColumnType("numeric");
@@ -384,7 +387,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RecordDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("Value")
                         .HasColumnType("double precision");
@@ -494,7 +497,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("DashboardDataModelid")
                         .HasColumnType("integer");
@@ -505,7 +508,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("DiagnosisDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -606,7 +609,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Frequency")
                         .IsRequired()
@@ -617,7 +620,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -655,7 +658,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RecordedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric");
@@ -874,7 +877,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("ReportDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Systolic")
                         .HasColumnType("integer");
@@ -919,7 +922,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FrameData")
                         .IsRequired()
@@ -1037,7 +1040,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -1064,7 +1067,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("DistanceInKm")
                         .HasColumnType("double precision");
@@ -1175,7 +1178,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CustomerCity")
                         .HasColumnType("text");
@@ -1245,7 +1248,7 @@ namespace Ecommerencesite.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("ClosingDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -1281,7 +1284,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("PostedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -1297,7 +1300,7 @@ namespace Ecommerencesite.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -1447,10 +1450,10 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("ClosedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CustomerId")
                         .HasColumnType("text");
@@ -1500,7 +1503,7 @@ namespace Ecommerencesite.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("TicketId");
 

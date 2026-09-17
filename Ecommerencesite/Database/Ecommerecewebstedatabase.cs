@@ -1,6 +1,8 @@
 ﻿using Ecommerencesite.Model;
 using Ecommerencesite.Model.DASHBOARDS;
+using Ecommerencesite.Model.LABTESTMODEL;
 using HelpDeskAPI.Models;
+using LabTestApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerencesite.Database
@@ -38,17 +40,17 @@ namespace Ecommerencesite.Database
 
 
 
-              //                //Preciption
-              //                base.OnModelCreating(modelBuilder);
+                              //                //Preciption
+                              //                base.OnModelCreating(modelBuilder);
 
-              ////      Optional: Explicitly defining One - to - Many relationship configuration
-              //                modelBuilder.Entity<PrescriptionModel>()
-              //                    .HasMany(p => p.Medicines)
-              //                    .WithOne(m => m.PrescriptionModel)
-              //                    .HasForeignKey(m => m.PrescriptionModelId)
-              //                    .OnDelete(DeleteBehavior.Cascade);
+                              ////      Optional: Explicitly defining One - to - Many relationship configuration
+                              //                modelBuilder.Entity<PrescriptionModel>()
+                              //                    .HasMany(p => p.Medicines)
+                              //                    .WithOne(m => m.PrescriptionModel)
+                              //                    .HasForeignKey(m => m.PrescriptionModelId)
+                              //                    .OnDelete(DeleteBehavior.Cascade);
 
-              //                modelBuilder.Entity<MedicineDetail>().HasNoKey();
+                              //                modelBuilder.Entity<MedicineDetail>().HasNoKey();
                     }
 
 
@@ -114,17 +116,25 @@ namespace Ecommerencesite.Database
                     public DbSet<Help_SupportTicketModel> SupportTicketModels { get; set; }
                     public DbSet<UserSettingsModel> UserSettingsModels { get; set; }
                     public DbSet<AvailableTestModel> AvailableTestModels { get; set; }
-                  //public DbSet<Medication> Medicationss { get; set; }
+                    //public DbSet<Medication> Medicationss { get; set; }
 
-                    public DbSet<TestReport> TestReports { get; set; }     
-                    
+                    public DbSet<TestReport> TestReports { get; set; }
+
                     public DbSet<MedicineDetail> medicinedetailss { get; set; }
+
+                    public DbSet<OfferTestModel> OfferTestModels { get; set; }
+                    public DbSet<BookingRequestModel> BookingRequestModels { get; set; }
+                    public DbSet<BookingResponseModel> BookingResponseModels
+                    {
+                              get; set;
+
 
                     }
 
 
 
 
+          }
 }
 
 

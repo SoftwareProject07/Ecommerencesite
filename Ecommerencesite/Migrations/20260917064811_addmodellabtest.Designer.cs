@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260917064811_addmodellabtest")]
+    partial class addmodellabtest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -565,7 +568,7 @@ namespace Ecommerencesite.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ActionType")
+                    b.Property<string>("ActivityType")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -576,9 +579,12 @@ namespace Ecommerencesite.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IpAddress")
+                    b.Property<string>("Timestamp")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -938,86 +944,43 @@ namespace Ecommerencesite.Migrations
                     b.ToTable("issuecategorymasterModels");
                 });
 
-            modelBuilder.Entity("Ecommerencesite.Model.LABTESTMODEL.BookingRequestModel", b =>
+            modelBuilder.Entity("Ecommerencesite.Model.LABTESTMODEL.OfferTestModel", b =>
                 {
-                    b.Property<int>("TestId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TestId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Age")
+                    b.Property<int>("DiscountPercentage")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("AppointmentDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<double>("DistanceInKm")
-                        .HasColumnType("double precision");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MobileNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PatientName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Pincode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TestType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TimeSlot")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("TestId");
-
-                    b.ToTable("BookingRequestModels");
-                });
-
-            modelBuilder.Entity("Ecommerencesite.Model.LABTESTMODEL.BookingResponseModel", b =>
-                {
-                    b.Property<int>("BookingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookingId"));
-
-                    b.Property<string>("ExecutiveMobile")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ExecutiveName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("FinalAmount")
+                    b.Property<decimal>("OfferPrice")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Status")
+                    b.Property<decimal>("OriginalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("TestName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("TrackingStep")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.HasKey("Id");
 
-                    b.HasKey("BookingId");
-
-                    b.ToTable("BookingResponseModels");
+                    b.ToTable("OfferTestModels");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.LivenessCheckRequestModel", b =>
@@ -1618,49 +1581,6 @@ namespace Ecommerencesite.Migrations
                     b.HasKey("TicketId");
 
                     b.ToTable("CustomerTicketRaise");
-                });
-
-            modelBuilder.Entity("LabTestApp.Models.OfferTestModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("DiscountPercentage")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("OfferPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("TestName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OfferTestModels");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.DASHBOARDS.AvailableTestModel", b =>

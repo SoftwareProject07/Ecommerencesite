@@ -2,6 +2,8 @@
 using Ecommerencesite.Database;
 using Ecommerencesite.Model;
 using Ecommerencesite.Model.DASHBOARDS;
+using Ecommerencesite.Model.LABTESTMODEL;
+using LabTestApp.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -281,6 +283,84 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     }
 
                     return prescription;
+          }
+
+
+          //labtestmodeladdmin
+          public List<OfferTestModel> AllOffersAsync()
+          {
+                   var listoffer= _context.OfferTestModels.ToList();
+                    return listoffer;
+          }
+
+          public OfferTestModel DetailsOffer(int id)
+          {
+                  var detailsOffer = _context.OfferTestModels.FirstOrDefault(o => o.Id == id);
+                    return detailsOffer;
+          }
+
+          public OfferTestModel SearchOffersAsync(string keyword)
+          {
+                  var searchOffer = _context.OfferTestModels.FirstOrDefault(o => o.TestName.Contains(keyword));
+                    return searchOffer;
+          }
+
+          public void CreateOfferAsync(OfferTestModel model)
+          {
+                 _context.OfferTestModels.Add(model);
+                    _context.SaveChanges();
+          }
+
+          public void UpdateOfferAsync(OfferTestModel model)
+          {
+                 _context.OfferTestModels.Update(model);
+                    _context.SaveChanges();
+          }
+
+          public OfferTestModel DeleteOfferAsync(int id)
+          {
+                   var deleteOffer = _context.OfferTestModels.FirstOrDefault(o => o.Id == id);
+                    if (deleteOffer != null)
+                    {
+                              _context.OfferTestModels.Remove(deleteOffer);
+                              _context.SaveChanges();
+                    }
+                    return deleteOffer;
+          }
+          //business layer -- history model 
+          public List<HistoryModel> AllHistory()
+          {
+                   var listhistory= _context.HistoryModels.ToList();
+                    return listhistory;
+          }
+
+          public HistoryModel DetailsHistory(int id)
+          {
+                 var detailsHistory = _context.HistoryModels.FirstOrDefault(h => h.Id == id);
+                    return detailsHistory;        
+          }
+
+          public void CreateHistory(HistoryModel newHistory)
+          {
+                  _context.HistoryModels.Add(newHistory);
+                    _context.SaveChanges();
+          }
+
+          public void UpdateHistory(HistoryModel updatedHistory)
+          {
+                 _context.HistoryModels.Update(updatedHistory);
+                    _context.SaveChanges();
+          }
+
+          public HistoryModel DeleteHistory(int id)
+          {
+                 var deleteHistory = _context.HistoryModels.FirstOrDefault(h => h.Id == id);
+                    if (deleteHistory != null)
+                    {
+                              _context.HistoryModels.Remove(deleteHistory);
+                              _context.SaveChanges();
+                    }
+                    return deleteHistory;
           }
 }
 

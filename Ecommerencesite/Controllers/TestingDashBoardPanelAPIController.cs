@@ -1,5 +1,7 @@
 ﻿using Ecommerencesite.Businee_Layer.IBusineeLayer;
 using Ecommerencesite.Model.DASHBOARDS;
+using Ecommerencesite.Model.LABTESTMODEL;
+using LabTestApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -270,6 +272,85 @@ namespace Ecommerencesite.Controllers
                               return deletedPrescription;
                     }
 
+                    // Lab Test Model API CONTROLLER CODE   
+
+                    [HttpGet("AllOffersAsync")]
+                    public List<OfferTestModel> AllOffersAsync()
+                    {
+                              var offersList = context.AllOffersAsync();
+                              return offersList;
+                    }
+
+                    [HttpGet("DetailsOffer")]
+                    public OfferTestModel DetailsOffer(int id)
+                    {
+                              var detailsOffer = context.DetailsOffer(id);
+                              return detailsOffer;
+                    }
+
+
+                    [HttpGet("SearchOffersAsync")]
+                    public OfferTestModel SearchOffersAsync(string keyword)
+                    {
+                              var searchResult = context.SearchOffersAsync(keyword);
+                              return searchResult;
+                    }
+
+
+                    [HttpPost("CreateOfferAsync")]
+                    public void CreateOfferAsync(OfferTestModel model)
+                    {
+                              context.CreateOfferAsync(model);
+                    }
+
+                    [HttpPut("UpdateOfferAsync")]
+                    public void UpdateOfferAsync(OfferTestModel model)
+                    {
+                              context.UpdateOfferAsync(model);
+                    }
+
+                    [HttpDelete("DeleteOfferAsync")]
+                    public OfferTestModel DeleteOfferAsync(int id)
+                    {
+                              var deletedOffer = context.DeleteOfferAsync(id);
+                              return deletedOffer;
+                    }
+
+
+                    //HISTORY MODEL API 
+                    [HttpGet("AllHistory")]
+                    public List<HistoryModel> AllHistory()
+                    {
+                                                           var historyList = context.AllHistory();
+                              return historyList;
+                    }
+
+                    [HttpGet("DetailsHistory")]
+                    public HistoryModel DetailsHistory(int id)
+                    {
+                              var detailsHistory = context.DetailsHistory(id);
+                              return detailsHistory;
+                    }
+
+                    [HttpPost("CreateHistory")]
+                    
+                    public void CreateHistory(HistoryModel newHistory)
+                    {
+                              context.CreateHistory(newHistory);
+                    }
+
+                    [HttpPut("UpdateHistory")]
+                    public void UpdateHistory(HistoryModel updatedHistory)
+                    {
+                              context.UpdateHistory(updatedHistory);
+                    }
+
+                    [HttpDelete("DeleteHistory")]
+                    public HistoryModel DeleteHistory(int id)
+                    {
+                              var deletedHistory = context.DeleteHistory(id);
+                              return deletedHistory;
+                    }
 
 
 
@@ -280,31 +361,6 @@ namespace Ecommerencesite.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    //[HttpGet("GetHealthHistoryByUserId/{userId}")]
-                    //Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId)
-                    //{
-                    //          var healthHistories = context.GetByUserIdAsync(userId);
-                    //          return healthHistories;
-                    //}
 
 
 

@@ -1,4 +1,6 @@
 ﻿using Ecommerencesite.Model.DASHBOARDS;
+using Ecommerencesite.Model.LABTESTMODEL;
+using LabTestApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Identity.Client;
@@ -74,6 +76,22 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
 
 
+
+                    //Lab Test Model    
+                   public List<OfferTestModel> AllOffersAsync();
+                    OfferTestModel DetailsOffer(int id);
+                    OfferTestModel SearchOffersAsync(string keyword);
+                   public  void  CreateOfferAsync(OfferTestModel model);
+                  public  void  UpdateOfferAsync(OfferTestModel model);
+                  public  OfferTestModel  DeleteOfferAsync(int id);
+
+
+                    // History Model    
+                    public List<HistoryModel> AllHistory(); 
+                    public HistoryModel DetailsHistory(int id);
+                    public void CreateHistory(HistoryModel newHistory);
+                    public void UpdateHistory(HistoryModel updatedHistory);
+                    public HistoryModel DeleteHistory(int id);
 
           }
 }

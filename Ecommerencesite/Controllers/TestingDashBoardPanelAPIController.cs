@@ -188,7 +188,94 @@ namespace Ecommerencesite.Controllers
 
 
 
+                    //PrescriptionModel API CONTROLLER CODE 
+                    [HttpGet("AllPrescriptions")]
+                    public List<PrescriptionModel> AllPrescriptions()
+                    {
+                              var prescriptionList = context.AllPrescriptions();
+                              return prescriptionList;
+                    }
 
+                    [HttpGet("DetailsPrescription")]
+                    public PrescriptionModel DetailsPrescription(int id)
+                    {
+                              var detailsPrescription = context.DetailsPrescription(id);
+                              return detailsPrescription;
+                    }
+
+                    //[HttpPost("CreatePrescription")]
+                    //public void CreatePrescription(PrescriptionModel newPrescription)
+                    //{
+                    //          context.CreatePrescription(newPrescription);
+                    //}
+
+
+
+
+
+                    //[HttpPost("CreatePrescription")]
+                    //public IActionResult CreatePrescription( PrescriptionModel model)
+                    //{
+                    //          if (model == null)
+                    //          {
+                    //                    return BadRequest(new { success = false, message = "Invalid data" });
+                    //          }
+
+                    //          try
+                    //          {
+                    //                    // यहाँ अपना डेटाबेस सेव करने का लॉजिक लिखें (DbContext.Add etc.)
+                    //                    // _context.Prescriptions.Add(model);
+                    //                    // _context.SaveChanges();
+
+                    //                    return Ok(new { success = true, message = "Prescription created successfully", data = model });
+                    //          }
+                    //          catch (Exception ex)
+                    //          {
+                    //                    return StatusCode(500, new { success = false, message = ex.Message });
+                    //          }
+                    //}
+
+
+
+
+                    [HttpPost("CreatePrescription")]
+                    public void CreatePrescription([FromBody] PrescriptionModel model)
+                    {
+                              if (model == null)
+                              {
+                                        throw new ArgumentException("Prescription model cannot be null.");
+                              }
+
+                              try
+                              {
+                                        // मान लीजिए आपके पास डेटाबेस का DbContext '_context' नाम से है
+                                        // अगर आपके कॉन्टेक्स्ट का नाम कुछ और है (जैसे ApplicationDbContext), तो उसे यहाँ बदल लें।
+
+                                        // 1. सबसे पहले मुख्य प्रिस्क्रिप्शन मॉडल को जोड़ें
+                                        context.CreatePrescription(model);
+
+                                        // 2. डेटाबेस में बदलावों को सेव करें
+                                      //  context.savecha();
+                              }
+                              catch (Exception ex)
+                              {
+                                        // यदि कोई डेटाबेस एरर आती है तो एक्सेप्शन थ्रो करें
+                                        throw new Exception("Error saving prescription to database: " + ex.Message);
+                              }
+                    }
+
+                    [HttpPut("UpdatePrescription")]
+                    public void UpdatePrescription(PrescriptionModel updatedPrescription)
+                    {
+                              context.UpdatePrescription(updatedPrescription);
+                    }
+
+                    [HttpDelete("DeletePrescription")]
+                    public PrescriptionModel DeletePrescription(int id)
+                    {
+                              var deletedPrescription = context.DeletePrescription(id);
+                              return deletedPrescription;
+                    }
 
 
 

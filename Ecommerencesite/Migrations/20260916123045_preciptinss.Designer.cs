@@ -3,6 +3,7 @@ using System;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerencesite.Migrations
 {
     [DbContext(typeof(Ecommerecewebstedatabase))]
-    partial class EcommerecewebstedatabaseModelSnapshot : ModelSnapshot
+    [Migration("20260916123045_preciptinss")]
+    partial class preciptinss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -650,7 +653,7 @@ namespace Ecommerencesite.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("PrescriptionModelId")
+                    b.Property<int>("PrescriptionModelId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -720,7 +723,7 @@ namespace Ecommerencesite.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("PrescriptionDate")
+                    b.Property<DateTime>("PrescriptionDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Status")
@@ -1610,9 +1613,13 @@ namespace Ecommerencesite.Migrations
 
             modelBuilder.Entity("Ecommerencesite.Model.DASHBOARDS.MedicineDetail", b =>
                 {
-                    b.HasOne("Ecommerencesite.Model.DASHBOARDS.PrescriptionModel", null)
+                    b.HasOne("Ecommerencesite.Model.DASHBOARDS.PrescriptionModel", "PrescriptionModel")
                         .WithMany("Medicines")
-                        .HasForeignKey("PrescriptionModelId");
+                        .HasForeignKey("PrescriptionModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PrescriptionModel");
                 });
 
             modelBuilder.Entity("Ecommerencesite.Model.DASHBOARDS.MonthlyProgressModel", b =>

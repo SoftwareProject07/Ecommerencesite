@@ -33,6 +33,22 @@ namespace Ecommerencesite.Database
         .HasMany(o => o.OrderItemss)
         .WithOne(i => i.Order)
         .HasForeignKey(i => i.OrderId);
+
+
+
+
+
+                              //Preciption
+                          //    base.OnModelCreating(modelBuilder);
+
+                              // Optional: Explicitly defining One-to-Many relationship configuration
+                              //modelBuilder.Entity<PrescriptionModel>()
+                              //    .HasMany(p => p.Medicines)
+                              //    .WithOne(m => m.prescription)
+                              //    .HasForeignKey(m => m.PrescriptionModelId)
+                              //    .OnDelete(DeleteBehavior.Cascade);
+
+                              //    modelBuilder.Entity<MedicineDetail>().HasNoKey();
                     }
 
 
@@ -99,7 +115,9 @@ namespace Ecommerencesite.Database
                     public DbSet<AvailableTestModel> AvailableTestModels { get; set; }
                   //public DbSet<Medication> Medicationss { get; set; }
 
-                    public DbSet<TestReport> TestReports { get; set; }          
+                    public DbSet<TestReport> TestReports { get; set; }     
+                    
+                    public DbSet<MedicineDetail> medicinedetailss { get; set; }
 
           }
 

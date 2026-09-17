@@ -1,5 +1,7 @@
 ﻿using Ecommerencesite.Model.DASHBOARDS;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Identity.Client;
 
 namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 {
@@ -59,6 +61,16 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void UpdateMonthlyProgress(MonthlyProgressModel updatedMonthlyProgress);
                     public MonthlyProgressModel DeleteMonthlyProgress(int id);
 
+
+                    //PrescriptionModel 
+
+                    public List<PrescriptionModel> AllPrescriptions();
+                    public  void UpdatePrescription(PrescriptionModel updatedPrescription);
+
+                 public void    CreatePrescription(PrescriptionModel newPrescription);       
+                    public  PrescriptionModel DeletePrescription(int id);
+
+                  public PrescriptionModel DetailsPrescription(int id);
 
 
 

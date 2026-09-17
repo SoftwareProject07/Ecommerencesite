@@ -221,7 +221,42 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     }
                     return deleteMonthlyProgress;
           }
+          // prescription Business Logic          
+          public List<PrescriptionModel> AllPrescriptions()
+          {
+                 var listPrescriptions = _context.PrescriptionModels.ToList();
+                    return listPrescriptions;     
           }
+
+          public void UpdatePrescription(PrescriptionModel updatedPrescription)
+          {
+                   _context.PrescriptionModels.Update(updatedPrescription);
+                    _context.SaveChanges();
+          }
+
+          public void CreatePrescription(PrescriptionModel newPrescription)
+          {
+                   _context.PrescriptionModels.Add(newPrescription);
+                    _context.SaveChanges();
+          }
+
+          public PrescriptionModel DeletePrescription(int id)
+          {
+                  var deletePrescription = _context.PrescriptionModels.FirstOrDefault(p => p.Id == id);
+                    if (deletePrescription != null)
+                    {
+                              _context.PrescriptionModels.Remove(deletePrescription);
+                              _context.SaveChanges();
+                    }
+                    return deletePrescription;    
+          }
+
+          public PrescriptionModel DetailsPrescription(int id)
+          {
+                   var detailsPrescription = _context.PrescriptionModels.FirstOrDefault(p => p.Id == id);
+                    return detailsPrescription;   
+          }
+}
 
 
 

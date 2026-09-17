@@ -93,5 +93,10 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     public void UpdateHistory(HistoryModel updatedHistory);
                     public HistoryModel DeleteHistory(int id);
 
+
+
+                    //Setting Module
+                    Task<SettingModule> GetSettingsAsync();
+                    Task<bool> UpdateSettingsAsync(SettingModule settingModel);
           }
 }

@@ -353,7 +353,23 @@ namespace Ecommerencesite.Controllers
                     }
 
 
+                    // GET: api/usersettings/GetUserSettings
+                    [HttpGet("AllSettings")]
+                    public async Task<IActionResult> GetUserSettings()
+                    {
+                              var settings = await context.GetSettingsAsync();
+                              return Ok(settings);
+                    }
 
+                    // POST: api/usersettings/UpdateUserSettings
+                    [HttpPost("UpdateSettings")]
+                    public async Task<IActionResult> UpdateUserSettings([FromBody] SettingModule settingModel)
+                    {
+                              var success = await context.UpdateSettingsAsync(settingModel);
+                              if (!success) return BadRequest(new { message = "Failed to update settings" });
+
+                              return Ok(new { success = true, message = "Settings updated successfully" });
+                    }
 
 
 

@@ -130,6 +130,7 @@ namespace Ecommerencesite.Database
 
 
                     }
+                    public DbSet<SettingModule> SettingModules { get; set; }    
 
 
 

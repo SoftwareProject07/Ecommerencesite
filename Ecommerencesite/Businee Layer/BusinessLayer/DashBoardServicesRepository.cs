@@ -362,6 +362,39 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     }
                     return deleteHistory;
           }
+
+          public async  Task<SettingModule> GetSettingsAsync()
+          {
+                    var setting = await _context.SettingModules.FirstOrDefaultAsync();
+                    if (setting == null)
+                    {
+                              setting = new SettingModule();
+                              _context.SettingModules.Add(setting);
+                              await _context.SaveChangesAsync();
+                    }
+                    return setting;
+          }
+
+          public  async Task<bool> UpdateSettingsAsync(SettingModule settingModel)
+          {
+                    var existing = await _context.SettingModules.FirstOrDefaultAsync();
+                    if (existing == null)
+                    {
+                              _context.SettingModules.Add(settingModel);
+                              return await _context.SaveChangesAsync() > 0;
+                    }
+
+                    // Existing fields ko update karein
+                    existing.EmailNotifications = settingModel.EmailNotifications;
+                    existing.SmsNotifications = settingModel.SmsNotifications;
+                    existing.TwoFactorAuth = settingModel.TwoFactorAuth;
+                    existing.ThemeMode = settingModel.ThemeMode;
+                    existing.Language = settingModel.Language;
+                    existing.UpdatedAt = DateTime.UtcNow;
+
+                    _context.SettingModules.Update(existing);
+                    return await _context.SaveChangesAsync() > 0;
+          }
 }
 
 

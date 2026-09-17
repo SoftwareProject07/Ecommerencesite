@@ -38,18 +38,19 @@ namespace Ecommerencesite.Database
 
 
 
-                              //Preciption
-                          //    base.OnModelCreating(modelBuilder);
+              //                //Preciption
+              //                base.OnModelCreating(modelBuilder);
 
-                              // Optional: Explicitly defining One-to-Many relationship configuration
-                              //modelBuilder.Entity<PrescriptionModel>()
-                              //    .HasMany(p => p.Medicines)
-                              //    .WithOne(m => m.prescription)
-                              //    .HasForeignKey(m => m.PrescriptionModelId)
-                              //    .OnDelete(DeleteBehavior.Cascade);
+              ////      Optional: Explicitly defining One - to - Many relationship configuration
+              //                modelBuilder.Entity<PrescriptionModel>()
+              //                    .HasMany(p => p.Medicines)
+              //                    .WithOne(m => m.PrescriptionModel)
+              //                    .HasForeignKey(m => m.PrescriptionModelId)
+              //                    .OnDelete(DeleteBehavior.Cascade);
 
-                              //    modelBuilder.Entity<MedicineDetail>().HasNoKey();
+              //                modelBuilder.Entity<MedicineDetail>().HasNoKey();
                     }
+
 
 
 
@@ -119,7 +120,7 @@ namespace Ecommerencesite.Database
                     
                     public DbSet<MedicineDetail> medicinedetailss { get; set; }
 
-          }
+                    }
 
 
 

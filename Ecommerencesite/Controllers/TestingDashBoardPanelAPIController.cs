@@ -237,7 +237,6 @@ namespace Ecommerencesite.Controllers
 
 
 
-
                     [HttpPost("CreatePrescription")]
                     public void CreatePrescription([FromBody] PrescriptionModel model)
                     {
@@ -248,19 +247,13 @@ namespace Ecommerencesite.Controllers
 
                               try
                               {
-                                        // मान लीजिए आपके पास डेटाबेस का DbContext '_context' नाम से है
-                                        // अगर आपके कॉन्टेक्स्ट का नाम कुछ और है (जैसे ApplicationDbContext), तो उसे यहाँ बदल लें।
-
-                                        // 1. सबसे पहले मुख्य प्रिस्क्रिप्शन मॉडल को जोड़ें
+                                        // _context आपके डेटाबेस DbContext का नाम होना चाहिए
                                         context.CreatePrescription(model);
-
-                                        // 2. डेटाबेस में बदलावों को सेव करें
-                                      //  context.savecha();
+                                    //    _context.SaveChanges();
                               }
                               catch (Exception ex)
                               {
-                                        // यदि कोई डेटाबेस एरर आती है तो एक्सेप्शन थ्रो करें
-                                        throw new Exception("Error saving prescription to database: " + ex.Message);
+                                        throw new Exception("Error saving to database: " + ex.Message);
                               }
                     }
 

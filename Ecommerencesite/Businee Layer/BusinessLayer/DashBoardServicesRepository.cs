@@ -222,11 +222,21 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     return deleteMonthlyProgress;
           }
           // prescription Business Logic          
+          //public List<PrescriptionModel> AllPrescriptions()
+          //{
+          //       var listPrescriptions = _context.PrescriptionModels.ToList();
+          //          return listPrescriptions;     
+          //}
+
           public List<PrescriptionModel> AllPrescriptions()
           {
-                 var listPrescriptions = _context.PrescriptionModels.ToList();
-                    return listPrescriptions;     
+                    // .Include(p => p.Medicines) लगाने से दवाइयों का डेटा साथ में आ जाएगा
+                    var prescriptionList = _context.PrescriptionModels
+                                                   .Include(p => p.Medicines)
+                                                   .ToList();
+                    return prescriptionList;
           }
+
 
           public void UpdatePrescription(PrescriptionModel updatedPrescription)
           {
@@ -251,10 +261,26 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     return deletePrescription;    
           }
 
+          //public PrescriptionModel DetailsPrescription(int id)
+          //{
+          //         var detailsPrescription = _context.PrescriptionModels.FirstOrDefault(p => p.Id == id);
+          //          return detailsPrescription;   
+          //}
+
+
           public PrescriptionModel DetailsPrescription(int id)
           {
-                   var detailsPrescription = _context.PrescriptionModels.FirstOrDefault(p => p.Id == id);
-                    return detailsPrescription;   
+                    // यहाँ भी .Include(p => p.Medicines) जोड़ें ताकि सिंगल डिटेल्स में भी दवाइयां दिखें
+                    var prescription = _context.PrescriptionModels
+                                               .Include(p => p.Medicines)
+                                               .FirstOrDefault(p => p.Id == id);
+
+                    if (prescription == null)
+                    {
+                              throw new Exception("Prescription not found with ID: " + id);
+                    }
+
+                    return prescription;
           }
 }
 

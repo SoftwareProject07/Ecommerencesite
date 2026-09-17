@@ -36,6 +36,7 @@
 
 
 
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -61,11 +62,11 @@ namespace Ecommerencesite.Model.DASHBOARDS
                     [Key]
                     public int Id { get; set; }
 
-                    // Foreign Key to link with PrescriptionModel
                     public int PrescriptionModelId { get; set; }
 
                     [ForeignKey("PrescriptionModelId")]
                     [JsonIgnore]
+                    [ValidateNever] // <-- यह लाइन जोड़ना सबसे महत्वपूर्ण है, इससे .NET इस नेविगेशन को वैलिडेट नहीं करेगा
                     public PrescriptionModel PrescriptionModel { get; set; }
 
                     public string MedicineName { get; set; }

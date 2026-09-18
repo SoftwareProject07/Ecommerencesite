@@ -373,7 +373,7 @@ namespace Ecommerencesite.Controllers
 
 
                     // GET: api/helpsupport/tickets
-                    [HttpGet("Alltickets")]
+                    [HttpGet("AllticketHelpSupport")]
                     public async Task<ActionResult<IEnumerable<Help_SupportTicketModels>>> GetTickets()
                     {
                               var tickets = await context.GetAllTicketsAsync();
@@ -381,7 +381,7 @@ namespace Ecommerencesite.Controllers
                     }
 
                     // POST: api/helpsupport/ticket
-                    [HttpPost("Createticket")]
+                    [HttpPost("CreateticketHelpSupport")]
                     public async Task<IActionResult> CreateTicket([FromBody] Help_SupportTicketModels model)
                     {
                               if (!ModelState.IsValid)

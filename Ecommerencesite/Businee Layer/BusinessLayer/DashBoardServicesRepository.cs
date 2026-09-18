@@ -10,16 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-public class DashBoardServicesRepository : IDashBoardServicesRepository         
+public class DashBoardServicesRepository : IDashBoardServicesRepository
 {
-          public  readonly Ecommerecewebstedatabase _context;
+          public readonly Ecommerecewebstedatabase _context;
 
           public DashBoardServicesRepository(Ecommerecewebstedatabase context)
           {
-                   this._context   = context;
+                    this._context = context;
           }
 
-          public   List<MedicationTrackerModel> GetAllAsync()
+          public List<MedicationTrackerModel> GetAllAsync()
           {
 
                     var medications = _context.MedicationTrackerModels.ToList();
@@ -28,29 +28,29 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
 
           public MedicationTrackerModel GetByIdAsync(int id)
           {
-                 var medication = _context.MedicationTrackerModels.FirstOrDefault(m => m.Id == id);
-                       return medication;
+                    var medication = _context.MedicationTrackerModels.FirstOrDefault(m => m.Id == id);
+                    return medication;
           }
 
           public void AddAsync(MedicationTrackerModel medicationsss)
           {
                     _context.MedicationTrackerModels.Add(medicationsss);
-                     _context.SaveChanges();
+                    _context.SaveChanges();
           }
 
-          public void  UpdateAsync(MedicationTrackerModel medicationssss)
+          public void UpdateAsync(MedicationTrackerModel medicationssss)
           {
                     _context.MedicationTrackerModels.Update(medicationssss);
-                     _context.SaveChanges();
+                    _context.SaveChanges();
           }
 
           public MedicationTrackerModel DeleteAsync(int id)
           {
-                    var medication =  _context.MedicationTrackerModels.Where(S=>S.Id==id).FirstOrDefault();
+                    var medication = _context.MedicationTrackerModels.Where(S => S.Id == id).FirstOrDefault();
                     if (medication != null)
                     {
                               _context.MedicationTrackerModels.Remove(medication);
-                              _context.SaveChanges();       
+                              _context.SaveChanges();
                     }
                     return medication;
           }
@@ -118,17 +118,17 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
 
           public List<TestReport> AllTestReports()
           {
-                 var testReports = _context.TestReports.ToList();
-                    return testReports; 
+                    var testReports = _context.TestReports.ToList();
+                    return testReports;
           }
 
           public TestReport GetTestReportById(int id)
           {
-                  var testReport = _context.TestReports.FirstOrDefault(tr => tr.Id == id);
-                    return testReport;  
+                    var testReport = _context.TestReports.FirstOrDefault(tr => tr.Id == id);
+                    return testReport;
           }
 
-          public void CreateTestReport( TestReport newReport)
+          public void CreateTestReport(TestReport newReport)
           {
                     _context.TestReports.Add(newReport);
                     _context.SaveChanges();
@@ -136,7 +136,7 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
 
           public void UpdateTestReport(TestReport updatedReport)
           {
-                  _context.TestReports.Update(updatedReport);
+                    _context.TestReports.Update(updatedReport);
                     _context.SaveChanges();
 
           }
@@ -153,37 +153,37 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           }
 
           public List<HealthHistoryModel> GetAllHealthHistories()
-         {
-                   var listhealthHistories = _context.HealthHistoryModels.ToList();
-                    return  listhealthHistories;  
+          {
+                    var listhealthHistories = _context.HealthHistoryModels.ToList();
+                    return listhealthHistories;
           }
 
           public HealthHistoryModel DetailsHealthhistory(int id)
           {
-                   var detailsHealthHistory = _context.HealthHistoryModels.FirstOrDefault(hh => hh.Id == id);
+                    var detailsHealthHistory = _context.HealthHistoryModels.FirstOrDefault(hh => hh.Id == id);
                     return detailsHealthHistory;
           }
 
           public HealthHistoryModel DeleteHealthHistory(int id)
           {
-                   var deleteHealthHistory = _context.HealthHistoryModels.FirstOrDefault(hh => hh.Id == id);
+                    var deleteHealthHistory = _context.HealthHistoryModels.FirstOrDefault(hh => hh.Id == id);
                     if (deleteHealthHistory != null)
                     {
                               _context.HealthHistoryModels.Remove(deleteHealthHistory);
                               _context.SaveChanges();
                     }
-                    return deleteHealthHistory;   
+                    return deleteHealthHistory;
           }
 
           public void CreateHealthHistory(HealthHistoryModel createhealthHistory)
           {
-                   _context.HealthHistoryModels.Add(createhealthHistory);
+                    _context.HealthHistoryModels.Add(createhealthHistory);
                     _context.SaveChanges();
           }
 
           public void UpdateHealthHistory(HealthHistoryModel updatehelath)
           {
-                   _context.HealthHistoryModels.Update(updatehelath);
+                    _context.HealthHistoryModels.Update(updatehelath);
                     _context.SaveChanges();
           }
 
@@ -191,13 +191,13 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           //MonthlyProgressModel 
           public List<MonthlyProgressModel> AllMonthlyProgress()
           {
-                   var listMonthlyProgress = _context.MonthlyProgressModels.ToList();
+                    var listMonthlyProgress = _context.MonthlyProgressModels.ToList();
                     return listMonthlyProgress;
           }
 
           public MonthlyProgressModel DetialsMonthlyProgress(int id)
           {
-                  var detailsMonthlyProgress = _context.MonthlyProgressModels.FirstOrDefault(mp => mp.Id == id);
+                    var detailsMonthlyProgress = _context.MonthlyProgressModels.FirstOrDefault(mp => mp.Id == id);
                     return detailsMonthlyProgress;
           }
 
@@ -242,25 +242,25 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
 
           public void UpdatePrescription(PrescriptionModel updatedPrescription)
           {
-                   _context.PrescriptionModels.Update(updatedPrescription);
+                    _context.PrescriptionModels.Update(updatedPrescription);
                     _context.SaveChanges();
           }
 
           public void CreatePrescription(PrescriptionModel newPrescription)
           {
-                   _context.PrescriptionModels.Add(newPrescription);
+                    _context.PrescriptionModels.Add(newPrescription);
                     _context.SaveChanges();
           }
 
           public PrescriptionModel DeletePrescription(int id)
           {
-                  var deletePrescription = _context.PrescriptionModels.FirstOrDefault(p => p.Id == id);
+                    var deletePrescription = _context.PrescriptionModels.FirstOrDefault(p => p.Id == id);
                     if (deletePrescription != null)
                     {
                               _context.PrescriptionModels.Remove(deletePrescription);
                               _context.SaveChanges();
                     }
-                    return deletePrescription;    
+                    return deletePrescription;
           }
 
           //public PrescriptionModel DetailsPrescription(int id)
@@ -289,37 +289,37 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           //labtestmodeladdmin
           public List<OfferTestModel> AllOffersAsync()
           {
-                   var listoffer= _context.OfferTestModels.ToList();
+                    var listoffer = _context.OfferTestModels.ToList();
                     return listoffer;
           }
 
           public OfferTestModel DetailsOffer(int id)
           {
-                  var detailsOffer = _context.OfferTestModels.FirstOrDefault(o => o.Id == id);
+                    var detailsOffer = _context.OfferTestModels.FirstOrDefault(o => o.Id == id);
                     return detailsOffer;
           }
 
           public OfferTestModel SearchOffersAsync(string keyword)
           {
-                  var searchOffer = _context.OfferTestModels.FirstOrDefault(o => o.TestName.Contains(keyword));
+                    var searchOffer = _context.OfferTestModels.FirstOrDefault(o => o.TestName.Contains(keyword));
                     return searchOffer;
           }
 
           public void CreateOfferAsync(OfferTestModel model)
           {
-                 _context.OfferTestModels.Add(model);
+                    _context.OfferTestModels.Add(model);
                     _context.SaveChanges();
           }
 
           public void UpdateOfferAsync(OfferTestModel model)
           {
-                 _context.OfferTestModels.Update(model);
+                    _context.OfferTestModels.Update(model);
                     _context.SaveChanges();
           }
 
           public OfferTestModel DeleteOfferAsync(int id)
           {
-                   var deleteOffer = _context.OfferTestModels.FirstOrDefault(o => o.Id == id);
+                    var deleteOffer = _context.OfferTestModels.FirstOrDefault(o => o.Id == id);
                     if (deleteOffer != null)
                     {
                               _context.OfferTestModels.Remove(deleteOffer);
@@ -330,31 +330,31 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           //business layer -- history model 
           public List<HistoryModel> AllHistory()
           {
-                   var listhistory= _context.HistoryModels.ToList();
+                    var listhistory = _context.HistoryModels.ToList();
                     return listhistory;
           }
 
           public HistoryModel DetailsHistory(int id)
           {
-                 var detailsHistory = _context.HistoryModels.FirstOrDefault(h => h.Id == id);
-                    return detailsHistory;        
+                    var detailsHistory = _context.HistoryModels.FirstOrDefault(h => h.Id == id);
+                    return detailsHistory;
           }
 
           public void CreateHistory(HistoryModel newHistory)
           {
-                  _context.HistoryModels.Add(newHistory);
+                    _context.HistoryModels.Add(newHistory);
                     _context.SaveChanges();
           }
 
           public void UpdateHistory(HistoryModel updatedHistory)
           {
-                 _context.HistoryModels.Update(updatedHistory);
+                    _context.HistoryModels.Update(updatedHistory);
                     _context.SaveChanges();
           }
 
           public HistoryModel DeleteHistory(int id)
           {
-                 var deleteHistory = _context.HistoryModels.FirstOrDefault(h => h.Id == id);
+                    var deleteHistory = _context.HistoryModels.FirstOrDefault(h => h.Id == id);
                     if (deleteHistory != null)
                     {
                               _context.HistoryModels.Remove(deleteHistory);
@@ -363,7 +363,7 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     return deleteHistory;
           }
 
-          public async  Task<SettingModule> GetSettingsAsync()
+          public async Task<SettingModule> GetSettingsAsync()
           {
                     var setting = await _context.SettingModules.FirstOrDefaultAsync();
                     if (setting == null)
@@ -375,7 +375,7 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     return setting;
           }
 
-          public  async Task<bool> UpdateSettingsAsync(SettingModule settingModel)
+          public async Task<bool> UpdateSettingsAsync(SettingModule settingModel)
           {
                     var existing = await _context.SettingModules.FirstOrDefaultAsync();
                     if (existing == null)
@@ -395,10 +395,38 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     _context.SettingModules.Update(existing);
                     return await _context.SaveChangesAsync() > 0;
           }
+
+
+          public async Task<List<Help_SupportTicketModels>> GetAllTicketsAsync()
+          {
+                    // Database se saare tickets fetch karna
+                    // return await _context.SupportTickets.ToListAsync();
+
+                    // Dummy implementation for reference
+                    return new List<Help_SupportTicketModels>();
+          }
+          // Naya Ticket Create karne ka logic
+          public async Task<bool> CreateTicketAsync(Help_SupportTicketModels ticket)
+          {
+                    // Business validations
+                    if (string.IsNullOrEmpty(ticket.Subject))
+                    {
+                              throw new ArgumentException("Subject cannot be empty.");
+                    }
+
+                    // Default values set karna agar pehle se na ho
+                    ticket.Subject = ticket.Subject.Trim();
+                    ticket.Status = "OPEN";
+                    ticket.TicketDate = DateTime.UtcNow;
+
+                    // Database mein save karna
+                    // _context.SupportTickets.Add(ticket);
+                    // await _context.SaveChangesAsync();
+
+                    return true;
+          }
+
 }
-
-
-
 
 
 

@@ -18,7 +18,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     //MEDICATION TRACKER iBUSINESS LAYER CODE
 
-                 public   List<MedicationTrackerModel> GetAllAsync();
+                    public List<MedicationTrackerModel> GetAllAsync();
                     public MedicationTrackerModel GetByIdAsync(int id);
                     public void AddAsync(MedicationTrackerModel medicationsss);
                     public void UpdateAsync(MedicationTrackerModel medicationssss);
@@ -30,7 +30,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     public TestReport GetTestReportById(int id);
                     public void CreateTestReport(TestReport newReport);
-                    public void  UpdateTestReport(TestReport updatedReport);
+                    public void UpdateTestReport(TestReport updatedReport);
                     public TestReport DeleteTestReport(int id);
 
 
@@ -48,7 +48,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
                     public List<HealthHistoryModel> GetAllHealthHistories();
 
-               //     Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId);
+                    //     Task<IEnumerable<HealthHistoryModel>> GetByUserIdAsync(int userId);
                     public HealthHistoryModel DetailsHealthhistory(int id);
                     public HealthHistoryModel DeleteHealthHistory(int id);
                     public void CreateHealthHistory(HealthHistoryModel createhealthHistory);
@@ -67,27 +67,27 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     //PrescriptionModel 
 
                     public List<PrescriptionModel> AllPrescriptions();
-                    public  void UpdatePrescription(PrescriptionModel updatedPrescription);
+                    public void UpdatePrescription(PrescriptionModel updatedPrescription);
 
-                 public void    CreatePrescription(PrescriptionModel newPrescription);       
-                    public  PrescriptionModel DeletePrescription(int id);
+                    public void CreatePrescription(PrescriptionModel newPrescription);
+                    public PrescriptionModel DeletePrescription(int id);
 
-                  public PrescriptionModel DetailsPrescription(int id);
+                    public PrescriptionModel DetailsPrescription(int id);
 
 
 
 
                     //Lab Test Model    
-                   public List<OfferTestModel> AllOffersAsync();
+                    public List<OfferTestModel> AllOffersAsync();
                     OfferTestModel DetailsOffer(int id);
                     OfferTestModel SearchOffersAsync(string keyword);
-                   public  void  CreateOfferAsync(OfferTestModel model);
-                  public  void  UpdateOfferAsync(OfferTestModel model);
-                  public  OfferTestModel  DeleteOfferAsync(int id);
+                    public void CreateOfferAsync(OfferTestModel model);
+                    public void UpdateOfferAsync(OfferTestModel model);
+                    public OfferTestModel DeleteOfferAsync(int id);
 
 
                     // History Model    
-                    public List<HistoryModel> AllHistory(); 
+                    public List<HistoryModel> AllHistory();
                     public HistoryModel DetailsHistory(int id);
                     public void CreateHistory(HistoryModel newHistory);
                     public void UpdateHistory(HistoryModel updatedHistory);
@@ -98,5 +98,14 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                     //Setting Module
                     Task<SettingModule> GetSettingsAsync();
                     Task<bool> UpdateSettingsAsync(SettingModule settingModel);
+
+
+                    //Help Support Ticket Model
+                    public Task<List<Help_SupportTicketModels>> GetAllTicketsAsync();
+
+                    public Task<bool> CreateTicketAsync(Help_SupportTicketModels ticket);
+
+
           }
+
 }

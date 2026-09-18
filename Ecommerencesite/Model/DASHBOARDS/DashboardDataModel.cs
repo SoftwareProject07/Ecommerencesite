@@ -22,7 +22,7 @@ namespace Ecommerencesite.Model.DASHBOARDS
                               MonthlyProgresses = new List<MonthlyProgressModel>();
                               Prescriptions = new List<PrescriptionModel>();
                               HistoryRecords = new List<HistoryModel>();
-                              SupportTickets = new List<Help_SupportTicketModel>();
+                              SupportTickets = new List<Help_SupportTicketModels>();
                               AvailableTests = new List<AvailableTestModel>();
                     }
 
@@ -42,7 +42,7 @@ namespace Ecommerencesite.Model.DASHBOARDS
                     public List<MonthlyProgressModel> MonthlyProgresses { get; set; }
                     public List<PrescriptionModel> Prescriptions { get; set; }
                     public List<HistoryModel> HistoryRecords { get; set; }
-                    public List<Help_SupportTicketModel> SupportTickets { get; set; }
+                    public List<Help_SupportTicketModels> SupportTickets { get; set; }
                     public UserSettingsModel Settings { get; set; }
 
                     // New: Available diagnostic tests for booking (Blood Test, Ultrasound, etc.)

@@ -372,6 +372,38 @@ namespace Ecommerencesite.Controllers
                     }
 
 
+                    // GET: api/helpsupport/tickets
+                    [HttpGet("Alltickets")]
+                    public async Task<ActionResult<IEnumerable<Help_SupportTicketModels>>> GetTickets()
+                    {
+                              var tickets = await context.GetAllTicketsAsync();
+                              return Ok(tickets);
+                    }
+
+                    // POST: api/helpsupport/ticket
+                    [HttpPost("Createticket")]
+                    public async Task<IActionResult> CreateTicket([FromBody] Help_SupportTicketModels model)
+                    {
+                              if (!ModelState.IsValid)
+                              {
+                                        return BadRequest(ModelState);
+                              }
+
+                              try
+                              {
+                                        var result = await context.CreateTicketAsync(model);
+                                        if (result)
+                                        {
+                                                  return Ok(new { message = "Support ticket created successfully!" });
+                                        }
+
+                                        return BadRequest(new { message = "Failed to create ticket." });
+                              }
+                              catch (System.Exception ex)
+                              {
+                                        return StatusCode(500, new { message = ex.Message });
+                              }
+                    }
 
 
 

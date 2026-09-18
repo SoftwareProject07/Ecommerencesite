@@ -96,7 +96,7 @@ builder.Services.AddDbContext<Ecommerecewebstedatabase>(options =>
 //app.UseAuthorization();
 
 
-builder.Services.AddScoped<Ecommerencesite.Businee_Layer.BusineeLayer.IUserMedicineRepository, UserMedicineRepository>();
+builder.Services.AddScoped<IUserMedicineRepository, UserMedicineRepository>();
 builder.Services.AddScoped<IMedicineRepositort, MedicineRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();

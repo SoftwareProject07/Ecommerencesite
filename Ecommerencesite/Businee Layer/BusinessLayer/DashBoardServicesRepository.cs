@@ -397,38 +397,60 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           }
 
 
-          public List<Help_SupportTicketModels> AllTicketsAsync()
+          public List<HSupportticketdata> AllTicketsAsync()
           {
                     // Database se saare tickets fetch karna
                     // return await _context.SupportTickets.ToListAsync();
 
                     // Dummy implementation for reference
-                   var listhelpsupport = _context.helpSupportTicketModels.ToList();      
+                    var listhelpsupport = _context.HSupportTicketdatas.ToList();
                     return listhelpsupport;
           }
           // Naya Ticket Create karne ka logic
-          public void  CreateTicketAsync(Help_SupportTicketModels ticket)
+          public void CreateTicketAsync(HSupportticketdata helpticket)
           {
                     // Business validations
-                    if (string.IsNullOrEmpty(ticket.Subject))
+                    if (string.IsNullOrEmpty(helpticket.Subject))
                     {
                               throw new ArgumentException("Subject cannot be empty.");
                     }
 
                     // Default values set karna agar pehle se na ho
-                    ticket.Subject = ticket.Subject.Trim();
-                    ticket.Status = "OPEN";
-                    ticket.TicketDate = DateTime.UtcNow;
+                   // helpticket.Subject = ;
+                    helpticket.Status = "OPEN";
+                    helpticket.TicketDate = DateTime.UtcNow;
 
                     // Database mein save karna
                     // _context.SupportTickets.Add(ticket);
                     // await _context.SaveChangesAsync();
-                   _context.helpSupportTicketModels.Add(ticket);
+                    _context.HSupportTicketdatas.Add(helpticket);
                     _context.SaveChangesAsync();
-                   // return true;
+                    // return true;
 
           }
 
+          public void UpdateTicketAsync(HSupportticketdata helpticket)
+          {
+                   _context.HSupportTicketdatas.Update(helpticket);
+                    _context.SaveChanges();
+          }
+
+          public HSupportticketdata DeleteTicketAsync(int id)
+          {
+                    var deleteTicket = _context.HSupportTicketdatas.FirstOrDefault(t => t.Id == id);
+                    if (deleteTicket != null)
+                    {
+                              _context.HSupportTicketdatas.Remove(deleteTicket);
+                              _context.SaveChanges();
+                    }
+                    return deleteTicket;
+          }
+
+          public HSupportticketdata DetailsTicket(int id)
+          {
+                    var detailsTicket = _context.HSupportTicketdatas.FirstOrDefault(t => t.Id == id);
+                    return detailsTicket;         
+          }
 }
 
 

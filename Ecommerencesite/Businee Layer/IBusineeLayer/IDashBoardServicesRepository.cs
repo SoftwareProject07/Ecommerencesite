@@ -101,9 +101,12 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
 
                     //Help Support Ticket Model
-                    public List<Help_SupportTicketModels> AllTicketsAsync();
+                    public List<HSupportticketdata> AllTicketsAsync();
 
-                    public void CreateTicketAsync(Help_SupportTicketModels ticket);
+                    public void CreateTicketAsync(HSupportticketdata helpticket);
+                    public void UpdateTicketAsync(HSupportticketdata helpticket);
+                    public HSupportticketdata DeleteTicketAsync(int id);
+                    public HSupportticketdata DetailsTicket(int id);
 
 
           }

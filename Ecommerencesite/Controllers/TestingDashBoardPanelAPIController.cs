@@ -374,21 +374,37 @@ namespace Ecommerencesite.Controllers
 
                     // GET: api/helpsupport/tickets
                     [HttpGet("AllticketHelpSupport")]
-                    public List<Help_SupportTicketModels> AllTicketsAsync()
+                    public List<HSupportticketdata> AllTicketsAsync()
                     {
-                              var tickets =  context.AllTicketsAsync();
+                              var tickets = context.AllTicketsAsync();
                               return tickets;
                     }
 
                     // POST: api/helpsupport/ticket
                     [HttpPost("CreateticketHelpSupport")]
-                    public void CreateTicketAsync(Help_SupportTicketModels ticket)
+                    public void CreateTicket(HSupportticketdata helpticket)
                     {
-                              context.CreateTicketAsync(ticket);
+                              context.CreateTicketAsync(helpticket);
                     }
 
 
-
+                    [HttpPut("UpdateticketHelpSupport")]
+                    public void UpdateTicketAsync(HSupportticketdata helpticket)
+                    {
+                              context.UpdateTicketAsync(helpticket);
+                    }
+                    [HttpDelete("DeleteticketHelpSupport")] 
+                    public HSupportticketdata DeleteTicketAsync(int id)
+                    {
+                              var deletedTicket = context.DeleteTicketAsync(id);
+                              return deletedTicket;
+                    }
+                    [HttpGet("DetailsTicket")]
+                    public HSupportticketdata DetailsTicket(int id)
+                    {
+                              var detailsTicket = context.DetailsTicket(id);
+                              return detailsTicket;
+                    }
 
 
 

@@ -113,7 +113,7 @@ namespace Ecommerencesite.Database
                     public DbSet<MonthlyProgressModel> MonthlyProgressModels { get; set; }
                     public DbSet<PrescriptionModel> PrescriptionModels { get; set; }
                     public DbSet<HistoryModel> HistoryModels { get; set; }
-                    public DbSet<Help_SupportTicketModels> helpSupportTicketModels { get; set; }
+                    public DbSet<
                     public DbSet<UserSettingsModel> UserSettingsModels { get; set; }
                     public DbSet<AvailableTestModel> AvailableTestModels { get; set; }
                     //public DbSet<Medication> Medicationss { get; set; }

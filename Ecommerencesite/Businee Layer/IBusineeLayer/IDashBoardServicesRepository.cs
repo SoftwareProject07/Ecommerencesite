@@ -101,9 +101,9 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
 
 
                     //Help Support Ticket Model
-                    public Task<List<Help_SupportTicketModels>> GetAllTicketsAsync();
+                    public List<Help_SupportTicketModels> AllTicketsAsync();
 
-                    public Task<bool> CreateTicketAsync(Help_SupportTicketModels ticket);
+                    public void CreateTicketAsync(Help_SupportTicketModels ticket);
 
 
           }

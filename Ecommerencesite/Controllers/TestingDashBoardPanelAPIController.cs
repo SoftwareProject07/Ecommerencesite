@@ -374,35 +374,17 @@ namespace Ecommerencesite.Controllers
 
                     // GET: api/helpsupport/tickets
                     [HttpGet("AllticketHelpSupport")]
-                    public async Task<ActionResult<IEnumerable<Help_SupportTicketModels>>> GetTickets()
+                    public List<Help_SupportTicketModels> AllTicketsAsync()
                     {
-                              var tickets = await context.GetAllTicketsAsync();
-                              return Ok(tickets);
+                              var tickets =  context.AllTicketsAsync();
+                              return tickets;
                     }
 
                     // POST: api/helpsupport/ticket
                     [HttpPost("CreateticketHelpSupport")]
-                    public async Task<IActionResult> CreateTicket([FromBody] Help_SupportTicketModels model)
+                    public void CreateTicketAsync(Help_SupportTicketModels ticket)
                     {
-                              if (!ModelState.IsValid)
-                              {
-                                        return BadRequest(ModelState);
-                              }
-
-                              try
-                              {
-                                        var result = await context.CreateTicketAsync(model);
-                                        if (result)
-                                        {
-                                                  return Ok(new { message = "Support ticket created successfully!" });
-                                        }
-
-                                        return BadRequest(new { message = "Failed to create ticket." });
-                              }
-                              catch (System.Exception ex)
-                              {
-                                        return StatusCode(500, new { message = ex.Message });
-                              }
+                              context.CreateTicketAsync(ticket);
                     }
 
 

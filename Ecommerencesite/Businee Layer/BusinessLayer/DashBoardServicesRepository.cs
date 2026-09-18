@@ -397,16 +397,17 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           }
 
 
-          public async Task<List<Help_SupportTicketModels>> GetAllTicketsAsync()
+          public List<Help_SupportTicketModels> AllTicketsAsync()
           {
                     // Database se saare tickets fetch karna
                     // return await _context.SupportTickets.ToListAsync();
 
                     // Dummy implementation for reference
-                    return new List<Help_SupportTicketModels>();
+                   var listhelpsupport = _context.helpSupportTicketModels.ToList();      
+                    return listhelpsupport;
           }
           // Naya Ticket Create karne ka logic
-          public async Task<bool> CreateTicketAsync(Help_SupportTicketModels ticket)
+          public void  CreateTicketAsync(Help_SupportTicketModels ticket)
           {
                     // Business validations
                     if (string.IsNullOrEmpty(ticket.Subject))
@@ -422,8 +423,10 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
                     // Database mein save karna
                     // _context.SupportTickets.Add(ticket);
                     // await _context.SaveChangesAsync();
+                   _context.helpSupportTicketModels.Add(ticket);
+                    _context.SaveChangesAsync();
+                   // return true;
 
-                    return true;
           }
 
 }

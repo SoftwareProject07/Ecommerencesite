@@ -15,7 +15,8 @@ namespace Ecommerencesite.Businee_Layer.BusinessLayer
 
                     public OfferTestBusiness(Ecommerecewebstedatabase context)
                     {
-                              _context = context;
+
+                           this.   _context = context;
                     }
 
                     // 1. Get All Offer Tests (Dynamic from DB)

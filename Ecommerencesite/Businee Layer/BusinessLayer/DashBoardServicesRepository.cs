@@ -409,19 +409,7 @@ public class DashBoardServicesRepository : IDashBoardServicesRepository
           // Naya Ticket Create karne ka logic
           public void CreateTicketAsync(HSupportticketdata helpticket)
           {
-                   // // Business validations
-                   // if (string.IsNullOrEmpty(helpticket.Subject))
-                   // {
-                   //           throw new ArgumentException("Subject cannot be empty.");
-                   // }
-
-                   // // Default values set karna agar pehle se na ho
-                   //// helpticket.Subject = ;
-                   // helpticket.Status = "OPEN";
-                   // helpticket.TicketDate = DateTime.UtcNow;
-
-                    // Database mein save karna
-                    // _context.SupportTickets.Add(ticket);
+                  
                     // await _context.SaveChangesAsync();
                     _context.HSupportTicketdatas.Add(helpticket);
                     _context.SaveChangesAsync();

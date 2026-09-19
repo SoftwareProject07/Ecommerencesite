@@ -21,10 +21,10 @@ namespace LabTestApp.Models
 
                     public string ImageUrl { get; set; } // Admin ke create kiye gaye test ki image ke liye
 
-                    public DateTime StartDate { get; set; }
+                    public DateTime StartDate { get; set; }= DateTime.UtcNow;
 
-                    public DateTime EndDate { get; set; }
+                    public DateTime EndDate { get; set; } = DateTime.UtcNow; // Default 7 days offer
 
-                    public bool IsActive { get; set; }
+                    public bool IsActive { get; set; } = true;
           }
 }

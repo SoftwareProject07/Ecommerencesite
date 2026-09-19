@@ -6,6 +6,7 @@
 using Ecommerencesite.Businee_Layer.BusineeLayer;
 using Ecommerencesite.Businee_Layer.BusinessLayer;
 using Ecommerencesite.Businee_Layer.IBusineeLayer;
+using Ecommerencesite.Businee_Layer.IBusineeLayer.LABTESTIBUSINESSLAYER;
 using Ecommerencesite.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -125,6 +126,7 @@ builder.Services.AddScoped<IState_CityNameRepository, State_CityNameRepository>(
 builder.Services.AddScoped<ICustomerAccountantAccountRepository, CustomerAccountantAccountRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IDashBoardServicesRepository, DashBoardServicesRepository>();
+builder.Services.AddScoped<IOfferTestBusiness, OfferTestBusiness>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSignalR();

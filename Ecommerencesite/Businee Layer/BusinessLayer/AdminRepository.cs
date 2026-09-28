@@ -232,7 +232,7 @@ namespace Ecommerencesite.Businee_Layer.IBusineeLayer
                                         existingAdmin.MiddleName = adminREGMODEL.MiddleName;
                                         existingAdmin.LastName = adminREGMODEL.LastName;
                                         existingAdmin.Password = adminREGMODEL.Password;
-                                        existingAdmin.securitypassword = adminREGMODEL.securitypassword;
+                                       // existingAdmin.securitypassword = adminREGMODEL.securitypassword;
                                         existingAdmin.Email = adminREGMODEL.Email;
                                         existingAdmin.MobileNumber = adminREGMODEL.MobileNumber;
                                         existingAdmin.Fund = adminREGMODEL.Fund;

@@ -1,5 +1,6 @@
 ﻿using Ecommerencesite.Model;
 using Ecommerencesite.Model.DASHBOARDS;
+using Ecommerencesite.Model.HAPPYCLIENT;
 using Ecommerencesite.Model.LABTESTMODEL;
 using HelpDeskAPI.Models;
 using LabTestApp.Models;
@@ -131,7 +132,13 @@ namespace Ecommerencesite.Database
 
 
                     }
-                    public DbSet<SettingModule> SettingModules { get; set; }    
+                    public DbSet<SettingModule> SettingModules { get; set; }
+
+
+
+
+                    //Happy client model
+                    public DbSet<HappyClient> HappyClients { get; set; }
 
 
 

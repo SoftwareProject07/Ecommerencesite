@@ -1472,6 +1472,62 @@ namespace Ecommerencesite.Migrations
                     b.ToTable("team_hiringmodules");
                 });
 
+            modelBuilder.Entity("Ecommerencesite.Model.UpiPaymentVPARequest", b =>
+                {
+                    b.Property<int>("upivpaid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("upivpaid"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("CustomerContact")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Vpa")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("upivpaid");
+
+                    b.ToTable("UpiPaymentVPARequests");
+                });
+
+            modelBuilder.Entity("Ecommerencesite.Model.UpiPaymentVPAResponse", b =>
+                {
+                    b.Property<int>("upivpiresponse")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("upivpiresponse"));
+
+                    b.Property<bool>("IsValidVpa")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PaymentUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("upivpiresponse");
+
+                    b.ToTable("UpiPaymentVPAResponses");
+                });
+
             modelBuilder.Entity("Ecommerencesite.Model.UserMedicine", b =>
                 {
                     b.Property<int>("id")

@@ -142,6 +142,12 @@ namespace Ecommerencesite.Database
 
 
 
+                    //upi vpa payment model       
+                    public DbSet<UpiPaymentVPARequest> UpiPaymentVPARequests { get; set; }          
+                    public DbSet<UpiPaymentVPAResponse> UpiPaymentVPAResponses { get; set; }
+
+
+
 
           }
 }

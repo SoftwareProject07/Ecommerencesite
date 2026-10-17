@@ -128,7 +128,10 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IDashBoardServicesRepository, DashBoardServicesRepository>();
 builder.Services.AddScoped<IOfferTestBusiness, OfferTestBusiness>();
 builder.Services.AddScoped<IHappyClientRepository, HappyClientRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddEndpointsApiExplorer();
+// Program.cs mein ye line add karein
+builder.Services.AddHttpClient();
 
 builder.Services.AddSignalR();
 

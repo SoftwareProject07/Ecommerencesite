@@ -14,7 +14,7 @@ namespace Ecommerencesite.Controllers
                            this.  _licenseService = licenseService;
                     }
 
-                    [HttpGet("{ValidateClientLicense}")]
+                    [HttpGet("ValidateClientLicenseS")]
                     public IActionResult ValidateClientLicense(int clientId)
                     {
                               bool isAllowed = _licenseService.ValidateClientLicense(clientId);

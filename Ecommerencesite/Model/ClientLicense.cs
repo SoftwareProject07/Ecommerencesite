@@ -7,6 +7,6 @@ namespace Ecommerencesite.Model
                     [Key]
                     public int Id { get; set; }
                     public string ClientName { get; set; }
-                    public bool IsAllowed { get; set; } // Yeh wahi true/false status hai
+                    public bool IsAllowed { get; set; }  // Yeh wahi true/false status hai
           }
 }

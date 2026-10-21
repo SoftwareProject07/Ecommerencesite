@@ -248,6 +248,26 @@ namespace Ecommerencesite.Migrations
                     b.ToTable("cityMasterModels");
                 });
 
+            modelBuilder.Entity("Ecommerencesite.Model.ClientLicense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsAllowed")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientLicenses");
+                });
+
             modelBuilder.Entity("Ecommerencesite.Model.CustomerAccountantAccount", b =>
                 {
                     b.Property<int>("Id")

@@ -129,6 +129,8 @@ builder.Services.AddScoped<IDashBoardServicesRepository, DashBoardServicesReposi
 builder.Services.AddScoped<IOfferTestBusiness, OfferTestBusiness>();
 builder.Services.AddScoped<IHappyClientRepository, HappyClientRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+builder.Services.AddScoped<ILicenseService, LicenseService>();
 builder.Services.AddEndpointsApiExplorer();
 // Program.cs mein ye line add karein
 builder.Services.AddHttpClient();

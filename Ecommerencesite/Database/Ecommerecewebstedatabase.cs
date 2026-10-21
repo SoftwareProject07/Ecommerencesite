@@ -147,6 +147,7 @@ namespace Ecommerencesite.Database
                     public DbSet<UpiPaymentVPAResponse> UpiPaymentVPAResponses { get; set; }
 
 
+                    public DbSet<ClientLicense> ClientLicenses { get; set; } // Yeh wahi table hai jisme client license ka status store hoga          
 
 
           }
